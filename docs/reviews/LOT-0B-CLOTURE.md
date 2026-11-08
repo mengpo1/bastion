@@ -71,7 +71,33 @@ SDK .NET 10.0.114 local (bac à sable), commit `ebda48e`.
 
 ## 4. Publication et CI
 
-**CI distante non exécutée à ce stade.** Push et pull request : à faire après ce commit.
+_Rédigé avant le premier push avec la mention « CI distante non exécutée à ce stade ». Complété une seule fois après la première CI._
+
+**Publication :**
+
+| Commande | Résultat | Code |
+|---|---|---|
+| `git push -u origin main` | `* [new branch] main -> main` | 0 |
+| `git push -u origin chore/lot-0b-harnais` | `* [new branch] chore/lot-0b-harnais -> chore/lot-0b-harnais` | 0 |
+
+- Aucun `--force`.
+- Branches distantes après push (API GitHub) : `main` = `fdbff5d`, `chore/lot-0b-harnais` = `f88c022`. Aucune n'est protégée.
+- **PR : [mengpo1/bastion#1](https://github.com/mengpo1/bastion/pull/1)**, `draft: true`, `merged: false`, base `main` (`fdbff5d`), tête `f88c022`, 28 fichiers, 9 commits.
+
+**Première CI** (workflow `CI`, `.github/workflows/ci.yml`) :
+
+| Exécution | Événement | Commit testé | Statut | Étapes en échec |
+|---|---|---|---|---|
+| [n° 1 — 42472439100](https://github.com/mengpo1/bastion/actions/runs/42472439100) | `push` | `f88c022` | **success** | aucune |
+| [n° 2 — 42472482525](https://github.com/mengpo1/bastion/actions/runs/42472482525) | `pull_request` | `062bb8c`, fusion temporaire de `f88c022` dans `fdbff5d` créée par GitHub | **success** | aucune |
+
+Relevé dans les journaux des deux exécutions :
+
+- Runner `ubuntu-24.04` (image 20261101.360.1) ; `actions/checkout@v7` (SHA `3d3c42e5…`) ; `actions/setup-dotnet@v6` (SHA `0f4a354d…`) ; jeton GitHub limité à `contents: read`.
+- **SDK utilisé en CI : 10.0.403**, déjà présent sur le runner et retenu via `global.json` (canal 10.0). Il diffère du 10.0.114 local, comme prévu dans `LOT-0B-RETOUR-1.md` §5.
+- Restauration OK ; compilation **0 avertissement, 0 erreur** (aucune alerte NuGet) ; format sans écart ; tests .NET **2/2** ; tests des hooks **48/48**.
+
+**NC-4 satisfait :** preuve d'exécution de la CI disponible (exécutions n° 1 et n° 2).
 
 ## 5. Arbitrages du mandat appliqués
 
@@ -96,7 +122,10 @@ SDK .NET 10.0.114 local (bac à sable), commit `ebda48e`.
 - Hooks `SessionStart`, `PostToolUse` et `SubagentStop` ; analyse statique, contrôle des secrets et validation du registre en CI : différés.
 - **Protection de `main` sur GitHub : étape distincte, à confirmer par le propriétaire.** Non mise en place.
 
-**Anomalies non résolues :** aucune à ce stade.
+**Anomalies :**
+
+- Le push de `main` a affiché `fatal: expected 'acknowledgments', received 'packfile'`, puis `push negotiation failed; proceeding anyway with push`. Le push a abouti (code 0, branche visible avec le bon identifiant). Message attribué à la négociation via le proxy du bac à sable ; sans effet constaté.
+- `docs/decisions/TECHNICAL-DECISIONS.md` ne reflète pas encore les arbitrages de la section 5.
 
 ## 7. Déclaration
 
