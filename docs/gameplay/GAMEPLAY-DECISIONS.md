@@ -1,24 +1,49 @@
-# Registre des décisions de gameplay
+# Registre des mécaniques de gameplay
 
-Registre protégé. Une décision ne passe au statut « Validée » qu'avec l'accord explicite et daté du propriétaire. Claude Code n'y écrit qu'avec cet accord.
+Registre protégé (spécification v0.2, §3.1). Une fiche n'autorise un changement de comportement qu'avec une **décision du propriétaire « acceptée »**, explicite, datée et prouvée. Claude Code n'y écrit qu'avec cet accord.
 
-**Aucune décision de gameplay n'est validée à ce jour.** Aucune mécanique de jeu ne peut donc être implémentée.
+**Aucune mécanique n'est enregistrée à ce jour.** Aucune mécanique de jeu ne peut donc être implémentée.
 
-## Statuts
+## Règles
 
-| Statut | Signification |
+- **Classe** (nature de la mécanique) et **état d'implémentation** (avancement) sont deux champs distincts : ne pas les confondre.
+- `MODIFICATION-PROPOSEE` ou `A-VERIFIER` : n'autorise **aucun** changement de comportement.
+- `MODIFICATION-VALIDEE` : n'autorise **que** le périmètre décrit et approuvé.
+- Une idée évoquée dans une conversation n'est pas une décision validée.
+
+| Classe | Signification |
 |---|---|
-| Proposée | Soumise au propriétaire. Ne pas implémenter. |
-| Validée | Approuvée par le propriétaire. Implémentable dans le périmètre d'un mandat. |
-| Rejetée | Refusée par le propriétaire. |
-| Remplacée | Remplacée par une décision plus récente (indiquer laquelle). |
+| `OXCE-REFERENCE` | Comportement de référence d'OXCE à reproduire |
+| `MODIFICATION-PROPOSEE` | Modification soumise au propriétaire, non validée |
+| `MODIFICATION-VALIDEE` | Modification approuvée par le propriétaire, dans le périmètre décrit |
+| `A-VERIFIER` | Comportement de référence non encore établi |
 
-## Format d'une entrée
+| État d'implémentation |
+|---|
+| non commencé · en cours · testé · intégré |
 
-| ID | Date | Décision | Statut | Validée par / le | Source |
-|---|---|---|---|---|---|
-| G-001 | AAAA-MM-JJ | … | Proposée | — | mandat ou document |
+## Gabarit d'une fiche
 
-## Décisions
+```markdown
+### MEC-NNNN — <titre court>
+
+| Champ | Valeur |
+|---|---|
+| Système | |
+| Description | |
+| Classe | OXCE-REFERENCE / MODIFICATION-PROPOSEE / MODIFICATION-VALIDEE / A-VERIFIER |
+| Fonctionnement de référence et preuves | commit OXCE, fichiers, documentation, reproduction expérimentale |
+| Changement demandé | contenu, raisons, impacts prévus |
+| Décision du propriétaire | acceptée / refusée / reportée — preuve de validation explicite — date |
+| Périmètre autorisé | |
+| Éléments exclus | |
+| Tests de référence | |
+| Tests de modification | |
+| État d'implémentation | non commencé / en cours / testé / intégré |
+```
+
+L'identifiant `MEC-NNNN` est permanent : il n'est jamais réattribué.
+
+## Mécaniques
 
 _Aucune._

@@ -30,5 +30,5 @@ changements=$(
 # Accepte aussi un renommage (« ancien -> nouveau ») et un chemin entre guillemets.
 printf '%s\n' "$changements" | grep -Eq '(^|-> )"?docs/reviews/' && exit 0
 
-echo "Harnais Bastion : des fichiers ont changé sans rapport dans docs/reviews/. Si le mandat est terminé, rédigez son rapport avant de terminer. Si vous attendez une réponse du propriétaire, dites-le et arrêtez-vous." >&2
+echo "Harnais Bastion : des fichiers ont changé sans rapport dans docs/reviews/. Si le mandat est terminé, rédigez son rapport avant de terminer, en y indiquant les contrôles non exécutés. Si vous attendez une réponse du propriétaire, dites-le et arrêtez-vous." >&2
 exit 2

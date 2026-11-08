@@ -7,6 +7,8 @@ Ces règles s'appliquent à chaque session. Elles ne changent que par un mandat 
 - **Propriétaire** : valide les décisions.
 - **ChatGPT** : orchestre et rédige les mandats.
 - **Claude Code** : exécute un mandat à la fois.
+- **Relecteur indépendant** : agent distinct du développeur, mandaté ponctuellement ; relit le diff, les risques, les tests et la conformité au mandat ; ne s'accorde pas la validation finale.
+- **Contrôles automatiques** : hooks, scripts et CI ; leurs résultats sont des preuves partielles.
 
 ## 1. Périmètre
 
@@ -22,8 +24,11 @@ Ces règles s'appliquent à chaque session. Elles ne changent que par un mandat 
 
 ## 3. Gameplay
 
-- Aucune mécanique de jeu sans décision au statut « Validée » dans `docs/gameplay/GAMEPLAY-DECISIONS.md`.
+- Aucune mécanique de jeu sans fiche dans `docs/gameplay/GAMEPLAY-DECISIONS.md` portant une décision du propriétaire « acceptée », explicite et datée ; `MODIFICATION-VALIDEE` n'autorise que son périmètre.
+- Une idée évoquée dans une conversation n'est pas une décision validée.
 - Aucune modification de mécanique, même présentée comme une simplification temporaire.
+- Aucune modification de l'équilibrage sans accord explicite du propriétaire.
+- Ne jamais affirmer une fidélité à OXCE sans référence vérifiable (commit figé dans `docs/references/OXCE-BASELINE.md`) et tests de comportement adaptés.
 - Ne jamais inscrire ni modifier une décision dans les registres (`docs/gameplay/`, `docs/decisions/`, `docs/references/`) sans validation explicite du propriétaire.
 
 ## 4. Propriété intellectuelle
