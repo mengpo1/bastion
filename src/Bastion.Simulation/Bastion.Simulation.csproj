@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Simulation de Bastion. Ne doit jamais référencer Godot (TECHNICAL-DECISIONS.md, T-001). -->
+</Project>

@@ -1,0 +1,35 @@
+# CI minimale : restauration, compilation, format, tests (.NET et hooks).
+# Chaque étape échoue si sa commande renvoie un code non nul.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Restauration
+        run: dotnet restore
+
+      - name: Compilation
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Format
+        run: dotnet format --verify-no-changes --no-restore
+
+      - name: Tests .NET
+        run: dotnet test --no-build --configuration Release
+
+      - name: Tests des hooks
+        run: bash scripts/harness/test-hooks.sh

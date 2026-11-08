@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Bastion.Simulation/Bastion.Simulation.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Bastion.Simulation.Tests/Bastion.Simulation.Tests.csproj" />
+  </Folder>
+</Solution>
