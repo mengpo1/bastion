@@ -42,7 +42,7 @@ Registre protégé. OXCE (OpenXcom Extended) sert de référence de comportement
 
 ## Limites de vérification (toujours ouvertes)
 
-- **Aucun gameplay n'est validé ni implémenté** sur la base de cette référence. Aucune fiche `MEC`.
+- **Aucun gameplay n'est validé ni implémenté** sur la base de cette référence. La seule fiche, `MEC-0001`, est une fiche documentaire incomplète et non approuvée (`docs/gameplay/GAMEPLAY-DECISIONS.md`).
 - **Binaires non reconstruits :** le rattachement des binaires officiels au commit figé repose sur leur nom (hash `441cae1b0`, nommage par `git describe`). C'est une inférence solide, non vérifiée par recompilation.
 - **Compatibilité non vérifiée, dans les deux sens du terme :**
   - **licences :** la compatibilité des licences tierces avec Bastion n'est pas auditée exhaustivement (code tiers de `src/`, bibliothèques de `deps/`, shaders, ressources) ;
