@@ -15,6 +15,8 @@ public class SmokeTests
         Assert.Equal("Bastion.Simulation", Simulation.GetName().Name);
     }
 
+    // Détecte l'usage d'un type Godot dans la simulation. Une référence de paquet Godot
+    // déclarée mais inutilisée n'apparaît pas dans l'assembly et n'est pas détectée.
     [Fact]
     public void SimulationDoesNotReferenceGodot()
     {

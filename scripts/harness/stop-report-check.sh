@@ -16,15 +16,13 @@ git rev-parse --is-inside-work-tree >/dev/null 2>&1 || exit 0
 base=$(git merge-base HEAD main 2>/dev/null || git merge-base HEAD origin/main 2>/dev/null)
 changements=$(
   git -c core.quotePath=false status --porcelain --untracked-files=all | cut -c4-
-  if [ -n "$base" ]; then
-    git -c core.quotePath=false diff --name-only "$base" HEAD
-  else
-    git -c core.quotePath=false ls-files  # pas encore de main : tout le dépôt compte
-  fi
+  # Sans main (dépôt neuf), seules les modifications non commitées sont contrôlées.
+  [ -n "$base" ] && git -c core.quotePath=false diff --name-only "$base" HEAD
 )
 
 [ -z "$changements" ] && exit 0
-printf '%s\n' "$changements" | grep -q '^docs/reviews/' && exit 0
+# Accepte aussi un renommage (« ancien -> nouveau ») et un chemin entre guillemets.
+printf '%s\n' "$changements" | grep -Eq '(^|-> )"?docs/reviews/' && exit 0
 
-echo "Harnais Bastion : des fichiers ont changé mais aucun rapport n'est présent dans docs/reviews/. Rédigez le rapport de fin du mandat avant de terminer." >&2
+echo "Harnais Bastion : des fichiers ont changé sans rapport dans docs/reviews/. Si le mandat est terminé, rédigez son rapport avant de terminer. Si vous attendez une réponse du propriétaire, dites-le et arrêtez-vous." >&2
 exit 2

@@ -1,15 +1,17 @@
 # Registre des décisions techniques
 
-Registre protégé. Une décision ne passe au statut « Validée » qu'avec l'accord explicite du propriétaire, ou si elle provient d'un document qu'il a validé (source indiquée).
+Registre protégé. Une décision ne passe au statut « Validée » qu'avec l'accord explicite et daté du propriétaire.
 
-Statuts : **Validée**, **Proposée** (à valider, peut changer), **Rejetée**, **Remplacée**.
+Statuts : **Validée**, **Exigence de mandat** (imposée par un mandat, à confirmer par le propriétaire), **Proposée** (à valider, peut changer), **Rejetée**, **Remplacée**.
 
-## Décisions issues de documents validés
+**Aucune décision technique n'est au statut « Validée » à ce jour.**
+
+## Exigences du mandat LOT-0B
 
 | ID | Décision | Statut | Source |
 |---|---|---|---|
-| T-001 | La simulation est indépendante de Godot ; l'interface est un projet distinct. | Validée | Spécification `BASTION-HARNAIS-LOT-0A-v0.2.md` (validée le 8 nov. 2026), citée par le mandat LOT-0B §4.B. Le texte de la spécification n'est pas dans le dépôt. |
-| T-002 | Moteur Godot .NET, langage C#. Version de Godot **à figer**. | Validée (version non figée) | Mandat LOT-0B §3.2 et §4.B. |
+| T-001 | La simulation est indépendante de Godot ; l'interface est un projet distinct. | Exigence de mandat | Mandat LOT-0B §4.B (« architecture cible »). Le mandat a pour référence la spécification `BASTION-HARNAIS-LOT-0A-v0.2.md`, absente du dépôt. |
+| T-002 | Moteur Godot .NET, langage C#. Version de Godot **à figer**. | Exigence de mandat | Mandat LOT-0B §3.2 et §4.B. |
 
 ## Choix provisoires du lot 0B — à valider par le propriétaire
 

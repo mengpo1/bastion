@@ -3,7 +3,8 @@
 # Entrée : l'appel d'outil en JSON sur stdin. Réponse :
 #   - code 2 + message      : appel BLOQUÉ (commande destructive, commit sur main) ;
 #   - JSON "ask" sur stdout : Claude Code demande l'accord du propriétaire
-#                             (écriture d'un fichier protégé, git push / merge / rebase) ;
+#                             (fichier protégé, git push / pull / merge / rebase,
+#                             écriture sur GitHub) ;
 #   - code 0 sans sortie    : appel autorisé.
 # Détection par motifs de texte, non exhaustive : voir scripts/harness/README.md.
 
@@ -26,14 +27,17 @@ demander() {
   exit 0
 }
 
-# Fichiers de gouvernance et du harnais.
-PROTEGES='GAMEPLAY-DECISIONS\.md|TECHNICAL-DECISIONS\.md|OXCE-BASELINE\.md|CLAUDE\.md|docs/mandates/|\.claude/|scripts/harness/|\.github/workflows/'
+# Registres, mandats, règles et harnais.
+PROTEGES='docs/(gameplay|decisions|references|mandates)/|CLAUDE\.md|\.claude/settings[^/]*\.json|scripts/harness/|\.github/workflows/'
 # Commandes destructives (liste courte). \\n : retour à la ligne échappé dans le JSON.
-DESTRUCTIF='(^|[^[:alnum:]_.-]|\\n)rm[[:space:]]+-[[:alnum:]]*[rR]|git[[:space:]]+reset[[:space:]]+--hard|git[[:space:]]+clean[[:space:]]+-[[:alnum:]]*f|git[[:space:]]+branch[[:space:]]+-D|git[[:space:]]+push[[:space:]].*(--force|[[:space:]]-f([[:space:]]|\\|$))'
+DESTRUCTIF='(^|[^[:alnum:]_.-]|\\n)rm[[:space:]]+-[[:alnum:]]*[rR]|git[[:space:]]+reset[[:space:]]+--hard|git[[:space:]]+clean[[:space:]]+-[[:alnum:]]*f|git[[:space:]]+branch[[:space:]]+-D|git[[:space:]]+push.*[[:space:]](--force|-f([[:space:]]|\\|$))'
+# Publication et fusion.
+PUBLICATION='git[[:space:]]+(push|pull|merge|rebase)([[:space:]]|\\|$)|gh[[:space:]]+pr[[:space:]]+merge'
 # Indices d'écriture dans une commande shell (2>&1 et 2>/dev/null ne comptent pas).
 ECRITURE='(^|[^0-9])>|tee[[:space:]]|sed[[:space:]]+-i|(^|[[:space:]])(mv|cp|rm|truncate)[[:space:]]'
 
-case "$(champ tool_name)" in
+outil=$(champ tool_name)
+case "$outil" in
   Write|Edit|MultiEdit|NotebookEdit)
     chemin=$(champ file_path)
     [ -n "$chemin" ] || chemin=$(champ notebook_path)
@@ -48,14 +52,20 @@ case "$(champ tool_name)" in
       bloquer "commande destructive"
     fi
     if printf '%s' "$cmd" | grep -Eq 'git[[:space:]]+commit' &&
-       [ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" = main ]; then
+       [ "$(git symbolic-ref --short -q HEAD 2>/dev/null)" = main ]; then
       bloquer "commit direct sur main"
     fi
-    if printf '%s' "$cmd" | grep -Eq 'git[[:space:]]+(push|merge|rebase)'; then
-      demander "git push, merge ou rebase"
+    if printf '%s' "$cmd" | grep -Eq "$PUBLICATION"; then
+      demander "git push, pull, merge, rebase ou gh pr merge"
     fi
     if printf '%s' "$cmd" | grep -Eq "$PROTEGES" && printf '%s' "$cmd" | grep -Eq "$ECRITURE"; then
       demander "commande shell pouvant modifier un fichier protégé"
+    fi
+    ;;
+  mcp__github__*)
+    # Lecture (get_, list_, search_, *_read, *_get, *_list) : libre. Le reste écrit sur GitHub.
+    if ! printf '%s' "$outil" | grep -Eq '^mcp__github__(get_|list_|search_)|_(read|get|list)$'; then
+      demander "écriture sur GitHub ($outil)"
     fi
     ;;
 esac
