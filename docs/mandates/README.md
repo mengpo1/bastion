@@ -2,9 +2,16 @@
 
 Les documents de ce dossier sont conservés tels que reçus. Ne pas les modifier : toute évolution donne un nouveau document versionné. L'empreinte SHA-256 permet de vérifier qu'ils sont intacts.
 
-| Document | Statut | SHA-256 |
-|---|---|---|
-| `BASTION-HARNAIS-LOT-0A-v0.2.md` — spécification du harnais | **Validée par le propriétaire le 8 novembre 2026.** Version historique conservée telle quelle : son en-tête indique encore « PROPOSÉ ». | `d81a1c2e77414fef25d7c7ef29b8f13820e82b09028c33dbba25bf919030b001` |
-| `BASTION-MANDAT-LOT-0B-v1.0.md` — mandat du lot 0B | Exécuté (voir `docs/reviews/LOT-0B-EXECUTION.md`) | `89486722fb13fa37cb29244945271493ed519ae5e1109c92fb0ad65afad99112` |
-| `BASTION-LOT-0B-RETOUR-ORCHESTRATEUR.md` — retour de l'orchestrateur sur le lot 0B | Traité (voir `docs/reviews/LOT-0B-RETOUR-1.md`) | `98ad142f4814d00c063fde78f9786be90b8bbbeff1a3a9c095550ae807973223` |
-| `BASTION-MANDAT-LOT-0B-CLOTURE-v1.0.md` — mandat de clôture du lot 0B | Autorisé par le propriétaire le 8 novembre 2026 (voir `docs/reviews/LOT-0B-CLOTURE.md`) | `86b878eabaf0d6fb6db621596cacf58d70f8a52f47b6d1e7e58ded437f54627d` |
+**Provenance :**
+
+- **original `.md`** : fichier joint à la conversation, copié octet pour octet.
+- **transcription** : texte collé dans la conversation, enregistré tel que reçu ; identité avec le fichier original non vérifiée. L'empreinte porte sur la transcription.
+
+| Document | Provenance | Statut | SHA-256 |
+|---|---|---|---|
+| `BASTION-HARNAIS-LOT-0A-v0.2.md` — spécification du harnais | original `.md` | **Validée par le propriétaire le 8 novembre 2026.** Version historique conservée telle quelle : son en-tête indique encore « PROPOSÉ ». | `d81a1c2e77414fef25d7c7ef29b8f13820e82b09028c33dbba25bf919030b001` |
+| `BASTION-MANDAT-LOT-0B-v1.0.md` — mandat du lot 0B | original `.md` | Exécuté (voir `docs/reviews/LOT-0B-EXECUTION.md`) | `89486722fb13fa37cb29244945271493ed519ae5e1109c92fb0ad65afad99112` |
+| `BASTION-LOT-0B-RETOUR-ORCHESTRATEUR.md` — retour de l'orchestrateur sur le lot 0B | original `.md` | Traité (voir `docs/reviews/LOT-0B-RETOUR-1.md`) | `98ad142f4814d00c063fde78f9786be90b8bbbeff1a3a9c095550ae807973223` |
+| `BASTION-MANDAT-LOT-0B-CLOTURE-v1.0.md` — mandat de clôture du lot 0B | original `.md` | Exécuté (voir `docs/reviews/LOT-0B-CLOTURE.md`) | `86b878eabaf0d6fb6db621596cacf58d70f8a52f47b6d1e7e58ded437f54627d` |
+| `BASTION-MANDAT-LOT-0B-FUSION-transcription.md` — mandat de fusion de la PR n° 1 | **transcription depuis la conversation ; identité avec le fichier original non vérifiée** | Exécuté le 8 novembre 2026 : commit de fusion `9ece89df9acd88bcf8c8c2eb8215ffd5937a04b4` | `6e9207e67559cb1ba686d82c3130ad466eb25e2735bd3168ae8af49bcaa76b21` |
+| `BASTION-MANDAT-LOT-0C-v1.2.md` — mandat du lot 0C | original `.md` | **Autorisé par le propriétaire le 8 novembre 2026** dans la conversation. Le fichier indique encore « préparé — en attente d'autorisation », conservé tel quel. | `22f02c3bbd073843d0262c0ae2272f03a31c7b2b142b9ae03ae7b2fa7f71fd0e` |

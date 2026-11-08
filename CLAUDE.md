@@ -9,6 +9,7 @@ Ces règles s'appliquent à chaque session. Elles ne changent que par un mandat 
 - **Claude Code** : exécute un mandat à la fois.
 - **Relecteur indépendant** : agent distinct du développeur, mandaté ponctuellement ; relit le diff, les risques, les tests et la conformité au mandat ; ne s'accorde pas la validation finale.
 - **Contrôles automatiques** : hooks, scripts et CI ; leurs résultats sont des preuves partielles.
+- **Échanges avec l'orchestrateur** : protocole du §3 de `docs/mandates/BASTION-MANDAT-LOT-0C-v1.2.md`.
 
 ## 1. Périmètre
 
