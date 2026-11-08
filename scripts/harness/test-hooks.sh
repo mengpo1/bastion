@@ -140,5 +140,156 @@ g "$tmp/seul" commit -q -m "suite sans rapport"
 g "$tmp/seul" branch -q -D chore/seul
 verifier autorise "LIMITE sans main : branche d'origine supprimée, son rapport compte" "$STOP" "$(stop_json false)" "$tmp/seul"
 
+echo "== Stop : référence origin/main =="
+# main locale périmée (C0) ; origin/main à jour (C1, qui contient le rapport d'un lot déjà fusionné).
+git init -q -b main "$tmp/perime"
+g "$tmp/perime" commit -q --allow-empty -m "C0"
+c0=$(git -C "$tmp/perime" rev-parse HEAD)
+mkdir -p "$tmp/perime/docs/reviews"
+echo "rapport A" > "$tmp/perime/docs/reviews/LOT-A.md"
+g "$tmp/perime" add docs
+g "$tmp/perime" commit -q -m "C1 : lot A fusionné avec son rapport"
+git -C "$tmp/perime" update-ref refs/remotes/origin/main HEAD
+g "$tmp/perime" checkout -q -b chore/lot-b
+git -C "$tmp/perime" branch -q -f main "$c0"
+verifier autorise "branche identique à origin/main : pas de faux blocage" "$STOP" "$(stop_json false)" "$tmp/perime"
+echo "b" > "$tmp/perime/b.cs"
+g "$tmp/perime" add b.cs
+g "$tmp/perime" commit -q -m "lot B sans rapport"
+verifier bloque "main locale périmée, origin/main à jour : branche sans rapport" "$STOP" "$(stop_json false)" "$tmp/perime"
+total=$((total + 1))
+message=$(cd "$tmp/perime" && printf '%s' "$(stop_json false)" | CLAUDE_PROJECT_DIR="$tmp/perime" bash "$STOP" 2>&1 >/dev/null)
+case "$message" in
+  *"Aucun rapport du lot"*"incomplet ou en attente d'arbitrage"*)
+    echo "OK     [message] le rappel vise le rapport du lot et demande de déclarer un mandat incomplet" ;;
+  *) echo "ÉCHEC  [message] rappel inattendu : $message"; echecs=$((echecs + 1)) ;;
+esac
+echo "rapport B" > "$tmp/perime/docs/reviews/LOT-B.md"
+verifier autorise "main locale périmée, origin/main à jour : rapport présent" "$STOP" "$(stop_json false)" "$tmp/perime"
+# Limites : une référence périmée (main sans origin/main, ou origin/main sans fetch) fausse la base.
+for cas in sans-origin origin-perimee; do
+  r="$tmp/limite-$cas"
+  git init -q -b main "$r"
+  g "$r" commit -q --allow-empty -m "C0"
+  r0=$(git -C "$r" rev-parse HEAD)
+  mkdir -p "$r/docs/reviews"
+  echo "rapport A" > "$r/docs/reviews/LOT-A.md"
+  g "$r" add docs
+  g "$r" commit -q -m "C1 : lot A et son rapport"
+  g "$r" checkout -q -b chore/lot-b
+  if [ "$cas" = sans-origin ]; then
+    git -C "$r" branch -q -f main "$r0"
+  else
+    git -C "$r" update-ref refs/remotes/origin/main "$r0"
+  fi
+  echo "b" > "$r/b.cs"
+  g "$r" add b.cs
+  g "$r" commit -q -m "lot B sans rapport"
+done
+verifier autorise "LIMITE origin/main absente et main locale périmée : faux passage" "$STOP" "$(stop_json false)" "$tmp/limite-sans-origin"
+verifier autorise "LIMITE main locale à jour mais origin/main périmée : faux passage" "$STOP" "$(stop_json false)" "$tmp/limite-origin-perimee"
+
+echo "== Traçabilité simulation (contrôle CI des PR) =="
+TRACE="$ici/check-simulation-trace.sh"
+D="$tmp/trace"
+# verifier_trace <attendu ok|echec> <description du test> <texte de la description de PR>
+# Lancé dans le dépôt d'essai $D, sur sa branche courante, avec main comme base.
+verifier_trace() {
+  printf '%s' "$3" > "$tmp/description-pr.txt"
+  (cd "$D" && bash "$TRACE" main "$tmp/description-pr.txt" > /dev/null 2>&1)
+  code=$?
+  case "$code" in 0) obtenu=ok ;; 1) obtenu=echec ;; *) obtenu="code $code" ;; esac
+  total=$((total + 1))
+  if [ "$obtenu" = "$1" ]; then
+    echo "OK     [$1] $2"
+  else
+    echo "ÉCHEC  [attendu $1, obtenu $obtenu] $2"
+    echecs=$((echecs + 1))
+  fi
+}
+git init -q -b main "$D"
+mkdir -p "$D/src/Bastion.Simulation" "$D/scripts/harness" "$D/docs/gameplay"
+echo "class A {}" > "$D/src/Bastion.Simulation/A.cs"
+echo "x" > "$D/scripts/harness/x.sh"
+echo "doc" > "$D/README.md"
+# Registre d'essai : données de test du dépôt temporaire, pas le registre du projet.
+cat > "$D/docs/gameplay/GAMEPLAY-DECISIONS.md" <<'FIN'
+# Registre d'essai
+
+### MEC-0001 — Fiche d'essai acceptée
+
+| Champ | Valeur |
+|---|---|
+| Décision du propriétaire | acceptée — essai — 2026-11-08 |
+
+### MEC-0002 — Fiche d'essai refusée
+
+| Champ | Valeur |
+|---|---|
+| Décision du propriétaire | refusée — essai — 2026-11-08 |
+
+### MEC-0003 — Fiche recopiée du gabarit sans être remplie
+
+| Champ | Valeur |
+|---|---|
+| Décision du propriétaire | acceptée / refusée / reportée — preuve de validation explicite — date |
+FIN
+g "$D" add .
+g "$D" commit -q -m "base"
+g "$D" checkout -q -b doc
+echo "doc 2" >> "$D/README.md"
+g "$D" commit -qam "doc"
+verifier_trace ok "PR sans changement de simulation, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b harnais
+echo "y" >> "$D/scripts/harness/x.sh"
+g "$D" commit -qam "harnais"
+verifier_trace ok "PR ne touchant que le harnais, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b sim
+echo "// changement" >> "$D/src/Bastion.Simulation/A.cs"
+g "$D" commit -qam "sim"
+verifier_trace echec "simulation modifiée, description vide" ""
+verifier_trace echec "simulation modifiée, texte sans déclaration" "Corrige un détail."
+verifier_trace echec "déclaration sans justification" "Traçabilité simulation : TECHNIQUE — "
+verifier_trace echec "déclaration mal formée (type inconnu)" "Traçabilité simulation : TECH — détail"
+verifier_trace echec "justification laissée au gabarit" "Traçabilité simulation : TECHNIQUE — <justification précise>"
+verifier_trace echec "MEC inexistant" "Traçabilité simulation : MEC-0009 — essai"
+verifier_trace echec "MEC refusé" "Traçabilité simulation : MEC-0002 — essai"
+verifier_trace echec "MEC recopié du gabarit, non décidé" "Traçabilité simulation : MEC-0003 — essai"
+verifier_trace echec "une déclaration valide et une invalide" $'Traçabilité simulation : TECHNIQUE — renommage interne\nTraçabilité simulation : MEC-0009 — essai'
+verifier_trace ok "MEC accepté (données d'essai)" "Traçabilité simulation : MEC-0001 — essai"
+verifier_trace ok "LIMITE TECHNIQUE justifié : contrôle syntaxique seulement" "Traçabilité simulation : TECHNIQUE — renommage interne sans effet de jeu"
+verifier_trace ok "fins de ligne Windows dans la description" $'Résumé\r\n\r\nTraçabilité simulation : TECHNIQUE — renommage interne\r\n'
+g "$D" checkout -q main
+g "$D" checkout -q -b suppression
+g "$D" rm -q src/Bastion.Simulation/A.cs
+g "$D" commit -qm "suppression"
+verifier_trace echec "fichier de simulation supprimé, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b ajout
+echo "class B {}" > "$D/src/Bastion.Simulation/B.cs"
+g "$D" add src
+g "$D" commit -qm "ajout"
+verifier_trace echec "fichier de simulation ajouté, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b renommage-sortant
+mkdir -p "$D/autre"
+g "$D" mv src/Bastion.Simulation/A.cs autre/A.cs
+g "$D" commit -qm "renommage sortant"
+verifier_trace echec "fichier de simulation renommé hors du dossier, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b renommage-entrant
+g "$D" mv README.md src/Bastion.Simulation/README.md
+g "$D" commit -qm "renommage entrant"
+verifier_trace echec "fichier renommé vers le dossier de simulation, sans déclaration" ""
+g "$D" checkout -q sim
+verifier_trace echec "déclaration avec puce Markdown (ligne seule attendue)" "- Traçabilité simulation : TECHNIQUE — détail"
+verifier_trace ok "LIMITE déclaration cachée dans un bloc de code : acceptée" $'```\nTraçabilité simulation : TECHNIQUE — détail\n```'
+g "$D" checkout -q -b fiche-ajoutee sim
+printf '\n### MEC-0004 — Fiche ajoutée par la PR elle-même\n\n| Champ | Valeur |\n|---|---|\n| Décision du propriétaire | acceptée — sans preuve — 2026-11-08 |\n' >> "$D/docs/gameplay/GAMEPLAY-DECISIONS.md"
+g "$D" commit -qam "fiche ajoutée par la PR"
+verifier_trace ok "LIMITE fiche MEC ajoutée par la PR elle-même : acceptée" "Traçabilité simulation : MEC-0004 — essai"
+
 echo "== $total tests, $echecs échec(s) =="
 [ "$echecs" -eq 0 ]

@@ -1,10 +1,13 @@
-# CI minimale : restauration, compilation, format, tests (.NET et hooks).
+# CI minimale : restauration, compilation, format, tests (.NET et hooks),
+# puis, sur les pull requests, contrôle de traçabilité des changements de simulation.
 # Chaque étape échoue si sa commande renvoie un code non nul.
 name: CI
 
 on:
   push:
   pull_request:
+    # « edited » : la modification de la description de la PR relance le contrôle de traçabilité.
+    types: [opened, synchronize, reopened, edited]
 
 permissions:
   contents: read
@@ -14,6 +17,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Sur une PR, le commit testé est la fusion de test de GitHub : son premier parent est la base.
+          fetch-depth: 2
 
       - uses: actions/setup-dotnet@v6
         with:
@@ -33,3 +39,18 @@ jobs:
 
       - name: Tests des hooks
         run: bash scripts/harness/test-hooks.sh
+
+      # La description de la PR passe par une variable d'environnement, jamais interpolée dans le shell.
+      - name: Traçabilité simulation (PR)
+        if: github.event_name == 'pull_request'
+        env:
+          DESCRIPTION_PR: ${{ github.event.pull_request.body }}
+        run: |
+          git rev-parse --verify -q HEAD^2 > /dev/null || { echo "::error::Commit de fusion de test attendu pour une PR."; exit 1; }
+          printf '%s\n' "$DESCRIPTION_PR" > "$RUNNER_TEMP/description-pr.txt"
+          bash scripts/harness/check-simulation-trace.sh HEAD^1 "$RUNNER_TEMP/description-pr.txt"
+
+      - name: Traçabilité simulation (hors PR)
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "Contrôle de déclaration non applicable à l'événement $GITHUB_EVENT_NAME : il ne s'applique qu'aux pull requests et ne bloque pas une fusion (main non protégée)."
