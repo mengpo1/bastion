@@ -3,6 +3,8 @@
 **Mandat :** `docs/mandates/BASTION-MANDAT-LOT-0B-v1.0.md` · **Exécutant :** Claude Code · **Date :** 8 nov. 2026
 **Branche locale :** `chore/lot-0b-harnais` · **Push :** non effectué (non autorisé)
 
+> **Complément :** voir `docs/reviews/LOT-0B-RETOUR-1.md` (conformité à la spécification v0.2, correction du contrôle `Stop` sans `main`, 48 tests de hooks, plan Git). Le présent rapport décrit l'état au commit `46629b4`.
+
 ## 1. Résumé
 
 - Dépôt trouvé **vide** (aucun commit, aucun fichier ; dépôt distant `github.com/mengpo1/bastion` vide aussi). Rien n'a été écrasé, déplacé ni supprimé.
