@@ -24,7 +24,7 @@ Inscrire aussi dans `CLAUDE.md` la règle permanente de **notification au propri
 
 1. Vérifier que `main`, la tête de la PR n° 2 et les rapports du lot 0C correspondent aux références ci-dessus. En cas de changement distant imprévu : arrêter et demander arbitrage, sans écraser ni réécrire les commits.
 2. Rester sur `chore/lot-0c-qualification` ; conserver tous les commits existants, sans rebase ni amendement.
-3. Archiver **ce fichier `.md` reçu comme pièce jointe, octet pour octet**, dans `docs/mandates/BASTION-MANDAT-LOT-0C-R1-v1.0.md`. Vérifier et consigner son SHA-256 dans `docs/mandates/README.md` ; obtenir les accords des hooks pour les fichiers protégés.
+3. Lire le mandat directement depuis la branche GitHub `orchestration/mandats`, chemin `docs/mandates/BASTION-MANDAT-LOT-0C-R1-v1.0.md`. **Ne pas le recopier ni l'archiver** sur la branche de travail ; sa publication est prise en charge par l'orchestrateur. La branche `orchestration/mandats` est en lecture seule pour Claude Code.
 4. Le mandat autorise les nouveaux commits et le **push de cette seule branche**, puis la mise à jour de la PR n° 2 en brouillon. Il n'autorise **aucun** push direct vers `main`, force push, fusion, suppression de branche ni publication d'autre chose.
 
 ## 3. Correction H-Q05 — Signalement obligatoire des changements de simulation
@@ -75,7 +75,6 @@ Cette règle **n'autorise pas** à elle seule un push pour les mandats ultérieu
 
 ## 6. Fichiers autorisés
 
-- `docs/mandates/BASTION-MANDAT-LOT-0C-R1-v1.0.md` et `docs/mandates/README.md` : archivage et empreinte.
 - `CLAUDE.md` : notification de fin et consigne de mise à jour de la référence Git.
 - `scripts/harness/stop-report-check.sh`, `scripts/harness/test-hooks.sh`, `scripts/harness/README.md` : correctif, tests, limites.
 - Un **unique** petit script de contrôle de traçabilité dans `scripts/harness/`, uniquement si nécessaire, ainsi que ses tests dans les scripts de tests existants.
