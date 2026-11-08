@@ -35,7 +35,7 @@ Ces règles s'appliquent à chaque session. Elles ne changent que par un mandat 
 ## 4. Propriété intellectuelle
 
 - Aucun asset X-COM original.
-- Aucune copie de code OXCE sans audit de licence et décision enregistrée.
+- Aucune reprise de code, de données ni d'assets d'OXCE ou des jeux X-COM (décision D4, `docs/references/OXCE-BASELINE.md`). Si cette politique devait être réexaminée, les licences seraient à examiner au préalable ; en l'état, aucune reprise n'est autorisée.
 
 ## 5. Git
 

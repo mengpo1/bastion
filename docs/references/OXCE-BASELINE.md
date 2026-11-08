@@ -52,6 +52,6 @@ Registre protégé. OXCE (OpenXcom Extended) sert de référence de comportement
 
 ## Règles
 
-- Aucun code OXCE copié et aucun asset X-COM original sans audit de licence et décision enregistrée.
-- Utiliser OXCE comme référence d'une mécanique exige une décision au statut « Validée » dans `docs/gameplay/GAMEPLAY-DECISIONS.md`.
+- **Aucune reprise de code, de données ni d'assets d'OXCE ou des jeux X-COM** dans Bastion (décision D4). Si cette politique devait être réexaminée, les licences seraient à examiner au préalable ; en l'état, aucune reprise n'est autorisée.
+- Utiliser OXCE comme référence d'une mécanique exige une fiche `MEC` dans `docs/gameplay/GAMEPLAY-DECISIONS.md` portant une **décision du propriétaire « acceptée »**, explicite et datée. Ce statut de décision ne se confond pas avec la classe de la fiche : `MODIFICATION-VALIDEE` est une classe, qui n'autorise que le périmètre décrit.
 - Figer la référence (version ou commit exact, date, auteur de la vérification) avant toute comparaison de comportement.
