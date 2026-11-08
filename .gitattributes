@@ -1,0 +1,3 @@
+* text=auto
+# Scripts shell : fins de ligne LF obligatoires, sinon bash échoue sous Windows.
+*.sh text eol=lf

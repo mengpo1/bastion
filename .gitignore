@@ -1,0 +1,15 @@
+# .NET
+bin/
+obj/
+TestResults/
+*.user
+
+# Éditeurs
+.vs/
+.idea/
+
+# Godot
+.godot/
+
+# Claude Code : réglages personnels, non partagés
+.claude/settings.local.json
