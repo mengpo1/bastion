@@ -41,11 +41,19 @@ Ces règles s'appliquent à chaque session. Elles ne changent que par un mandat 
 
 - Ne jamais travailler directement sur `main`. Une branche dédiée par mandat.
 - Pas de `git push`, fusion, rebase, publication ni effacement sans approbation explicite du propriétaire.
+- Au démarrage de chaque lot : `git fetch origin main`. Le hook `Stop` compare la branche à `origin/main`, qui reste périmée sans cette commande.
 
 ## 6. Preuves
 
 - Toute réussite annoncée s'appuie sur les commandes réellement exécutées, leur sortie et leur code de sortie. Sans sortie observable, pas de succès déclaré.
 - Fin de mandat : rapport dans `docs/reviews/` (résumé, fichiers, vérifications, limites, points à décider).
+- **Notification de fin de mandat :**
+  - à la fin de chaque mandat, Claude Code rédige le rapport dans `docs/reviews/`, le commite et le pousse sur **la seule branche explicitement autorisée** ;
+  - il indique au propriétaire que le travail est terminé et publié, avec le chemin GitHub du rapport, la branche, le SHA du dernier commit, le lien de la PR et l'état réel de la CI ;
+  - si la publication est impossible, il le signale sans annoncer le rapport disponible ;
+  - le propriétaire sollicite lui-même l'orchestrateur ChatGPT pour la lecture : aucune revue automatique n'est présumée ;
+  - aucune fusion ni écriture sur `main` sans autorisation distincte ;
+  - cette règle n'autorise aucun push à elle seule : l'autorisation reste propre à chaque mandat.
 
 ## 7. Architecture
 
