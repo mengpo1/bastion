@@ -41,7 +41,11 @@
 
 Le dépôt OXCE a été cloné en lecture seule (`--depth 400`, branche `oxce-plus`) hors du dépôt Bastion. Il n'a été ni compilé ni exécuté.
 
-**Rappel (mandat §2) :** le lot 0D est accepté avec réserves. Les limites conservées des lots 0C et 0C-R1 (`main` sans protection technique, contrôles non sémantiques, rapport vide accepté par le hook `Stop`, références Git possiblement périmées) s'appliquent. Elles n'ont pas d'incidence directe sur cette étude documentaire.
+**Rappel (mandat §2) :** le lot 0D est accepté avec réserves. Les limites conservées des lots 0C et 0C-R1 (contrôles non sémantiques, rapport vide accepté par le hook `Stop`, références Git possiblement périmées) s'appliquent. Elles n'ont pas d'incidence directe sur cette étude documentaire.
+
+_Précision du 8 nov. 2026 (LOT-1B) :_ l'absence de protection technique de `main` relevée lors de la qualification du harnais n'est plus d'actualité.
+- L'API GitHub des branches signale `main` comme protégée (`protected: true`). Constaté le 8 nov. 2026 par Claude Code, via l'outil GitHub de la session, hors bac à sable : le proxy bloque l'API GitHub, voir ci-dessus.
+- Selon le mandat LOT-1B, GitHub affiche un ruleset actif ciblant `main` et imposant le job `build-test`. Ce détail n'est pas vérifié par Claude Code, faute d'accès à la configuration des rulesets.
 
 ## 2. Dépôts : officiel, forks, binaires, mods
 
@@ -215,3 +219,17 @@ Un seul fichier ajouté : ce rapport. Aucun registre, aucune règle, aucun harna
 **Aucun gameplay implémenté. Aucune fiche `MEC`. Aucune modification des registres de décisions. Aucune fusion dans `main`.**
 
 Arrêt après publication : en attente de la décision du propriétaire sur la référence.
+
+## Additif du 8 novembre 2026 — décisions du propriétaire (LOT-1B)
+
+Cette étude a été rédigée **avant** la décision du propriétaire : ses sections 0 à 11 restent des propositions et ne sont pas réécrites, hormis la précision datée ajoutée à la section 1 sur la protection de `main`.
+
+Le **8 novembre 2026**, le propriétaire a explicitement décidé, sur les propositions D1 à D6 :
+- **D1** : OXCE 8.7.1, commit figé `441cae1b071d249d40a223858cb6bd07fd5d791b` ;
+- **D2** : jeu de référence initial UFO: Enemy Unknown (`xcom1`) ; Terror From the Deep (`xcom2`) n'est pas inclus ;
+- **D3** : options par défaut de cette version, toute exception étant décidée séparément ;
+- **D4** : aucune reprise de code, de données ni d'assets ; réimplémentation indépendante possible après décision et tests ;
+- **D5** : inscription dans le registre ;
+- **D6** : aucun mod.
+
+Ces décisions sont inscrites dans [`docs/references/OXCE-BASELINE.md`](../references/OXCE-BASELINE.md) par le mandat LOT-1B v1.0. Elles n'autorisent aucun développement de gameplay.
