@@ -40,12 +40,14 @@ jobs:
       - name: Tests des hooks
         run: bash scripts/harness/test-hooks.sh
 
-      # La description de la PR est lue par jq dans un fichier, jamais interpolée dans le shell.
+      # La description de la PR passe par une variable d'environnement, jamais interpolée dans le shell.
       - name: Traçabilité simulation (PR)
         if: github.event_name == 'pull_request'
+        env:
+          DESCRIPTION_PR: ${{ github.event.pull_request.body }}
         run: |
           git rev-parse --verify -q HEAD^2 > /dev/null || { echo "::error::Commit de fusion de test attendu pour une PR."; exit 1; }
-          jq -r '.pull_request.body // ""' "$GITHUB_EVENT_PATH" > "$RUNNER_TEMP/description-pr.txt"
+          printf '%s\n' "$DESCRIPTION_PR" > "$RUNNER_TEMP/description-pr.txt"
           bash scripts/harness/check-simulation-trace.sh HEAD^1 "$RUNNER_TEMP/description-pr.txt"
 
       - name: Traçabilité simulation (hors PR)

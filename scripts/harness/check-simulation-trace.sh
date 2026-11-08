@@ -29,7 +29,13 @@ echo "Fichiers de simulation modifiés :"
 printf '%s\n' "$fichiers" | sed 's/^/  /'
 
 lignes=$(tr -d '\r' < "$description" | grep -aE '^[[:space:]]*Traçabilité simulation[[:space:]]*:')
-[ -n "$lignes" ] || erreur "déclaration absente de la description de la PR. Ajoutez une ligne « Traçabilité simulation : TECHNIQUE — <justification> » ou « Traçabilité simulation : MEC-NNNN — <justification> »."
+if [ -z "$lignes" ]; then
+  # Mention présente mais mise en forme (puce, gras, backticks, citation…) : le dire clairement.
+  if tr -d '\r' < "$description" | grep -aiqE 'tra(ç|c)abilit(é|e).{1,3}simulation'; then
+    erreur "déclaration mal formée : écrivez-la seule sur sa ligne, sans puce, gras, backticks ni citation, avec des espaces ordinaires : « Traçabilité simulation : TECHNIQUE — <justification> » ou « Traçabilité simulation : MEC-NNNN — <justification> »."
+  fi
+  erreur "déclaration absente de la description de la PR. Ajoutez une ligne « Traçabilité simulation : TECHNIQUE — <justification> » ou « Traçabilité simulation : MEC-NNNN — <justification> »."
+fi
 
 while IFS= read -r ligne; do
   type=$(printf '%s\n' "$ligne" | sed -nE "s/$motif/\1/p")

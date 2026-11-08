@@ -21,11 +21,20 @@ Fichiers protégés : `docs/gameplay/`, `docs/decisions/`, `docs/references/`, `
   - compare la branche à `origin/main`, qu'il ne met pas à jour. **Faire `git fetch origin main` au début de chaque lot** : sans cette commande, `origin/main` peut être périmée et le hook laisser passer à tort ;
   - plusieurs mandats sur une même branche : le rapport d'un mandat précédent suffit au hook ;
   - s'exécute à chaque fin de tour, y compris quand Claude s'arrête pour poser une question : un seul rappel, puis l'arrêt est accepté (`stop_hook_active`) ;
-  - **sans branche `main` ni `origin/main`**, la branche est délimitée par ses commits absents des autres branches locales : si la branche d'origine a été supprimée, son rapport compte encore.
+  - **sans branche `main` ni `origin/main`**, la branche est délimitée par ses commits absents des autres branches locales : si la branche d'origine a été supprimée, son rapport compte encore ;
+  - si `origin/main` est absente, le repli sur `main` locale reproduit le faux passage quand celle-ci est périmée. À l'inverse, avec `main` locale à jour et `origin/main` périmée, la branche passe aussi (tests « LIMITE ») ;
+  - **qualification** : H-Q06 était échoué au lot 0C (`docs/reviews/LOT-0C-QUALIFICATION.md`). Il est corrigé en partie au lot 0C-R1 (`docs/reviews/LOT-0C-R1-EXECUTION.md`), sans être requalifié.
 - **Contrôle de traçabilité** :
   - contrôle **syntaxique** : une déclaration `TECHNIQUE` ne prouve pas l'absence de changement de gameplay, la revue doit le vérifier ;
-  - pour `MEC`, il vérifie seulement que la fiche existe dans le registre de la PR et que sa décision commence par « acceptée ». Une PR qui ajoute elle-même une fiche « acceptée » passe : la revue doit vérifier que la décision vient du propriétaire ;
+  - la déclaration doit être **seule sur sa ligne**, sans puce, gras, backticks ni citation, avec des espaces ordinaires. Sinon, elle est rejetée comme « mal formée » ;
+  - une déclaration placée dans un bloc de code ou un commentaire HTML, donc invisible à l'affichage, est acceptée (test « LIMITE ») ;
+  - pour `MEC`, il vérifie seulement que la fiche existe dans le registre de la PR et que sa décision commence par « acceptée ». Ne sont pas détectés :
+    - une PR qui ajoute elle-même une fiche « acceptée » (test « LIMITE ») ;
+    - une fiche placée dans un bloc de code ;
+    - une décision à peine remplie ou annulée plus loin dans le texte.
+    La revue doit vérifier que la décision vient du propriétaire ;
+  - sur une pull request, GitHub exécute le `ci.yml` et le script **de la PR** : une PR peut donc modifier ou neutraliser ce contrôle. Ces fichiers sont protégés par le hook, et la revue doit le vérifier ;
   - s'applique aux **pull requests** seulement et ne bloque pas une fusion (`main` n'est pas protégée) ;
-  - ne surveille que `src/Bastion.Simulation/`.
-- **Portée** : les hooks ne voient que les outils de Claude Code. Non couverts : les actions humaines, l'interface web de GitHub, les serveurs MCP autres que `github`.
-- **Prérequis** : bash, git, sed, grep, awk. Sous Windows, Git Bash est nécessaire (sans lui, Claude Code lance les hooks avec PowerShell et ils échouent). Testé sous Linux (GNU) ; macOS (BSD) non testé. En CI, `jq` (présent sur le runner) lit la description de la PR.
+  - ne surveille que `src/Bastion.Simulation/`. `Directory.Build.props` et `global.json`, qui agissent aussi sur la simulation, ne sont pas surveillés.
+- **Portée** : les hooks ne voient que les outils de Claude Code. Non couverts : les actions humaines, la CI, l'interface web de GitHub, les serveurs MCP autres que `github`.
+- **Prérequis** : bash, git, sed, grep, awk. Sous Windows, Git Bash est nécessaire (sans lui, Claude Code lance les hooks avec PowerShell et ils échouent). Testé sous Linux (GNU) ; macOS (BSD) non testé.

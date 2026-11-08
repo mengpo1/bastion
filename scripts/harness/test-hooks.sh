@@ -166,6 +166,28 @@ case "$message" in
 esac
 echo "rapport B" > "$tmp/perime/docs/reviews/LOT-B.md"
 verifier autorise "main locale périmée, origin/main à jour : rapport présent" "$STOP" "$(stop_json false)" "$tmp/perime"
+# Limites : une référence périmée (main sans origin/main, ou origin/main sans fetch) fausse la base.
+for cas in sans-origin origin-perimee; do
+  r="$tmp/limite-$cas"
+  git init -q -b main "$r"
+  g "$r" commit -q --allow-empty -m "C0"
+  r0=$(git -C "$r" rev-parse HEAD)
+  mkdir -p "$r/docs/reviews"
+  echo "rapport A" > "$r/docs/reviews/LOT-A.md"
+  g "$r" add docs
+  g "$r" commit -q -m "C1 : lot A et son rapport"
+  g "$r" checkout -q -b chore/lot-b
+  if [ "$cas" = sans-origin ]; then
+    git -C "$r" branch -q -f main "$r0"
+  else
+    git -C "$r" update-ref refs/remotes/origin/main "$r0"
+  fi
+  echo "b" > "$r/b.cs"
+  g "$r" add b.cs
+  g "$r" commit -q -m "lot B sans rapport"
+done
+verifier autorise "LIMITE origin/main absente et main locale périmée : faux passage" "$STOP" "$(stop_json false)" "$tmp/limite-sans-origin"
+verifier autorise "LIMITE main locale à jour mais origin/main périmée : faux passage" "$STOP" "$(stop_json false)" "$tmp/limite-origin-perimee"
 
 echo "== Traçabilité simulation (contrôle CI des PR) =="
 TRACE="$ici/check-simulation-trace.sh"
@@ -244,6 +266,30 @@ g "$D" checkout -q -b suppression
 g "$D" rm -q src/Bastion.Simulation/A.cs
 g "$D" commit -qm "suppression"
 verifier_trace echec "fichier de simulation supprimé, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b ajout
+echo "class B {}" > "$D/src/Bastion.Simulation/B.cs"
+g "$D" add src
+g "$D" commit -qm "ajout"
+verifier_trace echec "fichier de simulation ajouté, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b renommage-sortant
+mkdir -p "$D/autre"
+g "$D" mv src/Bastion.Simulation/A.cs autre/A.cs
+g "$D" commit -qm "renommage sortant"
+verifier_trace echec "fichier de simulation renommé hors du dossier, sans déclaration" ""
+g "$D" checkout -q main
+g "$D" checkout -q -b renommage-entrant
+g "$D" mv README.md src/Bastion.Simulation/README.md
+g "$D" commit -qm "renommage entrant"
+verifier_trace echec "fichier renommé vers le dossier de simulation, sans déclaration" ""
+g "$D" checkout -q sim
+verifier_trace echec "déclaration avec puce Markdown (ligne seule attendue)" "- Traçabilité simulation : TECHNIQUE — détail"
+verifier_trace ok "LIMITE déclaration cachée dans un bloc de code : acceptée" $'```\nTraçabilité simulation : TECHNIQUE — détail\n```'
+g "$D" checkout -q -b fiche-ajoutee sim
+printf '\n### MEC-0004 — Fiche ajoutée par la PR elle-même\n\n| Champ | Valeur |\n|---|---|\n| Décision du propriétaire | acceptée — sans preuve — 2026-11-08 |\n' >> "$D/docs/gameplay/GAMEPLAY-DECISIONS.md"
+g "$D" commit -qam "fiche ajoutée par la PR"
+verifier_trace ok "LIMITE fiche MEC ajoutée par la PR elle-même : acceptée" "Traçabilité simulation : MEC-0004 — essai"
 
 echo "== $total tests, $echecs échec(s) =="
 [ "$echecs" -eq 0 ]
