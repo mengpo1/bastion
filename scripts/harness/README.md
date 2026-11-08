@@ -18,6 +18,7 @@ Fichiers protégés : `docs/gameplay/`, `docs/decisions/`, `docs/references/`, `
 - **Hook Stop** :
   - vérifie qu'un fichier de `docs/reviews/` a changé, pas son contenu ;
   - s'exécute à chaque fin de tour, y compris quand Claude s'arrête pour poser une question : un seul rappel, puis l'arrêt est accepté (`stop_hook_active`) ;
-  - **tant que la branche `main` n'existe pas**, seules les modifications non commitées sont contrôlées.
+  - **sans branche `main`**, la branche est délimitée par ses commits absents des autres branches locales : si la branche d'origine a été supprimée, son rapport compte encore ;
+  - **non qualifié** : la qualification est l'objet du lot 0C.
 - **Portée** : uniquement les outils de Claude Code. Non couverts : les actions humaines, la CI, l'interface web de GitHub, les serveurs MCP autres que `github`.
 - **Prérequis** : bash, git, sed, grep. Sous Windows, Git Bash est nécessaire (sans lui, Claude Code lance les hooks avec PowerShell et ils échouent). Testé sous Linux (GNU) ; macOS (BSD) non testé.

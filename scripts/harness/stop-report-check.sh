@@ -16,8 +16,14 @@ git rev-parse --is-inside-work-tree >/dev/null 2>&1 || exit 0
 base=$(git merge-base HEAD main 2>/dev/null || git merge-base HEAD origin/main 2>/dev/null)
 changements=$(
   git -c core.quotePath=false status --porcelain --untracked-files=all | cut -c4-
-  # Sans main (dépôt neuf), seules les modifications non commitées sont contrôlées.
-  [ -n "$base" ] && git -c core.quotePath=false diff --name-only "$base" HEAD
+  if [ -n "$base" ]; then
+    git -c core.quotePath=false diff --name-only "$base" HEAD
+  else
+    # Sans main (dépôt neuf) : fichiers des commits propres à la branche courante,
+    # c'est-à-dire absents des autres branches locales.
+    branche=$(git symbolic-ref --short -q HEAD)
+    git -c core.quotePath=false log --name-only --format= HEAD --not ${branche:+--exclude="$branche"} --branches 2>/dev/null
+  fi
 )
 
 [ -z "$changements" ] && exit 0

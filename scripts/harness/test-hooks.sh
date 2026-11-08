@@ -51,11 +51,17 @@ echo "notes" > "$tmp/branche/notes.md"
 g "$tmp/branche" add fichier.cs notes.md
 g "$tmp/branche" commit -q -m "ajout"
 git init -q -b main "$tmp/neuf"                 # main pas encore créé (aucun commit)
-git init -q -b chore/x "$tmp/sansmain"          # dépôt sans branche main
+# Dépôts sans branche main, comme Bastion avant son initialisation.
+git init -q -b chore/lot-a "$tmp/sansmain"
 mkdir -p "$tmp/sansmain/docs/reviews"
-echo "ancien" > "$tmp/sansmain/docs/reviews/ANCIEN.md"
-g "$tmp/sansmain" add docs
-g "$tmp/sansmain" commit -q -m "ancien rapport"
+echo "rapport A" > "$tmp/sansmain/docs/reviews/LOT-A.md"
+echo "a" > "$tmp/sansmain/a.cs"
+g "$tmp/sansmain" add docs a.cs
+g "$tmp/sansmain" commit -q -m "lot A avec rapport"
+git init -q -b chore/seul "$tmp/seul"
+echo "s" > "$tmp/seul/s.cs"
+g "$tmp/seul" add s.cs
+g "$tmp/seul" commit -q -m "lot sans rapport"
 
 echo "== PreToolUse : effets =="
 verifier autorise "écriture d'un fichier source" "$PRE" "$(ecrit_json Write /depot/src/Bastion.Simulation/Exemple.cs)"
@@ -109,9 +115,30 @@ echo "rapport" > "$tmp/branche/docs/reviews/LOT-TEST.md"
 verifier autorise "branche modifiée avec rapport dans docs/reviews/" "$STOP" "$(stop_json false)" "$tmp/branche"
 echo "x" > "$tmp/main/note.txt"
 verifier bloque "modification non commitée sur main sans rapport" "$STOP" "$(stop_json false)" "$tmp/main"
-verifier autorise "LIMITE sans main : commits non contrôlés" "$STOP" "$(stop_json false)" "$tmp/sansmain"
-echo "x" > "$tmp/sansmain/nouveau.cs"
-verifier bloque "sans main : ancien rapport commité, nouvelle modification" "$STOP" "$(stop_json false)" "$tmp/sansmain"
+
+echo "== Stop : dépôt sans branche main =="
+verifier autorise "sans main : branche avec rapport commité, arbre propre" "$STOP" "$(stop_json false)" "$tmp/sansmain"
+verifier bloque "sans main : branche commitée sans rapport, arbre propre" "$STOP" "$(stop_json false)" "$tmp/seul"
+g "$tmp/sansmain" checkout -q -b chore/lot-b
+echo "b" > "$tmp/sansmain/b.cs"
+g "$tmp/sansmain" add b.cs
+g "$tmp/sansmain" commit -q -m "lot B sans rapport"
+verifier bloque "sans main : nouvelle branche sans rapport (celui du lot A ne compte pas)" "$STOP" "$(stop_json false)" "$tmp/sansmain"
+echo "c" > "$tmp/sansmain/c.cs"
+verifier bloque "sans main : modification non commitée sans rapport" "$STOP" "$(stop_json false)" "$tmp/sansmain"
+echo "rapport B" > "$tmp/sansmain/docs/reviews/LOT-B.md"
+verifier autorise "sans main : rapport non commité présent" "$STOP" "$(stop_json false)" "$tmp/sansmain"
+# Limite : si la branche d'origine est supprimée, son rapport redevient « propre » à la branche.
+mkdir -p "$tmp/seul/docs/reviews"
+echo "rapport" > "$tmp/seul/docs/reviews/SEUL.md"
+g "$tmp/seul" add docs
+g "$tmp/seul" commit -q -m "rapport"
+g "$tmp/seul" checkout -q -b chore/suite
+echo "t" > "$tmp/seul/t.cs"
+g "$tmp/seul" add t.cs
+g "$tmp/seul" commit -q -m "suite sans rapport"
+g "$tmp/seul" branch -q -D chore/seul
+verifier autorise "LIMITE sans main : branche d'origine supprimée, son rapport compte" "$STOP" "$(stop_json false)" "$tmp/seul"
 
 echo "== $total tests, $echecs échec(s) =="
 [ "$echecs" -eq 0 ]
