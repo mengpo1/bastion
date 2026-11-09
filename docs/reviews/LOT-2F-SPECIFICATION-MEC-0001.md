@@ -9,6 +9,7 @@
 | Référence OXCE | `MeridianOXC/OpenXcom`, commit `441cae1b071d249d40a223858cb6bd07fd5d791b` (8.7.1), règles `xcom1`, options par défaut. Lecture du code seulement, **aucune exécution**. |
 | Nature | Documentaire. **Aucune décision inscrite au registre, aucun gameplay, aucun test exécutable.** Au registre, `MEC-0001` reste « reportée ». |
 | Compagnon | Matrice de tests : `docs/reviews/LOT-2F-MATRICE-TESTS-MEC-0001.md`. |
+| Correctif | Demande de correctif documentaire du propriétaire, reçue le 9 novembre 2026 après la revue de l'orchestrateur, sur la même branche et la même PR (n° 9). Elle confirme trois décisions présentées par le propriétaire comme déjà validées : E14 (ennemi actuellement visible ciblable), E18 (chute au sol de l'attaquant après une esquive) et E23 (contenu du poids total `M`). Voir §6. |
 
 ## 0. En bref
 
@@ -39,7 +40,7 @@
   - type de dégâts ;
   - échelle physique.
 - **OXCE (§4)** : le tirage « explosion », l'enchaînement des dégâts et la résistance du terrain ont été lus dans le code. Aucune règle propre à Bastion n'est attribuée à OXCE.
-- **Points ouverts (§5)** : 24 points, dont 15 bloquants pour des tests exacts.
+- **Points ouverts (§5)** : 24 points, dont 3 tranchés par le correctif du propriétaire (E14, E18, E23) ; 21 restent ouverts, dont 13 bloquants pour des tests exacts.
 
 ## 1. Sources, statuts et conventions
 
@@ -49,10 +50,12 @@
 - **E** : rapport LOT-2E.
 - **A** : rapport LOT-2A.
 - **C** : lecture du code OXCE pour ce lot (§4).
+- **P** : demande de correctif du propriétaire, reçue le 9 novembre 2026 après la revue de l'orchestrateur. Elle confirme trois décisions présentées comme déjà validées, sans en préciser la date de validation initiale.
 
 **Statut de la règle.**
 - **validé (R)** : sous-décision acceptée au registre, tandis que `MEC-0001` reste globalement « reportée ».
 - **validé (M)** : décision du 9 novembre selon le §3 du mandat.
+- **validé (P)** : décision confirmée par la demande de correctif du propriétaire.
 - **proposition technique (non validée)** : formulation de Claude Code.
 - **ouvert** : non arbitré, ou déclaré « à formaliser », « à vérifier » ou « provisoire » par le mandat.
 - **contredit** : remplacé par une décision plus récente.
@@ -88,7 +91,7 @@ Les identifiants des tests renvoient à la matrice `LOT-2F-MATRICE-TESTS-MEC-000
 | M10 | Trajet en cases visibles ou déjà explorées | R : S7 | validé (R) ; application aux sauts : ouvert (E15) | non établi | T-M08 |
 | M11 | Trajet sur le dernier état connu ; interruption devant un obstacle inconnu | R : S8 | validé (R) | non établi | T-M07 |
 | M12 | Un obstacle inconnu rencontré devient connu | R : S9 | validé (R) | non établi | T-M07, T-I05 |
-| M13 | Case occupée par une autre unité : infranchissable pour la traversée comme pour la destination (S10). Le mandat restreint cette règle à la « marche normale » et demande de circonscrire les exceptions des sauts offensifs. Exceptions : J05 et J07 (validées) ; J13 (ouverte, E14). | R : S10 ; M §3.1 | validé (R) ; restriction à la marche normale : validé (M) (H07) | référence OXCE (A §2 l. 12) | T-M09, T-J12, T-J14 |
+| M13 | Case occupée par une autre unité : infranchissable pour la traversée comme pour la destination (S10). Le mandat restreint cette règle à la « marche normale » et demande de circonscrire les exceptions des sauts offensifs. Exceptions validées : J05, J07 et J13. Les cas dynamiques (case devenue occupée pendant le vol) restent ouverts (E9, T-X01). | R : S10 ; M §3.1 ; P | validé (R) ; restriction à la marche normale : validé (M) ; exceptions : validé (M, P) (H07) | référence OXCE (A §2 l. 12) | T-M09, T-J11, T-J12, T-J14 |
 | M14 | Une unité cachée rencontrée est révélée | R : S11 | validé (R) | non établi | T-M10 |
 | M15 | Une unité révélée redevient cachée lorsqu'elle n'est plus observable | R : S12 | validé (R) | non établi | — |
 | M16 | Surcharge selon OXCE : poids de l'armure + inventaire ; rapport Force / charge sur la récupération des TU ; ni seuil d'immobilisation ni surcoût par pas | R : N10 à N14 ; M §3.1 | validé (R) ; transposition exacte ouverte | référence OXCE (VC, LOT-2D) | T-M11 |
@@ -109,7 +112,7 @@ Les identifiants des tests renvoient à la matrice `LOT-2F-MATRICE-TESTS-MEC-000
 | J10 | TU insuffisantes : attaque impossible | M §3.2 | validé (M) ; seuil exact ouvert (E13) | adaptation Bastion | T-J19 |
 | J11 | Bonus `× 1,25` sur les dégâts infligés à la cible, après le plafond et avant le tirage aléatoire | M §3.2, §3.5 | validé (M) | adaptation Bastion | T-D05 |
 | J12 | Aucun bonus sur les blessures de l'attaquant | M §3.2 | validé (M) | adaptation Bastion | T-D05 |
-| J13 | Un ennemi **visible** peut être visé (exception à S10) | Déduit de l'objet de l'attaque ; non écrit au §3.2 | ouvert (E14) | adaptation Bastion | T-J11 |
+| J13 | Une attaque par saut peut viser un ennemi **actuellement visible** : exception explicite à S10 | P | validé (P) | adaptation Bastion | T-J11 |
 
 ### 2.3 Modèle physique du saut (M §3.3)
 
@@ -133,7 +136,7 @@ Les identifiants des tests renvoient à la matrice `LOT-2F-MATRICE-TESTS-MEC-000
 | K03 | Esquive automatique seulement si la cible voit **actuellement** l'unité qui tombe, a les TU du pas et dispose d'une case voisine libre et accessible | M §3.4 | validé (M) ; précisions ouvertes (E17) | adaptation Bastion | T-K01 |
 | K04 | Choix aléatoire d'une case valide | M §3.4 | validé (M) ; loi du tirage ouverte | adaptation Bastion | T-K05 |
 | K05 | Probabilité fondée sur les Réactions, + 5 points de pourcentage par niveau traversé, bornée à [0, 100]. Formulation provisoire : `clamp(Réactions + 5 × |z_dép − z_arr|, 0, 100)` % | M §3.4 | validé (M) dans le principe ; formulation exacte ouverte (E12) | adaptation Bastion | T-K02, T-K06 |
-| K06 | Esquive réussie : la cible se déplace et paie les TU du pas, ne subit pas le choc ; l'attaquant termine par une chute au sol | M §3.4 | validé (M) | adaptation Bastion | T-K03 |
+| K06 | Esquive réussie : la cible se déplace et paie les TU du pas, ne subit pas le choc ; l'attaquant termine par une chute au sol, selon les règles de la chute au sol : plafond de 70 sur les dégâts de base, appliqué avant le tirage | M §3.4 ; P | validé (M, P) | adaptation Bastion | T-K03 |
 | K07 | Esquive échouée : cible immobile, aucune TU dépensée pour l'essai, collision résolue | M §3.4 | validé (M) | adaptation Bastion | T-K04 |
 | K08 | Le poids influe sur les dégâts des deux unités, sans désigner mécaniquement la plus blessée | M §3.4 | validé (M) dans le principe ; formule ouverte (E6) | adaptation Bastion | T-D14 |
 
@@ -150,7 +153,7 @@ Les identifiants des tests renvoient à la matrice `LOT-2F-MATRICE-TESTS-MEC-000
 | D07 | Conversion finale en santé et en étourdissement : le mandat décrit les règles distinctes du moteur, sans écrire qu'elles sont reprises dans Bastion | M §3.5 | ouvert (E7) : reprise implicite, à confirmer | référence OXCE (C : §4) | T-D13 |
 | D08 | En collision volontaire, bonus `× 1,25` après le plafond, avant le tirage | M §3.5 | validé (M) | adaptation Bastion | T-D05, T-D07 |
 | D09 | Facteurs de poids et protection de l'armure ensuite, « selon l'ordre accepté » ; ordre numérique précis et type de dégâts à formaliser | M §3.5 | validé (M) dans le principe (après le tirage) ; ordre et formules ouverts (E6, E7, E24) | non établi | T-D13, T-D14 |
-| D10 | Choc contre un obstacle : puissance commune selon la vitesse réelle au point de contact et le « poids total `M` (équipement inclus) » ; facteur `min(M/80, 3)` (référence universelle 80 kg, sans minimum) ; ce n'est pas le rapport de masses entre deux unités | M §3.5 | validé (M) pour le facteur ; formule de puissance ouverte (E8) ; contenu de `M` ouvert (E23) | adaptation Bastion | T-D09 |
+| D10 | Choc contre un obstacle : puissance commune selon la vitesse réelle au point de contact et le « poids total `M` (équipement inclus) » ; facteur `min(M/80, 3)` (référence universelle 80 kg, sans minimum) ; ce n'est pas le rapport de masses entre deux unités | M §3.5 ; P | validé (M) pour le facteur ; contenu de `M` validé (P) : poids propre de l'unité + armure + équipement et inventaire ; formule de puissance ouverte (E8) | adaptation Bastion | T-D09 |
 | D11 | Distinguer la vitesse normale à la surface de la vitesse tangentielle ; phases début, milieu et fin pour le diagnostic seulement | M §3.5 | validé (M) | adaptation Bastion | T-J10 |
 | D12 | Obstacle destructible endommagé ou détruit selon les règles de résistance du terrain d'OXCE ; obstacle indestructible épargné | M §3.5 | validé (M) | référence OXCE (C : §4) | T-D10, T-D11 |
 | D13 | Le saut s'arrête à l'impact, même si l'obstacle est détruit ; puis chute verticale depuis le point de contact si l'unité est sans support ; dégâts d'impact et de chute résolus séparément | M §3.5 | validé (M) | adaptation Bastion | T-D12 |
@@ -174,7 +177,7 @@ Les identifiants des tests renvoient à la matrice `LOT-2F-MATRICE-TESTS-MEC-000
 | H04 | Hypothèse du LOT-2B « toutes les unités sont connues » | S6 à S12, déjà écartée au registre | historique |
 | H05 | N6 : dégâts croissants avec la hauteur | Précisée par D03 et D04 (incréments géométriques) | concordant |
 | H06 | N8 à N10 : caractéristiques, équipements, armure et poids lors d'une chute | Précisées en partie par K08, D09 et D10 (collisions et obstacles) ; aucune formule pour une chute au sol (E24) | concordant, incomplet |
-| H07 | S10 : case occupée infranchissable pour la traversée comme pour la destination | Restreinte à la « marche normale » par M §3.1 ; exceptions J05 et J07 (validées), J13 (ouverte, E14) | nuancé |
+| H07 | S10 : case occupée infranchissable pour la traversée comme pour la destination | Restreinte à la « marche normale » par M §3.1 ; exceptions J05, J07 (M) et J13 (P), toutes validées | nuancé |
 
 ## 3. Spécification mathématique (B)
 
@@ -192,7 +195,7 @@ Les définitions ci-dessous sont **symboliques**. Aucune échelle métrique n'es
 | `V(t)` | Volume de l'unité à l'instant `t` : translation d'un volume de référence `V0` | validé (M : P07) dans le principe ; forme et dimensions ouvertes (E1) |
 | `v_z0`, `v_h` | Vitesse verticale initiale ; vitesse horizontale (vecteur du plan) | `v_z0` constante pour une même unité et une même action, si « impulsion » désigne une vitesse (E11) |
 | `TU_max` | TU maximales de l'unité | validé (M) |
-| `M` | « Poids total `M` (équipement inclus) », en kg (référence universelle 80 kg) | validé (M) ; masse corporelle incluse ou non, et lien avec le poids porté de N14 : ouverts (E23, E20) |
+| `M` | Poids total utilisé pour les collisions, en kg (référence universelle 80 kg) : poids propre de l'unité + poids de son armure + poids de son équipement et de son inventaire. À ne pas confondre avec la charge portée de la surcharge (N14, armure + inventaire comme dans OXCE). | validé (M, P) ; valeurs du poids propre des unités non fixées ; unité de la charge portée : E20 |
 
 ### 3.2 Trajectoire (validé dans le principe, P02 à P04)
 
@@ -292,7 +295,7 @@ La base de dégâts d'une collision entre unités n'est pas écrite : `B(n)` est
 - unité percutée, 7 étages, **si la base d'une collision est `B(n)`** (hypothèse, E8) : `B(7) ≈ 94,63`, plafonné à 80, puis `× 1,25` = 100 avant le tirage. Avec la règle d'OXCE, le tirage serait sur [50, 150] ;
 - à partir de 3 étages, `B(n)` n'est pas entier : la puissance tirée dépend d'un arrondi non décidé (E5).
 
-**Facteur de poids contre un obstacle** (validé, D10) :
+**Facteur de poids contre un obstacle** (validé, D10). `M` désigne le poids total : poids propre de l'unité + armure + équipement et inventaire (validé, P).
 
 | M (kg) | 40 | 80 | 160 | 240 | 320 |
 |---|---|---|---|---|---|
@@ -329,7 +332,7 @@ Lecture du code au commit `441cae1`, sans exécution. Comportement lu dans OXCE,
 
 ## 5. Revue de cohérence et points ouverts (E)
 
-Aucune proposition ci-dessous n'est validée.
+Aucune proposition ci-dessous n'est validée. Les lignes marquées « Tranché par le correctif (P) » rapportent des décisions confirmées par la demande de correctif du propriétaire (§1, source P).
 
 | # | Question | Règles | Risque | Choix nécessaires | Proposition facultative | Bloquant |
 |---|---|---|---|---|---|---|
@@ -338,7 +341,7 @@ Aucune proposition ci-dessous n'est validée.
 | E3 | `g = 0` ou gravité hors de la plage prévue (T-X05) | P01, P06 | Aucun atterrissage ; division par zéro | Plage de gravité admise ; comportement hors plage | Interdire le saut hors plage | Oui (pour ces cas) |
 | E4 | Phases début, milieu, fin | D11 | Usage abusif comme modificateur | Définition pour l'affichage seulement | Signe de `v_z` | Non |
 | E5 | Arrondis : `B(n)`, bonus, entrée entière du tirage, produits de coefficients, valeurs extrêmes | D03 à D10, J09, P06 | Arrondis silencieux ; résultats non reproductibles | Où et comment arrondir | — | Oui (tests exacts de dégâts) |
-| E6 | Formule atténuée du rapport de poids entre deux unités | K08, D09 | Aucun calcul possible | Formule, bornes, place dans la chaîne | — | Oui |
+| E6 | Formule atténuée du rapport de poids entre deux unités (portant sur le poids total `M` de chacune, E23) | K08, D09 | Aucun calcul possible | Formule, bornes, place dans la chaîne | — | Oui |
 | E7 | Type de dégâts OXCE ; côté d'armure (par exemple « dessous ») ; conditions d'étourdissement | D07, D09 | Pipeline indéterminé | Type de dégâts, côté, conversion | — | Oui |
 | E8 | Conversion d'un choc en puissance : `v_n`, vitesse initiale, dénivelé ; double comptage avec `B(n)` ; base d'une collision entre unités ; contact au sommet (`v_n = 0`) | D03, D05, D10, D11 | Deux bases concurrentes | Formule de `P_obs` ; base des collisions | — | Oui |
 | E9 | Collisions multiples ; case devenue occupée ou libre ; grandes unités ; atterrissage sans support (T-X01 à T-X04) | I03, I04, D13, K01 à K08 | Résultats indéfinis | Règles dédiées | — | Oui (pour ces cas) |
@@ -346,19 +349,24 @@ Aucune proposition ci-dessous n'est validée.
 | E11 | « Impulsion verticale constante » : vitesse ou quantité de mouvement ? | P02, P04 | Avec une quantité de mouvement, la hauteur dépendrait du poids porté | Préciser | — | Oui (si le poids varie) |
 | E12 | Comptage des étages `n` : « niveaux traversés » ou `|z_dép − z_arr|` ; hauteur du sommet au-dessus du départ ; hauteurs de terrain dans un niveau ; chute depuis un point de contact situé entre deux niveaux, ou de moins d'un étage (`B(n)` n'est défini que pour un `n` entier ≥ 1) ; esquive à 0 % inatteignable | D03, D13, K05 | Comptes incohérents | Définition | — | Oui |
 | E13 | Coût en TU du déplacement d'un saut (« en plus du déplacement ») | J09, J10, I02 | Prévisualisation et seuil impossibles | Modèle du coût | — | Oui |
-| E14 | Exceptions à S10 propres aux sauts : J05 et J07 (unités cachées) sont validées ; un ennemi **visible** peut-il être visé (J13) ? | J02, J05, J07, J13, M13, H07 | Contradiction avec S10 si l'exception n'est pas circonscrite | Confirmer J13 ; circonscrire l'ensemble des exceptions | — | Oui (règles de cible) |
+| E14 | **Tranché par le correctif (P).** Exceptions à S10 propres aux sauts : J05 et J07 (unités cachées, M) et J13 (ennemi actuellement visible, P), toutes validées. Les cas dynamiques (case devenue occupée pendant le vol) restent ouverts (E9, T-X01). | J02, J05, J07, J13, M13, H07 | — | — | — | Non (tranché) |
 | E15 | S7 (trajet en cases visibles ou explorées) s'applique-t-elle à l'arc d'un saut et aux cases survolées ? | M10, J03, P07 | Ambiguïté | Préciser | — | Non |
 | E16 | Quels sont les « trois blocs » validés le 9 novembre ? Le §3 n'a pas été comparé à la conversation | M §3 entier | Traçabilité incomplète | Confirmation du propriétaire avant inscription | — | Non (tests) ; oui avant inscription |
 | E17 | Esquive : « TU du déplacement requis » pendant le tour adverse ; pas diagonal ; « case voisine » : 8 voisines, même niveau ? | K03, K06 | Ambiguïté | Préciser | — | Oui |
-| E18 | Esquive réussie : la chute au sol de l'attaquant relève-t-elle du plafond 70 ? | K06, D05 | Ambiguïté | Confirmer | — | Non |
+| E18 | **Tranché par le correctif (P).** Après une esquive réussie, l'attaquant termine sa chute au sol et relève des règles de la chute au sol : plafond de 70 sur les dégâts de base, avant le tirage | K06, D05 | — | — | — | Non (tranché) |
 | E19 | Chute volontaire hors attaque (N5) : mécanisme et commande | R : N5 ; J01 | Lacune | Préciser | — | Non |
-| E20 | Unité de poids : kg dans Bastion, contre les « unités de Force » d'OXCE (N14) | D10, M16 | Conversion indéfinie | Unité de référence | — | Non (tests de `f_M` en kg) ; voir E23 |
+| E20 | Unité de la **charge portée** de la surcharge (N14) : kg dans Bastion, ou « unités de Force » d'OXCE ? Cette charge est distincte du poids total `M` des collisions (E23, tranché), mais l'armure, l'équipement et l'inventaire entrent dans les deux grandeurs : leur unité doit rester cohérente. | D10, M16 ; R : N14 | Conversion indéfinie | Unité de référence | — | Non (tests de `f_M`) ; oui pour la transposition exacte de la surcharge (T-M11) |
 | E21 | N7 contredite au registre | H01 | Registre incohérent jusqu'à sa mise à jour | Mandat d'inscription distinct | — | Non (tests) ; oui avant implémentation |
 | E22 | Loi du tirage de la case d'esquive (uniforme ?) | K04 | Tests statistiques impossibles | Préciser | Uniforme | Non |
-| E23 | Le « poids total `M` (équipement inclus) » comprend-il la masse corporelle de l'unité ? Lien avec le poids porté de N14 (armure + inventaire, comme dans OXCE) | D10, M16, N14 | `f_M` très différent selon la définition | Définir `M` | — | Oui (dégâts d'impact contre un obstacle) |
+| E23 | **Tranché par le correctif (P).** Le poids total `M` des collisions comprend le poids propre de l'unité, celui de son armure, et celui de son équipement et de son inventaire. Il ne se confond pas avec la charge portée de la surcharge (N14). Les valeurs du poids propre des unités restent à fixer (données de jeu, pas une règle). | D10, K08, M16 | — | — | — | Non (tranché) |
 | E24 | Effet du poids, de l'armure et des caractéristiques sur une **chute au sol** (N8 à N10) : aucune formule ; risque de double comptage avec `f_M` | H06, D09 ; R : N8 à N10 | Dégâts au sol non calculables | Formule et place dans la chaîne | — | Oui (dégâts exacts au sol) |
 
-**Récapitulatif.** 15 points sont bloquants pour des tests exacts : E1 à E3, E5 à E9, E11 à E14, E17, E23 et E24. Trois autres ne bloquent qu'une étape ultérieure : E16 (avant inscription), E21 (avant implémentation) et E20 (lien avec N14, à trancher avec E23). Les tests concernés sont marqués « partiels » ou « bloqués » dans la matrice.
+**Récapitulatif.**
+- 3 points ont été tranchés par le correctif du propriétaire : E14, E18 et E23.
+- 13 points restent bloquants pour des tests exacts : E1 à E3, E5 à E9, E11 à E13, E17 et E24.
+- 3 autres ne bloquent qu'une étape ultérieure : E16 (avant inscription), E20 (transposition exacte de la surcharge, T-M11) et E21 (avant implémentation).
+
+Les tests concernés sont marqués « partiels » ou « bloqués » dans la matrice.
 
 ## 6. Vérifications, limites et revue indépendante
 
@@ -383,6 +391,7 @@ Tests .NET non lancés : non requis pour ce lot documentaire, et aucun code n'es
 - OXCE a été lu, pas exécuté.
 - Aucune échelle physique n'est fixée.
 - Les formules marquées « proposition technique » ne sont pas validées.
+- La source P n'est connue que par le texte de la demande de correctif ; la validation initiale des trois décisions n'est pas vérifiée ; rien n'est inscrit au registre.
 
 **Revue indépendante.**
 - **Relecteur** : agent distinct du développeur, en lecture seule (aucune écriture dans le dépôt). Il a relu les quatre fichiers, le mandat, le registre, les études LOT-2A, LOT-2B et LOT-2E, et le code OXCE aux lignes citées.
@@ -413,3 +422,28 @@ Tests .NET non lancés : non requis pour ce lot documentaire, et aucun code n'es
   - la conversation du 9 novembre et le message d'autorisation ne sont pas vérifiables par le relecteur ;
   - OXCE a été lu, pas exécuté ;
   - le relecteur est du même type que le développeur ; sa revue ne vaut pas validation.
+
+**Correctif documentaire (demande du propriétaire, après la revue de l'orchestrateur).**
+- **Décisions confirmées** par le propriétaire comme déjà validées (source P, demande reçue le 9 novembre 2026), sans date de validation initiale précisée :
+  - **E14** : une attaque par saut peut viser un ennemi actuellement visible ; c'est une exception explicite à S10 (J13) ;
+  - **E18** : après une esquive réussie, l'attaquant termine sa chute au sol, avec les règles de la chute au sol : plafond de 70 sur les dégâts de base, avant le tirage (K06) ;
+  - **E23** : le poids total `M` des collisions comprend le poids propre de l'unité, son armure, son équipement et son inventaire. Il est distinct de la charge portée de la surcharge (N14).
+- **Changements** :
+  - spécification : en-tête, §0, sources et statuts (§1), M13, J13, K06, D10, H07, définition de `M` (§3.1 et §3.6), introduction du §5, E6, E14, E18, E20, E23, récapitulatif (§5), limites (§6) ;
+  - matrice : T-J11, T-K03, T-D09, récapitulatif.
+- **Inchangés** : les autres points restent ouverts ; E6 et E20 sont seulement reformulés pour renvoyer à E23, sans être tranchés. Le registre, le mandat archivé, son index et le compte rendu de la première revue ne sont pas modifiés.
+- **Contrôles du correctif** (exécutés avant le commit) :
+  - `git diff --stat` : seuls les deux rapports sont modifiés (code 0) ; `git status --porcelain` ne liste aucun fichier non suivi ;
+  - `git diff --check` : aucune sortie, code 0 ; recherche d'espaces en fin de ligne (`grep -nE ' +$'`) : aucune ligne, code 1 ;
+  - `git diff --quiet HEAD -- docs/gameplay docs/decisions docs/references docs/mandates .claude scripts .github CLAUDE.md src tests` : code 0 (aucun changement) ;
+  - `sha256sum` du mandat archivé : `a68395e12475b364bb442c0ee66199404a86f743b9cca45fbcb9bd7f309bd3b5`, inchangé ;
+  - renvois : chaque `T-…` de la spécification existe dans la matrice, chaque `E…` de la matrice existe dans la spécification ;
+  - décomptes : 60 tests (24 spécifiables, 26 partiels, 10 bloqués) ; 13 points bloquants ; tableaux au nombre de colonnes cohérent ;
+  - `bash scripts/harness/test-hooks.sh` : 75 tests, 0 échec, code 0 ;
+  - `bash scripts/harness/check-simulation-trace.sh origin/main` avec la description de la PR : « Aucun fichier de src/Bastion.Simulation/ modifié », code 0 ;
+  - `dotnet` n'est pas installé dans l'environnement : build, format et tests .NET sont laissés à la CI.
+- **Revue indépendante du correctif** (agent distinct, lecture seule) : 12 constats, 0 bloquant, 2 importants, 10 mineurs. Tous sont intégrés :
+  - E20 garde D10 dans ses règles, note la cohérence d'unité entre `M` et la charge portée, et revient au récapitulatif comme point bloquant une étape ultérieure (T-M11) ;
+  - la source P est datée (demande reçue le 9 novembre 2026), l'en-tête reprend « présentées par le propriétaire comme déjà validées », et une limite est ajoutée ;
+  - mineurs : « actuellement » dans l'en-tête ; statut de K06 ; T-J11 dans M13 ; cas dynamiques (E9, T-X01) dans M13 et E14 ; T-K03 et T-J11 complétés ; formulations du §0 et du §5 ; mention « Inchangés » précisée ; ajout au compte rendu de la première revue retiré ; contrôles consignés ici ; description de la PR mise à jour.
+- **Limites du correctif** : la demande et les validations initiales ne sont pas vérifiables par le relecteur ; la revue ne vaut pas validation par le propriétaire.

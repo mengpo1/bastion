@@ -47,7 +47,7 @@ Compagnon de `docs/reviews/LOT-2F-SPECIFICATION-MEC-0001.md` : les identifiants 
 
 | ID | Préconditions | Déclencheur | Résultat attendu | Provenance | Exécutabilité |
 |---|---|---|---|---|---|
-| T-J11 | Ennemi **visible** sur la case visée | Saut offensif | À confirmer : exception à S10 | J13 | Bloqué (E14) |
+| T-J11 | g = 1 g ; U en (2, 2, 1) ; case visée en (3, 2, 0) : Manhattan 1, dénivelé d'exactement un étage `H`. Aucun obstacle ; aucun contact avec un plafond. Un ennemi **actuellement visible** occupe la case visée. | Sélection de la case pour un saut offensif | Sélection permise : exception explicite à S10 | J13 (P) ; configuration : J01, J02, P05 | Spécifiable |
 | T-J12 | Ennemi caché sur une case explorée, non visible ; l'ennemi ne voit pas actuellement l'attaquant (pas d'esquive possible, K03) | Saut à l'aveugle | Collision ; ennemi révélé ; bonus × 1,25 sur la cible | J03, J05, J11 | Partiel (dégâts : E5 à E8) |
 | T-J13 | Allié ou neutre **identifié** sur la case | Sélection | Refusée | J06 | Spécifiable |
 | T-J14 | Allié caché, puis neutre caché, sur une case visée à l'aveugle | Saut | Collision possible ; bonus × 1,25 appliqué à l'unité percutée | J07, J08 | Partiel (dégâts) |
@@ -68,7 +68,7 @@ Compagnon de `docs/reviews/LOT-2F-SPECIFICATION-MEC-0001.md` : les identifiants 
 |---|---|---|---|---|---|
 | T-K01 | (a) La cible ne voit pas actuellement l'unité qui tombe. (b) Elle la voit, mais ses TU sont inférieures au coût du pas. (c) Aucune case voisine n'est libre et accessible. | Chute sur la cible | Pas d'esquive ; collision | K03 | Partiel (E17) |
 | T-K02 | Réactions et étages fictifs : (R = 0, n = 1) ; (R = 50, n = 2) ; (R = 97, n = 1) | Calcul de p | 5 % ; 60 % ; 100 % (borné). Le cas 0 % est inatteignable si R ≥ 0. | K05 | Partiel (formulation provisoire : E12) |
-| T-K03 | Esquive possible, tirage forcé à la réussite | Chute | Cible déplacée sur une case valide ; TU du pas dépensées ; aucun dégât pour la cible ; l'attaquant finit par une chute au sol | K06 | Partiel (E17, E18) |
+| T-K03 | Esquive possible, tirage forcé à la réussite | Chute | Cible déplacée sur une case valide ; TU du pas dépensées ; aucun dégât pour la cible. L'attaquant finit par une chute au sol, selon les règles de la chute au sol : base `B(n)` plafonnée à 70 avant le tirage, sans bonus. | K06 (M, P), J12, D04, D05 | Partiel (E17 ; comptage de n : E12 ; E5, E7, E24) |
 | T-K04 | Esquive possible, tirage forcé à l'échec | Chute | Cible immobile ; aucune TU dépensée pour l'essai ; collision, avec des dégâts possibles pour les deux (K02) | K07, K02 | Partiel (dégâts : E6 à E8) |
 | T-K05 | Plusieurs cases d'esquive valides | Esquive réussie | La case choisie appartient à l'ensemble des cases valides | K04 | Spécifiable (loi du tirage : E22) |
 | T-K06 | Conditions d'esquive remplies (K03) ; (a) p = 100 % ; (b) p = 0 %, atteignable seulement avec des Réactions négatives | Nombreuses chutes | (a) Esquive à chaque fois. (b) Jamais d'esquive. | K05 | Partiel (tirage non décidé ; E12) |
@@ -85,7 +85,7 @@ Compagnon de `docs/reviews/LOT-2F-SPECIFICATION-MEC-0001.md` : les identifiants 
 | T-D06 | Allié caché percuté à l'aveugle | Dégâts | Bonus × 1,25 appliqué à l'allié | J08 | Partiel |
 | T-D07 | Chute accidentelle sur une unité | Dégâts | Aucun bonus | D08 | Partiel |
 | T-D08 | Même chute sur deux sols de natures différentes | Dégâts avant tirage | Identiques | D02 | Spécifiable |
-| T-D09 | M = 40, 80, 160, 240, 320 kg (fictif) | Facteur `f_M` | 0,5 ; 1 ; 2 ; 3 ; 3 | D10 | Spécifiable (facteur) ; dégâts : Bloqué (E8) |
+| T-D09 | Poids total `M` (poids propre + armure + équipement et inventaire) = 40, 80, 160, 240, 320 kg (fictif) | Facteur `f_M` | 0,5 ; 1 ; 2 ; 3 ; 3 | D10 ; définition de `M` (P) | Spécifiable (facteur) ; dégâts : Bloqué (E8) |
 | T-D10 | Obstacle destructible d'armure fictive A ; dégât au terrain ≥ A, puis < A | Impact | Détruit, puis intact (seuil d'OXCE, sans accumulation) | D12 | Partiel (puissance d'impact : E8) |
 | T-D11 | Obstacle marqué indestructible | Impact | Intact | D12 | Spécifiable |
 | T-D12 | Saut ; obstacle inconnu détruit à l'impact ; vide en dessous ; unité au sol plus bas | Enchaînement | Arrêt à l'impact, même si l'obstacle est détruit ; chute verticale depuis le contact ; dégâts d'impact puis de chute, résolus séparément ; atterrissage sur l'unité : collision | D13, I03 | Partiel (E8, E9) |
@@ -120,13 +120,13 @@ Pour ces cas, aucun résultat n'est inventé (mandat §3.6).
 |---|---|---|---|---|
 | Marche (T-M) | 11 | 5 | 6 | 0 |
 | Saut : portée, élévation, obstacles (T-J01 à T-J10) | 10 | 3 | 4 | 3 |
-| Saut : cible (T-J11 à T-J16) | 6 | 2 | 3 | 1 |
+| Saut : cible (T-J11 à T-J16) | 6 | 3 | 3 | 0 |
 | Coût offensif (T-J17 à T-J19) | 3 | 3 | 0 | 0 |
 | Esquive (T-K) | 6 | 1 | 5 | 0 |
 | Dégâts (T-D) | 14 | 4 | 8 | 2 |
 | Information (T-I) | 5 | 5 | 0 | 0 |
 | Non arbitrés (T-X) | 5 | 0 | 0 | 5 |
-| **Total** | **60** | **23** | **26** | **11** |
+| **Total** | **60** | **24** | **26** | **10** |
 
 T-J18, T-J19, T-D02 et T-D09 sont comptés comme spécifiables pour la partie déterminée ; le reste de leur attendu dépend des points ouverts indiqués.
 
