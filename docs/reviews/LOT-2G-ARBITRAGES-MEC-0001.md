@@ -8,7 +8,7 @@
 | Référence OXCE | `MeridianOXC/OpenXcom`, commit `441cae1b071d249d40a223858cb6bd07fd5d791b` (8.7.1). Lecture du code seulement, **aucune exécution**. |
 | Nature | Dossier de propositions. **Aucune décision n'est prise ni présumée** : les 13 points restent ouverts jusqu'à une validation explicite du propriétaire. Le registre n'est pas modifié ; `MEC-0001` reste « reportée ». Aucun gameplay, aucun code, aucun test exécutable. |
 | Compagnon | `docs/reviews/LOT-2G-IMPACTS-TESTS.md` : effet de chaque proposition sur les tests du LOT-2F. |
-| Publication | Non autorisée à ce stade : travail commité sur la branche locale, sans push ni PR. |
+| Publication | Autorisée par le propriétaire le 13 novembre 2026 (« Tu peux publier ») : branche poussée et PR en brouillon vers `main`, **sans fusion**. |
 
 ## 0. Synthèse pour le propriétaire
 
@@ -526,4 +526,4 @@ Ensuite seulement viendront les valeurs du §0.2.
 - **Mineurs, tous intégrés** : hypothèse du départ au centre marquée ; diagonale et alternative A1 précisées ; définitions géométriques (contact, contacts simultanés, rattachement) ; citations d'OXCE précisées (`RNG.h:52-55`, tête en inférence, scripts et forçages) ; cas de l'unité touchée en vol et place finale ; dépendance au renouvellement des TU ; tolérance pour `P_obs` ; renvois croisés ; tableaux de dépendances harmonisés ; généralisation corrigée dans les impacts ; attendus complétés ; lots futurs signalés ; formulations clarifiées ; troisième type de provenance expliqué dans l'index.
 - **Limites de la revue** : le relecteur n'a vérifié ni la conversation du propriétaire ni le texte d'autorisation ; OXCE a été lu, pas exécuté ; les lignes du LOT-2E n'ont pas été relues dans le code ; le relecteur est du même type d'agent que le développeur, et sa revue ne vaut pas validation.
 
-**Publication.** Non autorisée par le propriétaire à ce stade : commit sur la branche locale `docs/lot-2g-mec-0001-arbitrages`, sans push ni PR. Une publication demanderait une autorisation distincte.
+**Publication.** Le lot a d'abord été commité sur la seule branche locale (`fefbbb5`), sans push ni PR, faute d'autorisation. Le propriétaire a ensuite autorisé la publication le 13 novembre 2026 (« Tu peux publier ») : la branche `docs/lot-2g-mec-0001-arbitrages` est poussée et une PR en brouillon est ouverte vers `main`. Aucune fusion n'est autorisée.
