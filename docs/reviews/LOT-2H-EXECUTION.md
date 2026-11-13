@@ -5,7 +5,7 @@
 | Mandat | `BASTION-MANDAT-LOT-2H-PREPARATION-INSCRIPTION-v1.0.md` (SHA-256 `5dff21c4…f6e9`), copié depuis `orchestration/mandats`, commit `24ca756`. |
 | Autorisation | Propriétaire, 13 novembre 2026 : exécution du mandat, branche locale depuis `main`, proposition documentaire sans modification du registre ; « Aucun push, aucune PR ni fusion sans autorisation distincte. Arrête-toi après les contrôles et la revue indépendante. » |
 | Branche | `docs/lot-2h-preparation-inscription-mec-0001`, créée depuis `origin/main` = `72908389ea99f7267f7f723c57b488f640bfe441`, après `git fetch origin main`. |
-| Publication | **Aucune** : commit local seulement, sans push ni PR. |
+| Publication | D'abord un commit local seulement (`f0e59cb`). Puis autorisée par le propriétaire le 13 novembre 2026 (« Tu peux publier ») : branche poussée et PR en brouillon vers `main`, **sans fusion**. |
 
 ## 1. Résumé
 
@@ -113,4 +113,4 @@ Agent distinct, en lecture seule, sur les fichiers indexés.
 
 ## 7. Arrêt
 
-Le lot s'arrête ici. Aucune inscription au registre, aucune implémentation, aucune publication. Une publication de la branche demanderait une autorisation distincte, limitée à cette branche.
+Le lot s'arrête ici. Aucune inscription au registre, aucune implémentation. La publication de cette seule branche, en PR brouillon, a été autorisée séparément par le propriétaire ; aucune fusion n'est autorisée.
