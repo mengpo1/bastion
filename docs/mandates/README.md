@@ -6,6 +6,7 @@ Les documents de ce dossier sont conservés tels que reçus. Ne pas les modifier
 
 - **original `.md`** : fichier joint à la conversation, copié octet pour octet.
 - **transcription** : texte collé dans la conversation, enregistré tel que reçu ; identité avec le fichier original non vérifiée. L'empreinte porte sur la transcription.
+- **copie de branche** : fichier publié sur une branche du dépôt et désigné par le propriétaire, copié octet pour octet ; l'empreinte est identique à celle du fichier publié.
 
 | Document | Provenance | Statut | SHA-256 |
 |---|---|---|---|
@@ -16,3 +17,4 @@ Les documents de ce dossier sont conservés tels que reçus. Ne pas les modifier
 | `BASTION-MANDAT-LOT-0B-FUSION-transcription.md` — mandat de fusion de la PR n° 1 | **transcription depuis la conversation ; identité avec le fichier original non vérifiée** | Exécuté le 8 novembre 2026 : commit de fusion `9ece89df9acd88bcf8c8c2eb8215ffd5937a04b4` | `6e9207e67559cb1ba686d82c3130ad466eb25e2735bd3168ae8af49bcaa76b21` |
 | `BASTION-MANDAT-LOT-0C-v1.2.md` — mandat du lot 0C | original `.md` | **Autorisé par le propriétaire le 8 novembre 2026** dans la conversation. Le fichier indique encore « préparé — en attente d'autorisation », conservé tel quel. | `22f02c3bbd073843d0262c0ae2272f03a31c7b2b142b9ae03ae7b2fa7f71fd0e` |
 | `BASTION-MANDAT-LOT-2F-v1.0.md` — mandat du lot 2F | original `.md` | **Autorisé par le propriétaire le 9 novembre 2026** dans la conversation. Le fichier indique encore « PRÉPARÉ — NON ENCORE AUTORISÉ À L'EXÉCUTION », conservé tel quel. | `a68395e12475b364bb442c0ee66199404a86f743b9cca45fbcb9bd7f309bd3b5` |
+| `BASTION-MANDAT-LOT-2G-v1.0.md` — mandat du lot 2G | copie de branche : `orchestration/mandats`, commit `2ff8e1df53401ea8c5daa4ccb0e173a7a63f9dbd` | **Autorisé par le propriétaire le 10 novembre 2026** dans la conversation. Le fichier indique encore « PRÉPARÉ — EXÉCUTION NON AUTORISÉE », conservé tel quel. | `735ca10d5c03f1f2939e8794fcb791f9b12ba46de9b61dadc0e22af824511b59` |
