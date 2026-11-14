@@ -7,7 +7,7 @@
 | Mandat | `BASTION-MANDAT-LOT-2H-PREPARATION-INSCRIPTION-v1.0.md`, publié sur `orchestration/mandats` (commit `24ca7569bd3a25cc2b0f3807a0afc92b403ebcd7`). Archivé octet pour octet dans `docs/mandates/`, SHA-256 `5dff21c4e0040d81ea2bb14a7142ffcc87a077d287de967978349dc130d7f6e9`. |
 | Autorisation | Propriétaire, 13 novembre 2026 : « Je t'autorise à exécuter le mandat LOT-2H de Bastion. […] Prépare la proposition documentaire d'inscription au registre, sans modifier le registre lui-même. Aucun push, aucune PR ni fusion sans autorisation distincte. Arrête-toi après les contrôles et la revue indépendante. » |
 | Source des décisions | `BASTION-DECISIONS-LOT-2G-DS1-DS5-v1.0.md`, consolidation du 13 novembre 2026, publiée sur `orchestration/mandats` (commit `197d8b953540b178143b7c365335e19ec33e9c40`, inchangée au commit `24ca7569bd3a25cc2b0f3807a0afc92b403ebcd7`). Archivée octet pour octet, SHA-256 `dee88998c561247a5941fe2d04854a95b74e863d31b837b86f3de1acad9f335f`. |
-| Registre lu | `docs/gameplay/GAMEPLAY-DECISIONS.md` sur `main` = `72908389ea99f7267f7f723c57b488f640bfe441`, SHA-256 `c2a3a55e7b1ed3d08089b5d814cded324b94313792982c8556d0e9d19a7e3968`. Lu, **non modifié**. |
+| Registre lu | `docs/gameplay/GAMEPLAY-DECISIONS.md` sur `main` = `72908389ea99f7267f7f723c57b488f640bfe441`, SHA-256 `c2a3a55e7b1ed3d08089b5d814cded324b94313792982c8556d0e9d19a7e3968`. Lu, **non modifié**. Inchangé sur `main` après la fusion de la PR n° 10 (commit `b14dc49`, même SHA-256). |
 | Branche | `docs/lot-2h-preparation-inscription-mec-0001`, créée depuis `origin/main` après `git fetch origin main`. Locale : ni push ni PR. |
 | Compagnons | `docs/reviews/LOT-2H-TRACABILITE-ECARTS.md` (traçabilité et écarts) ; `docs/reviews/LOT-2H-EXECUTION.md` (contrôles, limites, revue). |
 
@@ -46,7 +46,7 @@
   - **conflit/écart** (dont les points « à vérifier »).
 - **Identifiants** : DS*n*.*m* = section *n* (DS1 à DS5) et item *m* de la consolidation. Ce sont des identifiants proposés pour le registre, à confirmer lors de l'inscription.
 - **Règles antérieures** : S, Z et N sont au registre. P, J, K, D, I et E viennent du LOT-2F (`docs/reviews/LOT-2F-SPECIFICATION-MEC-0001.md`) et **ne sont pas au registre**.
-- **LOT-2G** : ses documents sont lus sur la branche `docs/lot-2g-mec-0001-arbitrages` (PR n° 10, non fusionnée, tête `2a14a501376a84a1bb2f41f5d135db56e15ee10e`). Ses recommandations ne valent que si la consolidation les reprend.
+- **LOT-2G** : ses documents ont été lus sur la branche `docs/lot-2g-mec-0001-arbitrages` (PR n° 10, tête `2a14a501376a84a1bb2f41f5d135db56e15ee10e`), fusionnée depuis dans `main` le 14 novembre 2026. Ses recommandations ne valent que si la consolidation les reprend.
 - Les citations des principes suivent le texte de la consolidation, en phrases simplifiées sans changement de sens. Le texte source fait foi.
 
 ## 2. Texte proposé : nouvelle sous-section de la fiche
@@ -97,7 +97,7 @@ Extraits courts ; le texte exact figure dans le diff du §4.
 | # | Emplacement | Aujourd'hui | Proposition |
 |---|---|---|---|
 | 1 | Bandeau de la fiche | Sous-décisions S1 à S12, Z1, N1 à N14 | Ajoute « ainsi que des principes DS1.1 à DS5.7 pour les sauts offensifs, les chutes, les collisions et l'esquive (DS5.3 sous réserve) » ; garde « la mécanique n'est pas acceptée dans son ensemble » |
-| 2 | Fonctionnement de référence et preuves | Rapports LOT-2A à LOT-2D | Ajoute les rapports LOT-2E, LOT-2F et LOT-2G. Le chemin du LOT-2G n'existera sur `main` qu'après la fusion de la PR n° 10 |
+| 2 | Fonctionnement de référence et preuves | Rapports LOT-2A à LOT-2D | Ajoute les rapports LOT-2E, LOT-2F et LOT-2G, tous présents sur `main` depuis la fusion de la PR n° 10 |
 | 3 | Changement demandé | À partir de S1 à S12, Z1 et N1 à N14 | Ajoute DS1.1 à DS5.7 |
 | 4 | Décision du propriétaire | « reportée » ; preuves du 8 novembre | **« reportée » reste en tête.** Ajoute les principes DS1.1 à DS5.7 (DS5.3 sous réserve), leur date (13 novembre 2026) et leur preuve (consolidation, commits, SHA-256) |
 | 5 | Éléments exclus | Ce que S1 à S12, Z1 et N1 à N14 ne couvrent pas | Ajoute DS1.1 à DS5.7 |
@@ -243,5 +243,5 @@ Ce document ne demande aucun choix pendant le lot : ces sujets sont regroupés p
 - `docs/gameplay/GAMEPLAY-DECISIONS.md` : inchangé (SHA-256 identique à `main`).
 - Statut de `MEC-0001` : décision « reportée », classe `MODIFICATION-PROPOSEE`, état « non commencé », périmètre « aucun changement de gameplay ».
 - Sous-décisions S1 à S12, Z1, N1 à N14 : aucune réécrite. N7 recevrait seulement une annotation, si le propriétaire l'accepte.
-- Livrables du LOT-2F sur `main`, et ceux du LOT-2G sur leur branche (PR n° 10, non fusionnée).
+- Livrables du LOT-2F et du LOT-2G (ce dernier fusionné dans `main` par la PR n° 10).
 - Aucun code, aucun test, aucun fichier du harnais ni de `docs/decisions/` ou `docs/references/`.

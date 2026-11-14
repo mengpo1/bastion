@@ -23,7 +23,7 @@
 | Consolidation DS1 à DS5 | `orchestration/mandats` | commit `197d8b9` (inchangée au commit `24ca756`), SHA-256 `dee88998…f335f` |
 | Registre `docs/gameplay/GAMEPLAY-DECISIONS.md` | `main` | SHA-256 `c2a3a55e7b1ed3d08089b5d814cded324b94313792982c8556d0e9d19a7e3968` ; lu, non modifié |
 | Spécification et matrice du LOT-2F | `main` | `7290838` |
-| Dossier et impacts du LOT-2G | branche `docs/lot-2g-mec-0001-arbitrages` (PR n° 10, non fusionnée) | tête `2a14a501376a84a1bb2f41f5d135db56e15ee10e` ; lue sans fusion |
+| Dossier et impacts du LOT-2G | branche `docs/lot-2g-mec-0001-arbitrages` (PR n° 10, non fusionnée lors de la lecture ; fusionnée dans `main` le 14 novembre 2026, commit `b14dc49`) | tête `2a14a501376a84a1bb2f41f5d135db56e15ee10e`, celle qui a été fusionnée ; lue sur sa branche |
 | `docs/references/OXCE-BASELINE.md` | `main` | consulté pour la décision D4 (aucune reprise de code, de données ni d'assets), citée par la traçabilité. Aucune affirmation nouvelle sur OXCE : la traçabilité rappelle seulement deux comportements déjà lus au commit `441cae1` (LOT-2E C7 ; `src/Mod/RuleDamageType.cpp:37` et `:139-142`, cités par le LOT-2G) |
 
 ## 3. Fichiers du lot
@@ -70,13 +70,23 @@ Exécutés le 13 novembre 2026, après intégration de la revue, sur les fichier
 - **.NET** : non lancé, car `dotnet` est absent de l'environnement et le lot ne touche ni au code ni aux tests.
 - Aucun identifiant de modèle dans les fichiers du lot.
 
+**Après la fusion de `main` dans la branche** (14 novembre 2026, autorisée par le propriétaire, commit de fusion `69c85c0`, sans rebase ni push forcé) :
+- seul conflit : `docs/mandates/README.md`, résolu en gardant la version de `main` (légende et ligne du LOT-2G) suivie des deux lignes du LOT-2H. Vérifié par script : le résultat vaut exactement `main` plus ces deux lignes ;
+- `git diff --name-status origin/main` : les 6 mêmes fichiers ; index : 2 lignes ajoutées, 0 supprimée ;
+- archives : `cmp` avec `orchestration/mandats`, code 0 pour les deux ;
+- fichiers protégés, livrables des LOT-2F et LOT-2G, mandat LOT-2G : `git diff --quiet origin/main`, code 0 ;
+- `git diff --check origin/main` hors archives : code 0 ; aucun espace final dans les rapports et l'index ;
+- diff proposé : identique à celui construit, `git apply --check` sur le registre courant, code 0 (registre inchangé, même SHA-256) ;
+- tableaux cohérents ; `bash scripts/harness/test-hooks.sh` : 75 tests, 0 échec ;
+- mentions « PR n° 10 non fusionnée » mises à jour dans les trois rapports.
+
 ## 5. Limites
 
 - La consolidation est une transcription des réponses du propriétaire. La conversation elle-même n'a pas été fournie : aucune comparaison avec elle n'a été faite. Le texte proposé suit la consolidation, qui fait foi.
 - Les décisions du 9 novembre (LOT-2F) et le correctif E14, E18, E23 ne sont pas au registre. Le texte proposé y renvoie sans les inscrire.
 - Le diff proposé vaut pour le registre de `main` au commit `7290838`. Il serait à régénérer si le registre changeait.
-- Les chemins du LOT-2G cités dans le texte proposé n'existeront sur `main` qu'après la fusion de la PR n° 10.
-- **Index des mandats** : la PR n° 10 ajoute aussi des lignes à la fin du tableau de `docs/mandates/README.md`, et une ligne de légende. Fusionner les deux branches demandera de garder les deux ajouts : conflit simple, mais à résoudre à la main. La ligne de légende « copie de branche » de la PR n° 10 n'existe pas sur `main` : les deux nouvelles lignes décrivent donc leur provenance en entier.
+- Les chemins du LOT-2G cités dans le texte proposé existent sur `main` depuis la fusion de la PR n° 10 (14 novembre 2026).
+- **Index des mandats** : la PR n° 10 ajoutait aussi des lignes à la fin du tableau de `docs/mandates/README.md`, et une ligne de légende. Après sa fusion, `main` a été fusionnée dans cette branche, avec l'autorisation du propriétaire (14 novembre 2026) ; le conflit a été résolu en gardant les deux ajouts (§4). Les deux lignes du LOT-2H décrivent leur provenance en entier : la légende « copie de branche » n'existait pas encore sur `main` quand elles ont été écrites.
 - Aucun test .NET n'a été lancé : le lot ne touche ni au code ni aux tests, et `dotnet` n'est pas installé dans l'environnement.
 
 ## 6. Revue indépendante

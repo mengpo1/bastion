@@ -6,7 +6,7 @@ Compagnon de `docs/reviews/LOT-2H-PROPOSITION-INSCRIPTION-MEC-0001.md`. **Aucune
 - **C** : consolidation `docs/mandates/BASTION-DECISIONS-LOT-2G-DS1-DS5-v1.0.md`, SHA-256 `dee88998…f335f`. « §2 » à « §6 » désignent ses sections DS1 à DS5. Son texte fait foi.
 - **R** : registre `docs/gameplay/GAMEPLAY-DECISIONS.md` sur `main` (S1 à S12, Z1, N1 à N14).
 - **F** : spécification et matrice du LOT-2F, sur `main`. Les règles P, J, K, D et I y sont des décisions du 9 novembre 2026 (sauf D07 et I04, encore ouvertes) ; J13 et les points E14, E18 et E23 viennent du correctif du propriétaire ; les autres points E restent ouverts ; les H sont des décisions historiques ; les M transcrivent le registre. Aucune de ces règles n'est **inscrite au registre**, hormis ce que les M reprennent de lui.
-- **G** : dossier du LOT-2G, branche `docs/lot-2g-mec-0001-arbitrages` (PR n° 10, non fusionnée, tête `2a14a50`). Ses recommandations ne valent que reprises par C.
+- **G** : dossier du LOT-2G, lu sur la branche `docs/lot-2g-mec-0001-arbitrages` (PR n° 10, tête `2a14a50`), fusionnée dans `main` le 14 novembre 2026. Ses recommandations ne valent que reprises par C.
 
 **Statuts** (mandat LOT-2H §3 A) : **accepté en conversation** ; **à définir** ; **conflit/écart** (dont « à vérifier »).
 
@@ -146,4 +146,4 @@ T-G04 (`γ = 0` : saut indisponible) ne dépend pas de la vitesse de départ et 
 - La confirmation du contenu de la consolidation, avec sa date (proposition §5, ligne 13).
 - De préférence, l'inscription préalable ou simultanée des décisions du 9 novembre et du correctif (E16 du LOT-2F), auxquelles DS1 à DS5 renvoient (proposition §5, ligne 11).
 - Un choix sur le rattachement à `MEC-0001` (ligne 12) et sur l'annotation de N7 (ligne 14).
-- L'application du diff de la proposition (§4), vérifiée sur le registre de `main` au commit `7290838`. Si le registre change d'ici là, le diff serait à régénérer.
+- L'application du diff de la proposition (§4), vérifiée sur le registre de `main` au commit `7290838`, et toujours applicable au commit `b14dc49`, où le registre est inchangé. Si le registre change d'ici là, le diff serait à régénérer.
