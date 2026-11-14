@@ -5,7 +5,7 @@
 | Mandat | `BASTION-MANDAT-LOT-2I-v1.1.md`, `orchestration/mandats`, commit `58d3ebc`, SHA-256 `6ac95b0d…6ef6`. Non archivé (non autorisé). |
 | Autorisation | Propriétaire, 14 novembre 2026 : exécution documentaire du mandat v1.1 ; branche locale `docs/lot-2i-consolidation-mec-0002` depuis `origin/main` ; archivage du mandat et modification de `docs/mandates/README.md` **non autorisés** ; aucun push, aucune PR, aucune fusion, aucune modification du registre protégé, aucune implémentation. |
 | Branche | `docs/lot-2i-consolidation-mec-0002`, créée depuis `origin/main` = `74faa2974da7a4645725b4271eb66ae2a512e98a`, après `git fetch origin main`. |
-| Publication | **Aucune** : commit local après la revue, sans push ni PR. |
+| Publication | D'abord un commit local seulement (`8b84f0c`). Puis autorisée par le propriétaire le 14 novembre 2026 (« Je valide », précisé en « Publier en PR brouillon ») : branche poussée et PR en brouillon vers `main`, **sans fusion**. |
 | Implémentation | **Aucune autorisation d'implémentation** n'existe ni ne découle de ce lot. |
 
 ## 1. Bilan
@@ -152,4 +152,4 @@ Agent distinct, en lecture seule, sur les fichiers indexés.
 
 ## 8. Arrêt
 
-Le lot s'arrête ici. Aucune inscription, aucune implémentation, aucune publication. Toute suite demande une autorisation distincte du propriétaire.
+Le lot s'arrête ici. Aucune inscription, aucune implémentation. La publication de cette seule branche, en PR brouillon, a été autorisée séparément par le propriétaire ; aucune fusion n'est autorisée. Toute suite demande une autorisation distincte du propriétaire.
