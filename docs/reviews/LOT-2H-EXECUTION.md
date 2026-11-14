@@ -70,7 +70,7 @@ Exécutés le 13 novembre 2026, après intégration de la revue, sur les fichier
 - **.NET** : non lancé, car `dotnet` est absent de l'environnement et le lot ne touche ni au code ni aux tests.
 - Aucun identifiant de modèle dans les fichiers du lot.
 
-**Après la fusion de `main` dans la branche** (14 novembre 2026, autorisée par le propriétaire, commit de fusion `69c85c0`, sans rebase ni push forcé) :
+**Après la fusion de `main` dans la branche** (14 novembre 2026, sans rebase ni push forcé). Le propriétaire avait déjà fusionné `main` sur la branche distante (commit `3d90774`) ; la fusion locale qu'il a autorisée ensuite (commit `69c85c0`) donne exactement le même arbre. Les deux historiques sont réunis par un commit de fusion, sans changement de contenu :
 - seul conflit : `docs/mandates/README.md`, résolu en gardant la version de `main` (légende et ligne du LOT-2G) suivie des deux lignes du LOT-2H. Vérifié par script : le résultat vaut exactement `main` plus ces deux lignes ;
 - `git diff --name-status origin/main` : les 6 mêmes fichiers ; index : 2 lignes ajoutées, 0 supprimée ;
 - archives : `cmp` avec `orchestration/mandats`, code 0 pour les deux ;
