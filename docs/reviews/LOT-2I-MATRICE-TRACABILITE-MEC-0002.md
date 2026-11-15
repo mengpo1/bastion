@@ -24,7 +24,7 @@ Compagnon de `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md`, qui donne le texte
   - « maintenue » : décision antérieure que C2 ne redit pas, mais ne modifie pas (C2 §1 : une décision récente ne prévaut que si elle modifie une hypothèse ancienne) ;
   - « C3 prévaut » : un arbitrage du correctif v1.2 remplace une règle de C2 ou une décision plus ancienne ;
   - « C3 précise » : un arbitrage v1.2 ajoute un détail compatible ;
-  - « C3 confirme » : un arbitrage v1.2 confirme un point laissé à confirmer par le v1.1.
+  - « C3 confirme » : un arbitrage v1.2 confirme un point laissé à confirmer par le v1.1, ou une règle déjà validée (CH-02).
 - **Conflit** : renvoi à la consolidation (§11.1 point *n*, §11.2 X*n*, ou ambiguïté A*n* du §12) ; « réglée » signale une ambiguïté tranchée par C3.
 - **Statut** : repris automatiquement de la consolidation.
 
@@ -70,7 +70,7 @@ Compagnon de `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md`, qui donne le texte
 | SA-11 | Sol de départ ignoré | DS1.3 ; C2 §4.2 | 13 nov. 2026 | DS1.3 | concordant | — | validé en conception |
 | SA-12 | Obstacle connu / inconnu | P08 (M) ; C2 §4.2 | 9 nov. 2026 | P08 | concordant | — | validé en conception |
 | SA-13 | Vol sans correction ; réception stable | C2 §4.2 ; D2 | 14 nov. 2026 | — | nouveau | — | validé en conception |
-| SA-14 | Arrêt au premier choc ; événements distincts | DS5.2 ; D13 (M) ; C2 §4.2 | 9 et 13 nov. 2026 | DS5.2 ; D13 | concordant | — | validé en conception |
+| SA-14 | Arrêt au premier choc ; événements distincts | DS5.2 ; D13 (M) ; C2 §4.2 | 9 et 13 nov. 2026 | DS5.2 ; D13 | concordant | §11.2 X16 ; A30 | validé en conception |
 | SA-15 | Impulsions verticale et horizontale par type | P02, P03 (M) ; C2 §4.3 ; D2 | 9 et 14 nov. 2026 | P02 : impulsion verticale constante pour une unité et une action | C2 précise | — | validé en conception, paramètre ouvert |
 | SA-16 | Impulsion constante : v ∝ 1/M | DS2.1 ; C2 §4.3 ; D2 | 13 et 14 nov. 2026 | DS2.1 : plus lourd = moins haut et moins loin ; loi non choisie. G (E11) : même vitesse pour toutes les masses (écartée) | C2 tranche (quantité de mouvement) | §11.2 X2 | validé en conception, paramètre ouvert |
 | SA-17 | Gravité ; plage par type | P01 (M) ; DS2.4 ; C2 §4.3 | 9, 13 et 14 nov. 2026 | DS2.4 : une plage de gravité | C2 précise (par type) | A11 | validé en conception, paramètre ouvert |
@@ -92,20 +92,20 @@ Compagnon de `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md`, qui donne le texte
 | CH-01 | Saut volontaire sans surcharge, au même niveau ou d'un étage : pas de dégât de réception ; un étage compté sur 3 m entre les sols | DS3.1 ; C2 §5.1 ; D2 ; C3 (A3A, A4.2A, A4.3A, exception de surcharge, A25) | 13 et 14 nov. 2026 | DS3.1 : chute d'un étage sans surcharge, sans préciser « volontaire » ; C2 : « un étage » non défini, saut au même niveau non couvert, exemption perdue en cas de collision | C2 précise ; C3 précise | §11.1 point 1 ; X3, X4, X12, X16 ; A3, A4, A25 (réglées) ; A30 | validé en conception |
 | CH-02 | Surcharge : dégâts possibles | DS3.1, DS3.2 ; C2 §5.1 ; C3 (exception de surcharge) | 13 et 14 nov. 2026 | DS3.1 | concordant ; C3 confirme | — | validé en conception |
 | CH-03 | Chute involontaire : seuil de 3 m | D01 (M) ; C2 §5.1 ; D2 ; C3 (A4.1D, D3A) | 9 et 14 nov. 2026 | D01 et C2 : chute blessante possible dès un étage, même sans surcharge | C3 prévaut (remplace D01 et C2) | §11.1 point 1 ; X14 | validé en conception |
-| CH-04 | Réception sur une unité = collision calculée à part | DS3.4 ; K01, K02 (M) ; C2 §5.1 ; C3 (A25) | 9, 13 et 14 nov. 2026 | DS3.1 : l'unité qui tombe d'un étage sans surcharge est exemptée ; DS3.4 : l'unité percutée peut être blessée « indépendamment de l'exemption qui concerne l'unité tombante » | C2 prévaut (restreint DS3.1 et DS3.4) ; C3 confirme | §11.2 X12 ; A25 (réglée) | validé en conception |
+| CH-04 | Réception sur une unité = collision calculée à part | DS3.4 ; K01, K02 (M) ; C2 §5.1 ; C3 (A25) | 9, 13 et 14 nov. 2026 | DS3.1 : l'unité qui tombe d'un étage sans surcharge est exemptée ; DS3.4 : l'unité percutée peut être blessée « indépendamment de l'exemption qui concerne l'unité tombante » | C2 prévaut (restreint DS3.1 et DS3.4) ; C3 confirme | §11.2 X12, X16 ; A25 (réglée) ; A30 | validé en conception |
 | CH-05 | Attaquant après esquive : saut volontaire, mesure entre les sols | E18 (P) ; DS3.1 ; C2 §5.1 ; C3 (A4.3A) | 9, 13 et 14 nov. 2026 | E18 : chute au sol, plafond 70 | concordant ; C3 précise | — | validé en conception |
-| CH-06 | Chute après obstacle : involontaire | D13 (M) ; C2 §5.1 ; D2 | 9 et 14 nov. 2026 | D13 : chute verticale depuis le contact | C2 précise | — | validé en conception |
+| CH-06 | Chute après obstacle : involontaire | D13 (M) ; C2 §5.1 ; D2 | 9 et 14 nov. 2026 | D13 : chute verticale depuis le contact | C2 précise | §11.2 X16 ; A28, A30 | validé en conception |
 | CH-07 | Courbe à recalibrer ; B(n) historique | D03, D04 (M) ; C2 §5.2 ; C3 (D1C) | 9 et 14 nov. 2026 | D03, D04 et C2 : courbe B(n) du LOT-2F (historique) | C3 prévaut (barème remplacé) | §11.2 X15 ; A29 | validé en conception, paramètre ouvert |
 | CH-08 | Hauteurs en mètres ; trois grandeurs distinctes | C2 §5.2 ; D2 ; C3 (A3A, A4.3A, D1C) | 14 nov. 2026 | E12 (LOT-2F) : comptage ouvert ; DS3 : comptage non confirmé ; C2 : interpolation linéaire entre les points B(n) | C2 tranche (dégâts) ; C3 précise | §11.2 X16 ; A30 | validé en conception, paramètre ouvert |
 | CH-09 | Seuil de 3 m inclus | C2 §5.2 ; D2 ; C3 (A4.1D, D1C, D3A) | 14 nov. 2026 | N7 (R) : seuil à décider ; C2 : 0,25 étage et interpolation jusqu'à 8 (historique) | C3 prévaut (remplace le seuil de C2) ; précise N7 | §11.1 point 1 ; X4 ; A4 (réglée) ; A29 | validé en conception |
 | CH-10 | Gravité : au-delà du seuil seulement | C2 §5.2 ; D2 ; C3 (D3A) | 14 nov. 2026 | D03 : base selon le nombre d'étages, sans gravité ; C2 : g/g0 sur la puissance de référence | C2 prévaut (modifie D03) ; C3 précise | §11.2 X5 ; A5 | validé en conception, paramètre ouvert |
-| CH-11 | Vitesse héritée dans H_eq ; montée non comptée pour les sauts de CH-01 | C2 §5.2 ; D2 ; C3 (D4A, A4.2A, A4.3A, exception de surcharge) | 14 nov. 2026 | C2 : seuil de 0,25 sur H_eq (historique) | nouveau ; C3 précise | §11.2 X16 ; A5, A29, A30 | validé en conception, paramètre ouvert |
+| CH-11 | Vitesse héritée dans H_eq ; montée non comptée pour les sauts de CH-01 | C2 §5.2 ; D2 ; C3 (D4A, A4.2A, A4.3A, exception de surcharge) | 14 nov. 2026 | C2 : seuil de 0,25 sur H_eq (historique) | nouveau ; C3 précise | §11.2 X3, X4, X16 ; A4 (réglée) ; A5, A29, A30 | validé en conception, paramètre ouvert |
 | CH-12 | Sol horizontal : vitesse verticale seule | D11 (M) ; C2 §5.2 | 9 nov. 2026 | D11 | concordant | — | validé en conception |
 | CH-13 | Plafond 70 ; surcharge hors de la puissance | D05 (M) ; C2 §5.2 ; D2 ; C3 (D2A) | 9 et 14 nov. 2026 | D05 : plafonds avant le tirage ; D09 : facteurs de poids après le tirage ; C2 : surcharge après le plafond, au-delà de 70 | C2 prévaut (déroge à D09) ; C3 prévaut (surcharge sur H_eq) | §11.2 X6, X15 ; A6, A29 | validé en conception, paramètre ouvert |
 | CH-14 | Capacité de portage ; seuil de N14 | DS3.2 ; N14 (R) ; C2 §5.3 | 8 et 13 nov. 2026 | DS3.2 : même seuil que la réduction des TU | concordant | A13 | validé en conception, paramètre ouvert |
 | CH-15 | Dépassement relatif S | C2 §5.3 ; D2 | 14 nov. 2026 | — | nouveau | — | validé en conception |
 | CH-16 | F_surcharge sur la hauteur équivalente | C2 §5.3 ; D2 ; C3 (D2A) | 14 nov. 2026 | E24 (LOT-2F) : ouvert ; C2 : multiplicateur de la puissance | C2 tranche ; C3 prévaut (point d'application) | §11.2 X6, X15 ; A5, A29 | validé en conception, paramètre ouvert |
-| CH-17 | Surcharge non réappliquée à la puissance | N9, N10 (R) ; C2 §5.3 ; C3 (D2A) | 8 et 14 nov. 2026 | N9, N10 : le poids peut aggraver une chute ; C2 : la surcharge aggrave la puissance | C3 prévaut | — | validé en conception |
+| CH-17 | Chute : surcharge non réappliquée à la puissance | N9, N10 (R) ; C2 §5.3 ; C3 (D2A) | 8 et 14 nov. 2026 | N9, N10 : le poids peut aggraver une chute ; C2 : la surcharge aggrave la puissance | C3 prévaut (chute) | A6 (collisions) | validé en conception |
 | CH-18 | Surcharge : seuil maintenu, dégâts possibles dès 3 m | C2 §5.3 ; D2 ; C3 (exception de surcharge, D2A) | 14 nov. 2026 | C2 : seuil de 0,25 non supprimé par la surcharge (historique) | nouveau ; C3 prévaut (seuil) | §11.2 X16 ; A30 | validé en conception |
 | CH-19 | Nature du sol sans effet | D02 (M) ; C2 §5.4 | 9 nov. 2026 | D02 | concordant | — | validé en conception |
 | CH-20 | Support détruit : la chute continue | D12, D13 (M) ; C2 §5.4 | 9 et 14 nov. 2026 | D13 ; D12 | C2 précise | §11.2 X16 ; A30 | validé en conception |
@@ -123,7 +123,7 @@ Compagnon de `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md`, qui donne le texte
 | CO-06 | Blessures et étourdissement séparés | K02 (M) ; C2 §6 ; D2 | 9 et 14 nov. 2026 | K02 : dégâts et étourdissement distincts | C2 précise | A21 | validé en conception, paramètre ouvert |
 | CO-07 | Sensibilité à l'étourdissement | C2 §6 ; D2 | 14 nov. 2026 | — | nouveau | A16 | validé en conception, paramètre ouvert |
 | CO-08 | Tirage commun par événement, confirmé | D06 (M) ; DS4.5 ; C2 §6 ; D2 ; C3 (A8A) | 9, 13 et 14 nov. 2026 | DS4.5 : même tirage pour l'unité et l'obstacle ; mandat v1.0 : ne pas étendre aux unités | C2 prévaut (étend aux unités) ; C3 confirme | §11.1 point 8 ; A8 (réglée) ; A26 | validé en conception, paramètre ouvert |
-| CO-09 | Ordre de la chaîne de calcul, surcharge sur H_eq | DS3.5 ; D09, D10 (M) ; C2 §6 ; C3 (D2A, D3A) | 9, 13 et 14 nov. 2026 | DS3.5 : deux arrondis ; D09 : poids et armure après le tirage ; C2 : bonus de surcharge sur la puissance | C2 prévaut (déroge à D09) ; C3 prévaut (surcharge, gravité) | §11.2 X6 ; A5 à A7, A26 | validé en conception, paramètre ouvert |
+| CO-09 | Ordre de la chaîne de calcul ; chute : surcharge sur H_eq ; collisions : A6 | DS3.5 ; D09, D10 (M) ; C2 §6 ; C3 (D2A, D3A) | 9, 13 et 14 nov. 2026 | DS3.5 : deux arrondis ; D09 : poids et armure après le tirage ; C2 : bonus de surcharge sur la puissance | C2 prévaut (déroge à D09) ; C3 prévaut (surcharge d'une chute, gravité) | §11.2 X6 ; A5 à A7, A26 | validé en conception, paramètre ouvert |
 | CO-10 | Bonus × 1,25 de l'attaque sautée | J08, J11, J12, D08 (M) ; C2 §6 | 9 nov. 2026 | J11 ; J12 | concordant | — | validé en conception |
 | CO-11 | Contacts multiples d'un même choc | C2 §6 ; D2 | 14 nov. 2026 | — | nouveau | A23 | validé en conception, paramètre ouvert |
 
@@ -210,7 +210,7 @@ La colonne « Statut récent (C2) » décrit C2. Pour N7 et DS3.1, le correctif 
 - le seuil de 0,25 étage de C2 et son interpolation sont remplacés par un seuil de **3 m inclus**, quelle que soit la gravité (CH-09) ;
 - la courbe `B(n)` de D03 et D04, reprise par C2, devient historique ; la courbe est à recalibrer lors des tests, sans valeur fixée, et sans décalage d'un étage (CH-07) ;
 - D01 et la règle de C2 selon laquelle une chute involontaire peut blesser dès un étage sont remplacés : une chute ordinaire d'un étage ne blesse plus (CH-03 ; §11.2, X14) ;
-- le coefficient de surcharge passe de la puissance à la hauteur équivalente, sans double application (CH-16, CH-17) ;
+- pour une chute, le coefficient de surcharge passe de la puissance à la hauteur équivalente, sans double application (CH-16, CH-17) ; son effet dans les collisions reste ouvert (CO-09 ; A6) ;
 - la hauteur d'étage est fixée à 3 m, alors que C2 (§3) ne fixait pas de mètres pour la grille (GE-02 ; §11.2, X13) ;
 - un saut volontaire au même niveau sans surcharge, que C2 ne couvrait pas, ne blesse pas à la réception (A4.2A) ; pour un saut d'un étage vers le bas, avec ou sans surcharge, la hauteur comptée est l'écart de 3 m entre les sols, sans la montée, alors que C2 résolvait physiquement la montée et le sommet (A4.3A ; CH-01, CH-11 ; §11.2, X3, X4, X16).
 
@@ -251,7 +251,7 @@ La colonne « Statut récent (C2) » décrit C2. Pour N7 et DS3.1, le correctif 
 | T2-26 | GE-09 | Attaque sautée visant une grande unité | Sélection refusée | Spécifiable |
 | T2-27 | CH-11, CH-20, CH-21 | Chute de 3 m avec une vitesse descendante héritée fictive, par exemple après la traversée d'un plancher | `H_eq` supérieure à 3 m : dégâts possibles, sans garantie | Partiel (A5, A28 : combinaison et vitesse résiduelle ; A29 : courbe) |
 | T2-28 | CH-07, CH-09, CH-10 | Chutes ordinaires de plus de 3 m, sans surcharge (fictif : 3,01 m et 6 m), à 1 g, 0,5 g et 2 g | Dégâts possibles ; valeurs à calibrer lors des tests ; la gravité module les dégâts sans déplacer le seuil | Bloqué (A29 : courbe ; A5 : gravité) |
-| T2-29 | CH-01, CH-08, CH-11, CH-20 | Saut volontaire de deux étages vers le bas ; saut au même niveau en surcharge ; saut exempté d'un étage dont le support de réception cède | — | Bloqué (A30) |
+| T2-29 | CH-01, CH-04, CH-08, CH-11, CH-20 | Saut volontaire de deux étages vers le bas ; saut au même niveau en surcharge ; saut exempté d'un étage dont le support de réception cède ; attaque sautée d'un étage, sans surcharge, qui heurte sa cible : fin de la descente de l'attaquant | — | Bloqué (A30) |
 
 Décompte après le correctif v1.2 : 29 critères ; 12 spécifiables, 14 partiels, 3 bloqués. Avant (v1.1) : 26 critères ; 8 spécifiables, 16 partiels, 2 bloqués.
 
@@ -272,7 +272,7 @@ Version v1.1 citée telle quelle (historique).
 | T2-23 | RP-02, RP-03, RP-05, RP-06, RP-09 — Cible repoussée vers le vide ; cible sans case libre ; aucune case adjacente pour l'attaquant — Chute involontaire de la cible ; l'attaquant prend une case adjacente ; refus avant engagement si tout est connu — Partiel (A19 ; A18) | Maintien de RP-09 confirmé (A18) |
 | T2-25 | CH-01, CH-04 — Attaque sautée d'un étage, sans surcharge ; la cible n'esquive pas — Collision : l'attaquant peut être blessé (plafond 60), contrairement à DS3.1 — Partiel (A25 : changement à confirmer ; A14 : `K_unités`) | Collision calculée à part, confirmée (A25) ; le plafond 60 n'est plus cité (X15) |
 | T2-26 | GE-09 — Attaque sautée visant une grande unité — Sélection refusée — Partiel (A12 : maintien à confirmer) | Maintien de GE-09 confirmé (A12) |
-| T2-27 à T2-29 | — (nouveaux) | Cas du mandat v1.2 (§2.3) : vitesse héritée, chute au-delà de 3 m ; sauts non couverts et saut exempté suivi d'une chute (A30) |
+| T2-27 à T2-29 | — (nouveaux) | Cas du mandat v1.2 (§2.3) : vitesse héritée, chute au-delà de 3 m ; sauts non couverts, saut exempté suivi d'une chute, réception de l'attaquant après un choc (A30) |
 
 ## 4. Effet sur la matrice du LOT-2F
 
@@ -281,12 +281,12 @@ La matrice du LOT-2F n'est pas modifiée. Les tests ci-dessous seraient à repre
 | Test LOT-2F | Effet | Règles |
 |---|---|---|
 | T-J02, T-J03, T-J04, T-J11 | À recalculer : la référence de 2 cases vaut désormais au même niveau, et une descente d'un étage porte plus loin | SA-19, SA-21 |
-| T-J05 | Valable pour l'unité de référence seulement ; dépend de la masse | SA-16, SA-19 |
+| T-J05 | Valable pour l'unité de référence seulement ; dépend de la masse. A3A donne une valeur métrique à `H` (E1, pour la hauteur seulement) : à 1 g, le sommet de l'unité de référence est à 0,75 m (SA-19). *(v1.1 : « Valable pour l'unité de référence seulement ; dépend de la masse ».)* | SA-16, SA-19, GE-02 |
 | T-J15, T-J18, T-J19 | Coût total : `d_3D × C_saut` + supplément ; seuil complet | SA-22 à SA-27 |
 | T-J17 | Inchangé (supplément offensif) | SA-24 |
 | T-K02, T-K06 | Formule changée : + 10 si menace vue au départ ; tirage dans {1, …, 100} | ES-03 à ES-06 |
-| T-K03 | L'attaquant qui retombe après une esquive, d'un étage et sans surcharge, ne subit plus de dégâts ; réception comptée sur 3 m entre les sols | CH-05 |
-| T-K04 | Tirage commun aux deux unités ; repoussement possible de la cible après l'impact ; tous deux confirmés (A8A, A27) | CO-08, RP-01 |
+| T-K03 | L'attaquant qui retombe après une esquive, d'un étage et sans surcharge, ne subit plus de dégâts ; réception comptée sur 3 m entre les sols. *(v1.1 : « L'attaquant qui retombe après une esquive, d'un étage et sans surcharge, ne subit plus de dégâts ».)* | CH-05 |
+| T-K04 | Tirage commun aux deux unités ; repoussement possible de la cible après l'impact ; tous deux confirmés (A8A, A27). *(v1.1 : « Tirage commun aux deux unités ; repoussement possible de la cible après l'impact », règles CO-08, RP-01 ; A8.)* | CO-08, RP-01 |
 | T-D01 | Remplacé : ni le saut volontaire d'un étage, ni la chute involontaire ordinaire d'un étage (3 m) ne blessent, le seuil de 3 m étant inclus ; la base 8 est historique. *(v1.1 : « À séparer : saut volontaire d'un étage (aucun dégât) ; chute involontaire (puissance 8) ».)* | CH-01, CH-03, CH-09 |
 | T-D02 | Valeurs historiques : la courbe `B(n)` n'est plus un barème ; elle n'est pas décalée d'un étage ; nouvelles valeurs à calibrer lors des tests. *(v1.1, avec T-D04 : « Valeurs inchangées ; interpolation entre les points ».)* | CH-07, CH-08 ; A29 |
 | T-D04 | Bornes du tirage inchangées pour une puissance fictive ; la puissance 8 n'est plus celle d'une chute d'un étage | CO-08, CH-07 ; A26 |
@@ -295,6 +295,6 @@ La matrice du LOT-2F n'est pas modifiée. Les tests ci-dessous seraient à repre
 | T-D09 | Place de `min(M/80, 3)` à fixer | CO-04 ; A7 |
 | T-D10 | Remplacé : résistance cumulative | EN-01 |
 | T-D12 | La chute après l'obstacle est involontaire | CH-06 |
-| T-D14 | Remplacé : avec le tirage commun confirmé (A8A), l'ordre des dégâts avant protections suit `P_i × F_i`, avec `P_i` arrondie juste avant le tirage ; à puissances égales, la plus légère reçoit des dégâts supérieurs ou égaux ; seules les protections départagent ensuite | CO-03, CO-08 |
+| T-D14 | Remplacé : avec le tirage commun confirmé (A8A), l'ordre des dégâts avant protections suit `P_i × F_i`, avec `P_i` arrondie juste avant le tirage ; à puissances égales, la plus légère reçoit des dégâts supérieurs ou égaux ; seules les protections départagent ensuite. *(v1.1 : « Avec un tirage commun, l'ordre des blessures avant armure est fixe ; à puissances égales, la plus légère est toujours la plus blessée », règle A8.)* | CO-03, CO-08 |
 | T-X02, T-X03, T-X04, T-X05 | En partie tranchés : premier contact (SA-14), chute jusqu'au support (SA-01), grandes unités (GE-08), apesanteur (SA-18) | — |
 | T-X01 | Destination devenue occupée en vol : toujours non tranché ; RP-06 couvre seulement l'impossibilité révélée en vol | RP-06 |
