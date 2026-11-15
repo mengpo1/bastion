@@ -8,6 +8,8 @@
 | Publication | D'abord un commit local seulement (`8b84f0c`). Puis autorisée par le propriétaire le 14 novembre 2026 (« Je valide », précisé en « Publier en PR brouillon ») : branche poussée et PR en brouillon vers `main`, **sans fusion**. |
 | Implémentation | **Aucune autorisation d'implémentation** n'existe ni ne découle de ce lot. |
 
+> **Correctif v1.2** : les §1 à §8 décrivent l'exécution v1.1 (commit `cca1690`) et sont conservés tels quels, comme historique ; leurs comptes (64 / 33 / 8, 28 ambiguïtés, 26 critères) sont dépassés. L'état après le correctif v1.2, ses contrôles et sa revue figurent au §9.
+
 ## 1. Bilan
 
 - **Consolidation** (`LOT-2I-CONSOLIDATION-MEC-0002.md`) :
@@ -153,3 +155,154 @@ Agent distinct, en lecture seule, sur les fichiers indexés.
 ## 8. Arrêt
 
 Le lot s'arrête ici. Aucune inscription, aucune implémentation. La publication de cette seule branche, en PR brouillon, a été autorisée séparément par le propriétaire ; aucune fusion n'est autorisée. Toute suite demande une autorisation distincte du propriétaire.
+
+## 9. Correctif v1.2 (compte rendu ajouté)
+
+Ce paragraphe est **ajouté** au rapport. Les §1 à §8 ne sont pas réécrits : ils décrivent l'exécution v1.1, publiée au commit `cca1690`.
+
+| | |
+|---|---|
+| Mandat | `BASTION-MANDAT-LOT-2I-v1.2-CORRECTIF-MEC-0002.md`, `orchestration/mandats`, commit `f8cf26e38783499a23244f823da4e221d4a95992` (14 novembre 2026, 21:11:39 +0100), SHA-256 `e4c5345a324ed4e5eb9cab294c7af900b34c389cb0ea8e25e943da400ace5ba0`. **Non archivé** (non autorisé). |
+| Autorisation | Message du propriétaire, daté par lui du 14 novembre 2026, reçu trois fois à l'identique : exécution du v1.2 ; modification **locale** des seuls quatre livrables du LOT-2I ; branche `docs/lot-2i-consolidation-mec-0002`. Interdits : registre protégé, gameplay, harnais, archivage, push, actualisation de la PR n° 12, fusion. L'heure exacte du message n'est pas vérifiable ; elle est cohérente avec le commit du mandat (20:11 UTC) et la récupération de 20:13 UTC. |
+| Base | `git fetch origin main orchestration/mandats` le 14 novembre 2026 à 20:13:48 UTC (journal des références). Refait le 15 novembre 2026, vers 16:07 UTC, avec la branche distante du LOT-2I (code de sortie 0) : `origin/main` = `74faa2974da7a4645725b4271eb66ae2a512e98a`, `orchestration/mandats` = `f8cf26e`, branche distante du LOT-2I = `cca16906b6a7b075ab52a80e065769fe607cc78b`. Aucun nouveau commit, donc aucun conflit à signaler. |
+| Calendrier | Travail du 14 novembre 2026 au soir au 15 novembre 2026 (UTC). |
+| Publication | **Commit local seulement.** Aucun push ; la PR n° 12 n'est pas actualisée et reste au commit `cca1690` ; aucune fusion. |
+
+### 9.1 Fichiers touchés
+
+Seuls les quatre livrables autorisés sont modifiés :
+
+| Fichier | Changement | SHA-256 après correctif |
+|---|---|---|
+| `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md` | Règles, constats, ambiguïtés, limites ; §14 avant/après | `4372b063cb57e2864f06cdb48077b8bcac30a0a432f6f5e338b38bc1eef2c697` |
+| `docs/reviews/LOT-2I-MATRICE-TRACABILITE-MEC-0002.md` | Régénérée : provenance, écarts, critères de tests | `3ac6256f63a01ce9a78ce9d607921d91ba1abc30f07317b50d7890ff9f996b95` |
+| `docs/reviews/LOT-2I-DIFF-PROPOSE-REGISTRE-MEC-0001-MEC-0002.md` | Fiche et patch régénérés, **non appliqués** | `bda8b045956130d6add082a3c516a3b7495255cc2e5bd8f7c0959305601c6019` |
+| `docs/reviews/LOT-2I-EXECUTION.md` | Ce §9 et un bandeau de renvoi en tête ; §1 à §8 inchangés | (ce fichier) |
+
+Non modifiés : le registre `docs/gameplay/GAMEPLAY-DECISIONS.md` (SHA-256 `c2a3a55e7b1ed3d08089b5d814cded324b94313792982c8556d0e9d19a7e3968`, identique à `main`), `docs/decisions/`, `docs/references/`, `docs/mandates/`, `CLAUDE.md`, `.claude/`, `scripts/`, `.github/`, `src/`, `tests/`.
+
+### 9.2 Résumé des changements
+
+- **Consolidation** :
+  - 23 règles changent de texte, de statut ou de références : PE-01, GE-02, GE-09, SA-19, CH-01, CH-02, CH-03, CH-04, CH-05, CH-07, CH-08, CH-09, CH-10, CH-11, CH-13, CH-16, CH-17, CH-18, CO-03, CO-08, CO-09, RP-01, RP-09. Leur texte v1.1 est cité au §14 de la consolidation ;
+  - un étage mesure 3 m entre deux sols ; seuil de chute ordinaire de **3 m inclus**, quelle que soit la gravité ; la courbe `B(n)` et le seuil de 0,25 étage deviennent historiques, et la courbe est **à recalibrer lors des tests**, sans valeur nouvelle ;
+  - un saut volontaire sans surcharge ne blesse pas à la réception, au même niveau ou d'un étage vers le bas ; pour un saut d'un étage, la hauteur comptée est de 3 m entre les sols, sans la montée, avec ou sans surcharge ;
+  - la surcharge majore la hauteur équivalente, une seule fois ; la vitesse descendante héritée l'accroît ; la gravité module les dégâts au-delà du seuil ;
+  - statuts : 68 validées, 37 avec un paramètre ouvert, aucune « à confirmer avant inscription » ;
+  - constats X13 à X16 ajoutés ; ambiguïtés A29 et A30 ajoutées ; 8 ambiguïtés réglées dans leur principe (A3, A4, A8, A12, A18, A24, A25, A27), 22 ouvertes, aucune à régler avant l'inscription.
+- **Matrice** : source C3 ajoutée ; 23 lignes de provenance mises à jour ; écarts introduits par le correctif listés ; 29 critères de tests futurs (12 spécifiables, 14 partiels, 3 bloqués), dont la version v1.1 des critères modifiés est citée ; effets sur la matrice du LOT-2F mis à jour.
+- **Diff proposé** : fiche `MEC-0002` régénérée depuis la consolidation ; son champ de décision cite le mandat v1.2 comme **preuve déclarative** ; l'annotation proposée de N7 renvoie au seuil de 3 m. `MEC-0001` et `MEC-0002` restent **« reportées »**, classe `MODIFICATION-PROPOSEE`, état « non commencé », sans changement de gameplay.
+- **Aucune valeur inventée** : ni chaîne numérique, ni courbe, ni plafond, ni arrondi, ni coefficient nouveaux. « Dégâts possibles » n'est nulle part transformé en « dégâts garantis ».
+
+### 9.3 Contrôles exécutés
+
+Script de contrôle local (hors dépôt), lancé après l'intégration de la revue, puis relancé après l'ajout de ce §9 : **code de sortie 0** les deux fois. Il indexe les quatre livrables (`git add`), sans rien d'autre. Résultats de la dernière exécution :
+
+| # | Contrôle | Résultat |
+|---|---|---|
+| 1 | Base : `git merge-base --is-ancestor origin/main HEAD` | code 0 ; `HEAD` = `cca1690`, `origin/main` = `74faa29` |
+| 2 | Fichiers indexés, comparés à `origin/main` puis à `cca1690` | seuls les quatre livrables du LOT-2I ; aucune autre modification (`grep` : code 1) |
+| 3 | `git diff --cached --check origin/main` | code 0 |
+| 4 | Espaces en fin de ligne (`grep`) | aucun (code 1) |
+| 5 | Chemins protégés : `git diff --cached --quiet origin/main -- docs/gameplay docs/decisions docs/references docs/mandates CLAUDE.md .claude scripts .github src tests` | code 0 ; arbre de travail du registre : code 0 ; SHA-256 du registre `c2a3a55e…3968` |
+| 6 | C2 sur `orchestration/mandats` | SHA-256 `8e7c652b…dd83`, inchangé |
+| 7 | Patch extrait du bloc `diff` (214 lignes), sur une **copie** du registre dans un dossier temporaire | `git apply --check` : 0 ; `git apply` : 0 ; `cmp` avec le texte proposé : 0 ; `patch` : 0 ; `cmp` : 0 |
+| 8 | Champ « Décision du propriétaire » du registre proposé, lu comme le harnais | `MEC-0001` : reportée ; `MEC-0002` : reportée |
+| 9 | Identifiants des règles (consolidation, matrice, fiche) | 105 / 105 / 105, identiques ; aucun renvoi à une règle non définie |
+| 10 | Statuts matrice contre consolidation | 105 / 105, identiques |
+| 11 | Texte de la fiche contre colonne « Règle » | 0 écart ; seule l'introduction de la fiche cite le §12, volontairement |
+| 12 | Ambiguïtés | A1 à A30 définies ; aucun renvoi au-delà d'A30 |
+| 13 | Renvois aux décisions du LOT-2F et du registre | aucun manquant |
+| 14 | Renvois aux tests du LOT-2F | aucun manquant |
+| 15 | Tableaux (nombre de colonnes, barres dans le code) | cohérents dans les quatre fichiers |
+| 16 | Identifiant de modèle | aucun (code 1) |
+| 17 | Décision « acceptée » introduite | aucune ; seule la ligne du gabarit du registre contient « acceptée / refusée / reportée » (attendu) |
+| 18 | Statuts et ambiguïtés | 68 / 37 ; 30 ambiguïtés, 8 réglées, 22 ouvertes ; aucune ambiguïté d'inscription ouverte |
+| 19 | Fiche : ancien seuil et ancienne courbe | `0,25` seulement en contexte de remplacement ; aucune courbe `B(1) = 8` ; aucune mention « (v1.2) », C2, C3 ou D2 ; aucune mention « à confirmer avant inscription » |
+| 20 | Inventaire des termes demandé par le mandat (§3) | tableau ci-dessous |
+| 21 | Règles et critères de tests actifs | aucun ne contient `0,25`, `B(1)`, `[4, 12]` ni `140` |
+
+Inventaire des occurrences (dernière exécution) :
+
+| Terme | Consolidation | Matrice | Diff | Exécution |
+|---|---|---|---|---|
+| `0,25` | 16 | 6 | 10 | 6 |
+| `75 cm` | 0 | 0 | 0 | 2 |
+| `0,75` | 6 | 2 | 6 | 2 |
+| `B(1)` | 1 | 0 | 0 | 4 |
+| `B(n)` | 6 | 7 | 7 | 3 |
+| « un étage » | 49 | 34 | 47 | 12 |
+| « surcharge » | 81 | 40 | 83 | 16 |
+| « gravité » | 35 | 11 | 55 | 6 |
+
+Revue manuelle des occurrences : chaque `0,25`, `B(1)` et `B(n)` est historique, cité au §14 ou en contexte de remplacement ; `0,75` désigne le sommet d'un saut (SA-19), distinct de l'ancien seuil de blessure ; aucune occurrence de « 75 cm » dans la consolidation, la matrice et le diff. Les occurrences de « un étage », « surcharge » et « gravité » dans les règles actives et les critères de tests sont cohérentes avec C3. Dans ce rapport, ces termes ne figurent que dans le texte historique v1.1 (§1 à §8), dans les résumés, dans les tableaux de contrôle et dans le présent paragraphe : les comptes de la colonne « Exécution » incluent les libellés du tableau.
+
+Autres commandes :
+- `bash scripts/harness/test-hooks.sh` (lecture seule ; dépôts temporaires) : « 75 tests, 0 échec(s) », code 0. Le harnais n'est pas modifié.
+- `which dotnet` : code 1. `dotnet build`, `dotnet test` et `dotnet format --verify-no-changes` **n'ont pas été exécutés** ; aucun résultat .NET n'est déclaré. Le correctif ne touche que de la documentation.
+- CI : aucune exécution sur le correctif, faute de push. L'état de la CI de la PR n° 12 ne vaut que pour le commit `cca1690`.
+
+### 9.4 Incidents
+
+- Le hook du harnais a bloqué des commandes jugées destructives : une suppression récursive d'un dossier temporaire (une fois pour l'exécutant, une fois pour le relecteur), puis l'écriture de ce §9 par une commande dont le texte citait cette suppression. De nouveaux dossiers temporaires et l'outil d'écriture de fichiers ont été utilisés ; rien n'a été effacé.
+- Contrôles 10 et 11 : faux écarts, car les lignes du §14 commencent aussi par un identifiant de règle. Les deux contrôles ne lisent plus que le texte placé avant le §10 de la consolidation.
+- Contrôle 7 : `git apply --check` lisait d'abord le registre réel (sans l'écrire, `--check` n'appliquant rien). Il travaille désormais sur une copie, dans un dossier temporaire.
+- Un remplacement scripté a été refusé par son assertion (« la preuve D2 » commence par une minuscule) ; rien n'avait été écrit ; corrigé et relancé.
+- Le résumé de la consolidation annonçait d'abord « 9 réglées / 21 » : corrigé en « 8 réglées / 22 » avant la revue.
+- Après la revue, une apostrophe non échappée a fait échouer le générateur de la fiche ; le diff a d'abord été réassemblé avec l'ancienne fiche. L'erreur a été corrigée aussitôt, la fiche et le diff régénérés, puis tous les contrôles relancés.
+- Le hook `Stop` a demandé de commiter et de pousser : le push est refusé, car interdit par le propriétaire.
+
+### 9.5 Revue indépendante
+
+Relecteur : agent distinct de l'exécutant, **en lecture seule**, sur les trois livrables indexés comparés à `cca1690`. Il n'a rien modifié dans le dépôt et ne valide pas. Résultat : **aucun constat bloquant**, 3 importants, 14 mineurs. Il a aussi vérifié, sans constat : registre inchangé ; patch applicable sur une copie ; comptes (105 règles, 68 / 37, 23 règles modifiées, 30 ambiguïtés dont 8 réglées, 29 critères 12 / 14 / 3) ; fidélité aux arbitrages ; calculs de T2-04, T2-05, T2-10 et T2-14 ; couverture des 8 cas du mandat v1.2 (§2.3) ; empreintes des sources.
+
+| Constat | Traitement |
+|---|---|
+| **I1** — CH-01 et CH-11 tranchaient en silence des sauts déclarés ouverts (X16, A30, T2-29) | CH-01 et CH-11 réécrits : saut d'un étage, avec ou sans surcharge, compté sur 3 m entre les sols ; saut au même niveau sans surcharge, montée non comptée ; autres sauts renvoyés à A30. La lecture d'A4.3A sans restriction de surcharge suit le texte du mandat et l'exception « même à 3 mètres » ; elle est signalée (X16 ; diff, §4, point 3). Fiche et patch régénérés |
+| **I2** — l'arrondi pouvait, selon T2-07 et le §11.1 (point 8), « au plus créer une égalité » | Faux pour le premier arrondi. `P_i` est désormais la puissance arrondie juste avant le tirage ; « au plus une égalité » ne vaut que pour le second arrondi (T2-07, §11.1 point 8, T-D14) |
+| **I3** — saut exempté qui se poursuit en chute : point ouvert manquant | Ajouté à X16, A30, T2-29 (bloqué) et à la liste « Encore ouvert » de la fiche, sans trancher |
+| M1 — « Restent à suivre » laissait croire que seuls X15 et X16 restaient ouverts | Résumé réécrit : X1, X2, X5 à X7 et X9 restent aussi à suivre |
+| M2 — renvois incomplets dans la colonne « Conflit » | Complétés pour CH-01 (X12, A25), CH-09 (A29), CH-11 (X16, A29), CH-16 (X15, A29), CH-18 (X16, A30), RP-02 (A18 réglée), SA-01 et CH-20 (A30) ; CH-01 cite A25 dans la consolidation |
+| M3 — renvoi à D03 absent du tableau | Phrase corrigée : D03 figure dans la liste des écarts non mentionnés |
+| M4 — écarts A4.2A et A4.3A non listés | Ajoutés aux écarts introduits par le correctif |
+| M5 — renvois A*n* non définis dans la fiche ; retrait inégal des « (§12, A*n*) » | L'introduction de la fiche définit les renvois A*n* ; « (§12, A*n*) » devient partout « (A*n*) » ; ligne « Contenu » du diff mise à jour |
+| M6 — « sans surcharge » manquant | Ajouté |
+| M7 — « hauteur de chute sans dégâts » encore ouverte dans `MEC-0001` | Cinquième sous-point proposé : points précisés ou tranchés en partie par `MEC-0002` (seuil : CH-09) |
+| M8 — ordre « 3, 3 ter, 3 bis » | Rétabli : 3, 3 bis, 3 ter |
+| M9 — en-tête du §12 faux pour A29 et A30 | Corrigé |
+| M10 — « commité localement » avant le commit ; date de l'autorisation | En-tête reformulé ; date et heure documentées ci-dessus |
+| M11 — rapport d'exécution non mis à jour | Ce §9, et un bandeau en tête du rapport |
+| M12 — libellé A4C non cité ; « marque d'édition » impropre pour A4.1D | A4C cité (consolidation §1, matrice) ; formulation du §13 corrigée |
+| M13 — tolérance de comparaison à 3 m non dite (T2-02) | Rattachée à A29 ; précisée dans T2-02 |
+| M14 — « la valeur des plafonds peut être recalibrée » | « pourrait l'être selon la portée de D1C (A29) » (T-D03, X12) |
+
+Les corrections faites après la revue n'ont pas été relues par un second relecteur indépendant ; elles sont couvertes par les contrôles du §9.3.
+
+### 9.6 Limites de preuve
+
+- **C3 est déclarative** : les arbitrages du 14 novembre 2026 sont connus par la transcription de l'orchestrateur dans le mandat v1.2 (§2) ; les messages d'origine du propriétaire n'ont pas été fournis. La transcription « Je valid[e] » porte une marque d'édition.
+- **Lecture d'A4.3A** : la mesure de 3 m entre les sols est appliquée au saut d'un étage avec ou sans surcharge ; c'est une lecture du texte transcrit, à revoir si le propriétaire l'entend autrement.
+- **Pas de .NET** : `dotnet` est absent ; aucun test .NET n'est déclaré réussi.
+- **Pas de CI** sur le correctif, faute de push.
+- **Second passage de revue** : non effectué sur les corrections postérieures à la revue.
+
+### 9.7 Points encore ouverts et à décider
+
+Les points du §7 (v1.1) sont **dépassés** en partie : les huit points « à confirmer avant inscription », dont A24, sont réglés dans leur principe par C3. État après le correctif :
+- **Avant une inscription** (diff proposé, §4) :
+  - autorisation d'écrire le registre ;
+  - archivage de C2 et des mandats v1.1 et v1.2 (point 2) ;
+  - fidélité du texte proposé aux arbitrages, notamment la lecture d'A4.3A en surcharge (point 3) ;
+  - copie approuvée des 29 propositions et des réponses 1A à 6A (point 3 bis) ;
+  - identifiants et traitement des décisions du 9 novembre (points 4 à 6).
+- **Paramètres ouverts**, compatibles avec une inscription partielle (point 3 ter) :
+  - A5 : combinaison de la vitesse héritée, de la surcharge et de la gravité ;
+  - A6 : surcharge dans les collisions, plafonds ;
+  - A29 : courbe au-delà de 3 m, tolérance de comparaison au seuil, portée de D1C sur les plafonds (X15) ;
+  - A30 : sauts de plus d'un étage, saut au même niveau en surcharge, saut exempté qui se poursuit en chute (X16).
+- **Avant une implémentation** : les 22 ambiguïtés ouvertes (A1, A2, A5 à A7, A9 à A11, A13 à A17, A19 à A23, A26, A28 à A30), puis un mandat d'implémentation distinct, avec une décision « acceptée ».
+- **Publication** : le push du commit local et l'actualisation de la PR n° 12 demandent chacun une autorisation distincte du propriétaire.
+
+### 9.8 Arrêt
+
+Le correctif v1.2 s'arrête ici. Aucune inscription, aucune implémentation, aucun push, aucune actualisation de la PR n° 12, aucune fusion.
