@@ -166,7 +166,7 @@ Ce paragraphe est **ajouté** au rapport. Les §1 à §8 ne sont pas réécrits 
 | Autorisation | Message du propriétaire, daté par lui du 14 novembre 2026, reçu trois fois à l'identique : exécution du v1.2 ; modification **locale** des seuls quatre livrables du LOT-2I ; branche `docs/lot-2i-consolidation-mec-0002`. Interdits : registre protégé, gameplay, harnais, archivage, push, actualisation de la PR n° 12, fusion. L'heure exacte du message n'est pas vérifiable ; elle est cohérente avec le commit du mandat (20:11 UTC) et la récupération de 20:13 UTC. Puis nouvelle autorisation du propriétaire, reçue le 15 novembre 2026 (UTC) et non datée par lui, pour le même mandat, les mêmes quatre fichiers et la même branche : contrôles documentaires, vérification du harnais, revue indépendante en lecture seule, corrections dans le périmètre ; aucune publication sans nouvelle autorisation explicite. |
 | Base | `git fetch origin main orchestration/mandats` le 14 novembre 2026 à 20:13:48 UTC (journal des références). Refait le 15 novembre 2026, vers 16:07 UTC, avec la branche distante du LOT-2I (code de sortie 0) : `origin/main` = `74faa2974da7a4645725b4271eb66ae2a512e98a`, `orchestration/mandats` = `f8cf26e`, branche distante du LOT-2I = `cca16906b6a7b075ab52a80e065769fe607cc78b`. Aucun nouveau commit, donc aucun conflit à signaler. Refait encore à 16:29 UTC, après la nouvelle autorisation (code 0) : mêmes références. |
 | Calendrier | Travail du 14 novembre 2026 au soir au 15 novembre 2026 (UTC). |
-| Publication | **Commits locaux seulement** : `4bb8822`, puis un commit d'intégration de la seconde revue. Aucun push ; la PR n° 12 n'est pas actualisée et reste au commit `cca1690` ; aucune fusion. |
+| Publication | D'abord des commits locaux seulement : `4bb8822`, puis `ffe9623` (intégration de la seconde revue). Puis autorisée par le propriétaire le 15 novembre 2026 (« Je valide », précisé en « Pousser et actualiser la PR ») : branche poussée, sans forçage, et description de la PR n° 12 mise à jour ; la PR reste en brouillon ; **aucune fusion**. Le même jour, le propriétaire choisit de laisser en l'état la lecture d'A4.3A, qui reste à vérifier avant une inscription. |
 
 ### 9.1 Fichiers touchés
 
@@ -174,7 +174,7 @@ Seuls les quatre livrables autorisés sont modifiés :
 
 | Fichier | Changement | SHA-256 après correctif |
 |---|---|---|
-| `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md` | Règles, constats, ambiguïtés, limites ; §14 avant/après | `7b506b6ac2233e3194c7a6177585a8f7cbdac2eca1786fb66f2297d2b8281ce5` |
+| `docs/reviews/LOT-2I-CONSOLIDATION-MEC-0002.md` | Règles, constats, ambiguïtés, limites ; §14 avant/après | `8a06ca39d71073b463f1feac1cf0ac29956f01d6934d8a1aa159c3c637fd9de2` |
 | `docs/reviews/LOT-2I-MATRICE-TRACABILITE-MEC-0002.md` | Régénérée : provenance, écarts, critères de tests | `a75bbcfcaff3aa3be191ab0fa287eaf0b7319787689597c6ecebbe5081d93019` |
 | `docs/reviews/LOT-2I-DIFF-PROPOSE-REGISTRE-MEC-0001-MEC-0002.md` | Fiche et patch régénérés, **non appliqués** | `f82230ba8f9078514d6736acf8d339da19e88676c4f5393842d2d317bee76a94` |
 | `docs/reviews/LOT-2I-EXECUTION.md` | Ce §9 (avec la seconde revue au §9.8) et un bandeau de renvoi en tête ; §1 à §8 inchangés | (ce fichier) |
@@ -201,7 +201,7 @@ Script de contrôle local, hors dépôt. Il n'est pas versionné, car seuls les 
 
 | # | Contrôle | Résultat |
 |---|---|---|
-| 1 | Base : `git merge-base --is-ancestor origin/main HEAD` | code 0 ; `HEAD` = `4bb8822` (premier commit local du correctif ; l'index porte l'état final), `origin/main` = `74faa29` |
+| 1 | Base : `git merge-base --is-ancestor origin/main HEAD` | code 0 ; `HEAD` = dernier commit local du correctif au moment du contrôle (`ffe9623`), l'index portant l'état final ; `origin/main` = `74faa29` |
 | 2 | Fichiers indexés, comparés à `origin/main` puis à `cca1690` | seuls les quatre livrables du LOT-2I ; aucune autre modification (`grep` : code 1) |
 | 3 | `git diff --cached --check origin/main` | code 0 |
 | 4 | Espaces en fin de ligne (`grep`) | aucun (code 1) |
@@ -241,7 +241,7 @@ Revue manuelle des occurrences : chaque `0,25`, `B(1)` et `B(n)` est historique,
 Autres commandes :
 - `bash scripts/harness/test-hooks.sh` (lecture seule ; dépôts temporaires) : « 75 tests, 0 échec(s) », code 0, lancé trois fois (avant le premier commit local, sur `4bb8822`, puis sur l'état final). Le harnais n'est pas modifié.
 - `which dotnet` : code 1. `dotnet build`, `dotnet test` et `dotnet format --verify-no-changes` **n'ont pas été exécutés** ; aucun résultat .NET n'est déclaré. Le correctif ne touche que de la documentation.
-- CI : aucune exécution sur le correctif, faute de push. L'état de la CI de la PR n° 12 ne vaut que pour le commit `cca1690`.
+- CI : aucune exécution sur le correctif avant sa publication. Ce rapport est écrit avant le push : le résultat de la CI sur le commit publié est relevé dans le compte rendu au propriétaire, pas ici.
 
 ### 9.4 Incidents
 
@@ -284,7 +284,7 @@ Ces traitements ont ensuite été relus par un second relecteur (§9.8), qui les
 - **C3 est déclarative** : les arbitrages du 14 novembre 2026 sont connus par la transcription de l'orchestrateur dans le mandat v1.2 (§2) ; les messages d'origine du propriétaire n'ont pas été fournis. La transcription « Je valid[e] » porte une marque d'édition.
 - **Lecture d'A4.3A** : la mesure de 3 m entre les sols est appliquée au saut d'un étage avec ou sans surcharge. C'est une lecture littérale du texte transcrit, et non une ambiguïté ; elle relève de la vérification de fidélité prévue avant une inscription, et serait à revoir si le propriétaire l'entendait autrement.
 - **Pas de .NET** : `dotnet` est absent ; aucun test .NET n'est déclaré réussi.
-- **Pas de CI** sur le correctif, faute de push.
+- **CI** : ce rapport, écrit avant le push, ne contient pas le résultat de la CI sur le commit publié.
 - **Revues** : deux revues indépendantes en lecture seule ont eu lieu (§9.5, §9.8). Les corrections issues de la seconde n'ont pas été relues par un troisième relecteur ; elles sont couvertes par les contrôles du §9.3.
 - **Contrôles** : le script n'est pas versionné ; ses résultats sont déclaratifs (§9.3).
 
@@ -303,7 +303,7 @@ Les points du §7 (v1.1) sont **dépassés** en partie : les huit points « à c
   - A29 : courbe au-delà de 3 m, tolérance de comparaison au seuil, portée de D1C sur les plafonds et sur le plafond 2 de `F_surcharge` (X15) ;
   - A30 : sauts de plus d'un étage, saut au même niveau en surcharge, saut exempté qui se poursuit en chute, réception de l'attaquant après un choc contre sa cible (X16).
 - **Avant une implémentation** : les 22 ambiguïtés ouvertes (A1, A2, A5 à A7, A9 à A11, A13 à A17, A19 à A23, A26, A28 à A30), puis un mandat d'implémentation distinct, avec une décision « acceptée ».
-- **Publication** : le push du commit local et l'actualisation de la PR n° 12 demandent chacun une autorisation distincte du propriétaire.
+- **Publication** : push et actualisation de la PR n° 12 autorisés par le propriétaire le 15 novembre 2026 ; une **fusion** demande une autorisation distincte.
 
 ### 9.8 Seconde revue indépendante
 
@@ -333,4 +333,4 @@ Fichiers modifiés depuis `4bb8822` : les quatre mêmes livrables, et eux seuls.
 
 ### 9.9 Arrêt
 
-Le correctif v1.2 s'arrête ici. Aucune inscription, aucune implémentation, aucun push, aucune actualisation de la PR n° 12, aucune fusion.
+Le correctif v1.2 s'arrête ici. Aucune inscription, aucune implémentation, aucune fusion. La publication de cette seule branche, en PR brouillon, a été autorisée séparément par le propriétaire. Toute suite demande une autorisation distincte du propriétaire.
