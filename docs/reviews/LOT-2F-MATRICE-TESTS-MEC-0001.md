@@ -1,5 +1,7 @@
 # LOT-2F — Matrice de tests futurs de `MEC-0001`
 
+> **Document historique** *(avertissement ajouté le 17 novembre 2026)*. Cette matrice précède `MEC-0002` et les sous-décisions de `MEC-0001` du 17 novembre 2026 (ARB-A à ARB-E, G1 à G4), inscrites dans `docs/gameplay/GAMEPLAY-DECISIONS.md`. Certains attendus ne sont plus des oracles actuels, notamment T-M05 (diagonale près d'une unité : contrôle physique, ARB-A et G1), T-M09 (corps non bloquants pour la marche : ARB-B), T-M11 (récupération des TU : ARB-D) et les tests relatifs aux sauts, chutes, esquives et impacts, qui relèvent de `MEC-0002` (voir `docs/reviews/LOT-2I-MATRICE-TRACABILITE-MEC-0002.md`, §4). La matrice candidate à jour figure au §5 de la consolidation documentaire `MEC-0001` v1.4.1, hors dépôt (SHA-256 `b7874c48169c8c4a8af38fb5b52d56516d90114fb1dae23cd1a621694ae1b3cc`). Le texte ci-dessous est conservé sans modification.
+
 Compagnon de `docs/reviews/LOT-2F-SPECIFICATION-MEC-0001.md` : les identifiants de règles (M, J, P, K, D, I) et de points ouverts (E) y sont définis.
 
 **Aucun test n'est écrit ni exécuté.** Ce document décrit des scénarios ; il n'autorise aucune implémentation.
