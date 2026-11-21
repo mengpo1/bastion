@@ -1,0 +1,49 @@
+T01 :: Sp
+T02 :: Sp
+T03 :: Pa (géométrie, PNV-6)
+T04 :: Pa (bornes [OUV] ; au-delà : PNV-5)
+T05 :: Sp (sur la formulation résumée de Q4.16)
+T06 :: Sp
+T07 :: Sp
+T08 :: Sp
+T09 :: Sp
+T10 :: Pa (critères [OUV])
+T11a :: (a), (b) : Sp (tir simulé) ; (c) : Pa
+T11b :: Pa (profil de connexion)
+T12 :: Pa (profil de connexion)
+T13 :: Pa (chemin et coût du retour)
+T14 :: Sp
+T15 :: Pa (support pendant le pas, [OUV] et PNV-6)
+T16 :: Sp
+T17 :: Sp
+T18 :: Sp
+T19 :: Sp
+T20 :: Sp
+T21 :: Sp
+T22 :: Sp (passages praticables)
+T23 :: Sp (sélection abstraite)
+T24 :: Pa (correspondance emplacement / case [OUV])
+T25 :: Sp
+T26 :: Pa (1 274 mm : PNV-3 ; « dans sa case » : PNV-4) ⟨B3-03⟩
+T27 :: Sp
+T28 :: Pa (volume balayé)
+T29 :: Pa (marche des autres postures)
+T30 :: Sp
+T31 :: Pa (table [OUV])
+T32 :: Sp
+T33 :: Pa (sens [OUV])
+T34 :: Ou (méthode)
+T35 :: Sp (visibilité simulée)
+T36 :: Pa (critères [OUV], comme T10)
+T37 :: Sp (sélection abstraite)
+T38 :: Sp (pivot simulé)
+T39 :: Sp pour la comptabilité ; ordre des réactions [OUV]
+T40 :: Sp en principe (représentation des connexions [OUV])
+T41 :: Sp (murs pleins)
+T42 :: Pa (sous-segments)
+T43 :: Pa (géométrie et praticabilité du trajet ; **pas** PNV-7)
+T44 :: Sp
+T45 :: Sp (passage supposé praticable, comme T02 et T22) ; test intégré de la géométrie : Pa
+T46 :: Pa (géométrie)
+T47 :: Sp (coût réel simulé)
+T48 :: (a) Pa (modalités de conversion [OUV]) ; (b) Sp

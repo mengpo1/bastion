@@ -1,0 +1,25 @@
+OK    commit du clone = 441cae1b071d249d40a223858cb6bd07fd5d791b
+OK    BU:2733 ouvre prepareEnergy
+OK    BU:2742 ferme prepareEnergy
+OK    BU:2738 seule soustraction : blessures mortelles au torse
+OK    BU:2733-2742 sans terme de poids ni de charge
+OK    BU:2946 appelle [code OXCE retiré — D4]
+OK    BU:2902-2909 additionne les bonus du soldat dans ENRecovery
+OK    BU:2910 ne contient que l'accolade fermante du if
+OK    BU:2717 : getCarriedWeight dans prepareTimeUnits (BU:2709-2727)
+OK    BU:2894-2948 (updateUnitStats) sans getCarriedWeight
+OK    BattleUnit.cpp : getCarriedWeight seulement l.2717, 3110 (addItem) et 4852 (définition) : [2717, 3110, 4852]
+OK    Armor.cpp:60 : [code OXCE retiré — D4]
+OK    Armor.cpp:234 : chargement depuis la clé recovery, avec analyseur de script
+OK    Armor.cpp:789-791 : getEnergyRecovery = [code OXCE retiré — D4] (non cité)
+OK    RuleStatBonus.cpp:537-544 : setEnergyRecovery = energyRegen x 1.0
+OK    RuleStatBonus.cpp:292 : energyRegen -> basicEnergyRegeneration
+OK    RuleStatBonus.cpp:144-155 : TU initiales / 3 pour un soldat, sinon récupération de la règle de l'unité
+OK    RuleStatBonus.cpp:144-155 sans terme de poids
+OK    RuleStatBonus.cpp:579 : la sortie part de externalBonuses (non cité)
+OK    RuleStatBonus.cpp:382 : le script par défaut part de « bonus » (non cité)
+OK    RuleStatBonus.cpp:363-366 : une chaîne sous la clé est chargée comme script (non cité)
+OK    liste des termes de bonus (50) sans terme de poids ni de charge
+OK    RuleStatBonus.h : [code OXCE retiré — D4] et _bonusOrig vide par défaut
+OK    RuleSoldierBonus.cpp:57-60 : récupération d'énergie du bonus de soldat chargée depuis sa propre clé recovery (non cité)
+TOUS_OK True

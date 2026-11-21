@@ -1,0 +1,178 @@
+##### document I
+validation dans §0.1: True
+arbitrage l.32 dans §2 bis: True
+arbitrage l.45 dans §2 bis: True
+arbitrage l.59 dans §2 bis: True
+arbitrage l.73 dans §2 bis: True
+arbitrage l.85 dans §2 bis: True
+arbitrage l.96 dans §2 bis: True
+statut l.42: True principe validé ; modalités ouvertes
+statut l.56: True règle validée
+statut l.70: True règle validée ; modalités techniques restantes ouvertes
+statut l.82: True règle validée
+statut l.93: True clarification validée
+statut l.107: True articulation validée
+TOUS_OK True
+S-7 [I] EXIT=0
+rattachements contrôlés : 65 ; non cités : 0
+S-8 [I] EXIT=0
+OK    AN-01 T04 porte ⟨B3-03⟩
+OK    AN-02 tableau des identifiants JS-22 à JS-38
+OK    AN-02 plus de « message 1 / message 2 » nus au §0.1
+OK    AN-02 JS-31 et JS-35 au §0.1
+OK    AN-03 T47 (b) atteignable
+OK    AN-04 absence de « toutes les données géométriques »
+OK    AN-04 absence de « concordance de troncature »
+OK    AN-04 absence de « dans sa case »
+OK    AN-04 (a) D:30 cité
+OK    AN-04 (b) citation exacte
+OK    AN-04 (c) T26
+OK    AN-05 W-11 (a)
+OK    AN-06 | T03 | rattaché à R:134
+OK    AN-06 | T42 | rattaché à R:134
+OK    AN-06 | T43 | rattaché à R:134
+OK    AN-06 | T46 | rattaché à R:134
+OK    AN-06 ligne PNV du §12
+OK    AN-07 R:166
+OK    AN-07 G3
+OK    AN-08 script inventorié avec son empreinte : verif-v04/extract.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/last_user.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/make_v041.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/check_labels.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/calculs.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/make_v042.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/check_textes.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/check_matrice.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/calculs_v042.py
+OK    AN-08 script inventorié avec son empreinte : verif-v043/check_v043.py
+OK    AN-08 script inventorié avec son empreinte : verif-v043/citations_v043.py
+OK    AN-08 script inventorié avec son empreinte : verif-v043/calculs_v043.py
+OK    AN-08 JS-29 inventorié (14 bis)
+OK    AN-08 concordance fortuite de JS-22 expliquée
+OK    OB-01
+OK    OB-02
+OK    OB-03
+OK    OB-04
+OK    OB-05
+OK    OB-06
+OK    OB-07
+OK    Phrase finale
+TOUS_OK True
+S-10 [I] EXIT=0
+citations : 269 ; sources primaires : 254 ; document ou versions antérieures : 15 ; introuvables : 0
+S-11 [I] EXIT=0
+##### document E
+validation dans §0.1: True
+arbitrage l.32 dans §2 bis: True
+arbitrage l.45 dans §2 bis: True
+arbitrage l.59 dans §2 bis: True
+arbitrage l.73 dans §2 bis: True
+arbitrage l.85 dans §2 bis: True
+arbitrage l.96 dans §2 bis: True
+statut l.42: True principe validé ; modalités ouvertes
+statut l.56: True règle validée
+statut l.70: True règle validée ; modalités techniques restantes ouvertes
+statut l.82: True règle validée
+statut l.93: True clarification validée
+statut l.107: True articulation validée
+TOUS_OK True
+S-7 [E] EXIT=0
+rattachements contrôlés : 65 ; non cités : 0
+S-8 [E] EXIT=0
+OK    AN-01 T04 porte ⟨B3-03⟩
+OK    AN-02 tableau des identifiants JS-22 à JS-38
+OK    AN-02 plus de « message 1 / message 2 » nus au §0.1
+OK    AN-02 JS-31 et JS-35 au §0.1
+OK    AN-03 T47 (b) atteignable
+OK    AN-04 absence de « toutes les données géométriques »
+OK    AN-04 absence de « concordance de troncature »
+OK    AN-04 absence de « dans sa case »
+OK    AN-04 (a) D:30 cité
+OK    AN-04 (b) citation exacte
+OK    AN-04 (c) T26
+OK    AN-05 W-11 (a)
+OK    AN-06 | T03 | rattaché à R:134
+OK    AN-06 | T42 | rattaché à R:134
+OK    AN-06 | T43 | rattaché à R:134
+OK    AN-06 | T46 | rattaché à R:134
+OK    AN-06 ligne PNV du §12
+OK    AN-07 R:166
+OK    AN-07 G3
+OK    AN-08 script inventorié avec son empreinte : verif-v04/extract.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/last_user.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/make_v041.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/check_labels.py
+OK    AN-08 script inventorié avec son empreinte : verif-v04/calculs.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/make_v042.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/check_textes.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/check_matrice.py
+OK    AN-08 script inventorié avec son empreinte : verif-v042/calculs_v042.py
+OK    AN-08 script inventorié avec son empreinte : verif-v043/check_v043.py
+OK    AN-08 script inventorié avec son empreinte : verif-v043/citations_v043.py
+OK    AN-08 script inventorié avec son empreinte : verif-v043/calculs_v043.py
+OK    AN-08 JS-29 inventorié (14 bis)
+OK    AN-08 concordance fortuite de JS-22 expliquée
+OK    OB-01
+OK    OB-02
+OK    OB-03
+OK    OB-04
+OK    OB-05
+OK    OB-06
+OK    OB-07
+OK    Phrase finale
+TOUS_OK True
+S-10 [E] EXIT=0
+citations : 270 ; sources primaires : 255 ; document ou versions antérieures : 15 ; introuvables : 0
+S-11 [E] EXIT=0
+##### sans document
+bareme {'normal': ((4, 2), (6, 3)), 'difficile': ((6, 3), (9, 5)), 'tres difficile': ((8, 4), (12, 6))}
+T01 56 98
+T02 51 95 loi OXCE energie 4
+T05 minimum (10, 5) ex aequo [('NE', 'E'), ('E', 'NE')] choix ('NE', 'E')
+T18 (5, 2) (7, 3)
+T19 7
+T20 45 60 15 flottant naif 14
+T21 15 17 12 13
+min(s+60,60) pour s=0..60: {60}
+T22 diag (6, 3) detour (10, 5)
+T23 A B
+T37 B
+T44 cout 8 4 admissible avec 5 TU: False S5: reste 1
+T45 54 97
+T26 1400 848.5281374238571 850 1272.7922061357854 1274
+rotation max 1341.6 a 26.57 deg ; sqrt 1341.6
+rapport 1/2
+enveloppes paires OK
+S-5 EXIT=0
+T47 (a) 46 93
+T47 (b) pas payable ? False -> reste 5 98
+T48 (b) etendue 852.064 exact-> 854 arrondi prealable-> 852
+T48 (a) entiers True True False parite 1500 True
+T21 explication {60} 22 17 16 40/3
+OK
+S-9 EXIT=0
+T47 (a) 46 93
+T47 (b) après pas 1 8 98
+T47 (b) après pas 2 2 95
+T47 (b) pas 3 non payable : arrêt sans débit ; reste 2 95
+T48 étendue 852.0636713297897 exact -> 854 ; au plus proche -> 852 ; inférieur -> 852 ; supérieur -> 853 puis 854
+OK
+S-12 EXIT=0
+22 2026-11-19T16:25:44.422Z  PARTIEL dans PIECES-MANDATS-ET-CONFIRMATIONS.md : 47/2592 car. ; omis à partir de « Mission »
+23 2026-11-19T16:39:53.607Z  NON COPIE  « @"/root/.claude/uploads/7361641c-6eb6-5649-a764-279757212cf3/4f625a0d- »
+24 2026-11-19T19:56:49.488Z  INTEGRAL dans ['PIECES-Q4-Q5-B3-DECLARATIONS.md']  (1194 car.)
+25 2026-11-19T20:00:06.934Z  INTEGRAL dans ['PIECES-Q4-Q5-B3-DECLARATIONS.md']  (1827 car.)
+26 2026-11-19T20:02:13.775Z  INTEGRAL dans ['PIECES-Q4-Q5-B3-DECLARATIONS.md']  (3859 car.)
+27 2026-11-19T20:09:56.899Z  INTEGRAL dans ['PIECES-Q4-Q5-B3-DECLARATIONS.md']  (3394 car.)
+28 2026-11-19T20:13:09.653Z  INTEGRAL dans ['PIECES-Q4-Q5-B3-DECLARATIONS.md']  (2356 car.)
+29 2026-11-19T20:35:55.895Z  NON COPIE  « Pour Bastion MEC-0001, je te transmets les propositions et mes validat »
+30 2026-11-19T20:36:22.283Z  INTEGRAL dans ['PIECES-Q1-Q3-TRANSMISES.md']  (12962 car.)
+31 2026-11-19T20:54:21.612Z  PARTIEL dans PIECES-Q1-Q3-TRANSMISES.md : 1067/2023 car. ; omis à partir de « Mission : »
+32 2026-11-19T20:59:24.681Z  INTEGRAL dans ['PIECES-MANDATS-ET-CONFIRMATIONS.md']  (1684 car.)
+33 2026-11-19T21:08:57.339Z  INTEGRAL dans ['PIECES-MANDATS-ET-CONFIRMATIONS.md']  (1824 car.)
+34 2026-11-20T12:53:14.601Z  INTEGRAL dans ['PIECES-MANDATS-ET-CONFIRMATIONS.md']  (9990 car.)
+35 2026-11-20T13:41:45.327Z  INTEGRAL dans ['PIECE-Q1.1-Q1.4-OPTIONS-B.md']  (1864 car.)
+36 2026-11-20T14:44:23.468Z  INTEGRAL dans ['PIECE-MANDAT-v0.4.2-ARBITRAGES.md']  (11501 car.)
+37 2026-11-20T15:41:03.718Z  NON COPIE  « BASTION — Autorisation de revue indépendante MEC-0001 v0.4.2 »
+38 2026-11-20T16:12:04.779Z  INTEGRAL dans ['PIECE-MANDAT-v0.4.3-CORRECTIONS.md']  (3820 car.)
+O-5 EXIT=0

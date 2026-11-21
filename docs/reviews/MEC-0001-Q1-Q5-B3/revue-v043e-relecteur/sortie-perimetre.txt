@@ -1,0 +1,41 @@
+  bloc replace v043 l.1-1 -> erratum l.1-1
+  bloc insert  v043 l.5-4 -> erratum l.5-5
+  bloc replace v043 l.355-355 -> erratum l.356-356
+  bloc replace v043 l.833-833 -> erratum l.834-838
+OK    trois lignes retirées : titre, l.355 (§5), l.833 (§17)
+OK    huit lignes ajoutées
+OK    §5 : préfixe de la ligne inchangé
+OK    §5 : suffixe de la ligne inchangé
+  §5 : phrase remplacée par 1024 caractères, 7 phrases
+OK    §5 : [OUV] du point d'articulation conservé
+OK    §5 : phrase finale du point conservée
+OK    §17 : tableau des contrôles identique (lignes '|')
+OK    §17 : correspondance avec le §4 de P7 identique
+OK    §17 : impossibilités de vérification identiques
+OK    §17 : phrase fautive retirée
+OK    §17 : suite de l'introduction conservée
+OK    même découpage en sections
+  sections différentes : ['## 5. Coûts, ressources et surcharge', '## 17. Vérification interne de la v0.4.3']
+OK    seules §5 et §17 diffèrent (hors en-tête)
+OK    marqueur [OUV] : 49 -> 49
+OK    marqueur [DÉD] : 23 -> 23
+OK    marqueur [INS] : 25 -> 25
+OK    marqueur [VAL] : 19 -> 19
+OK    marqueur [TR] : 78 -> 78
+OK    marqueur [TR-M] : 21 -> 21
+OK    marqueur [PNV : 11 -> 11
+OK    marqueur (recommandé) : 3 -> 3
+OK    marqueur Sp : 35 -> 35
+OK    marqueur Pa : 25 -> 25
+OK    OC-01 (RD-9) : 1 -> 1 occurrence(s)
+OK    OC-02 (G1-05) : 2 -> 2 occurrence(s)
+OK    OC-03 (§10, G3) : 3 -> 3 occurrence(s)
+OK    OC-05 (§11) : 2 -> 2 occurrence(s)
+OK    OC-06 (§5, « n'est fixé ; ») : 2 -> 2 occurrence(s)
+OK    OC-07 (I-1) : 1 -> 1 occurrence(s)
+OK    OC-04 : ligne T47 identique
+OK    OC-06 : au §5, la sous-liste finit toujours par « n'est fixé ; » avant le rappel du registre (OB-01)
+OK    toutes les lignes de tableau identiques (462)
+OK    phrase finale inchangée
+OK    bloc Statut inchangé
+TOUS_OK True
