@@ -2,7 +2,7 @@
 
 Registre protégé (spécification v0.2, §3.1). Une fiche n'autorise un changement de comportement qu'avec une **décision du propriétaire « acceptée »**, explicite, datée et prouvée. Claude Code n'y écrit qu'avec cet accord.
 
-**Deux fiches sont enregistrées : `MEC-0001` et `MEC-0002`, proposées et incomplètes, sans décision globale « acceptée ».** Aucune mécanique n'est acceptée dans son ensemble : aucune mécanique de jeu ne peut donc être implémentée.
+**Trois fiches sont enregistrées. `MEC-0001` et `MEC-0002`, proposées et incomplètes, sont sans décision globale « acceptée » et n'autorisent aucune implémentation. `MEC-0003` est acceptée pour un périmètre restreint, le premier incrément de la marche : seul ce périmètre peut être implémenté.**
 
 ## Règles
 
@@ -440,3 +440,187 @@ Ces décisions restent dans leurs sources d'origine, comme historique ; elles ne
 - Décisions du 9 novembre 2026 et correctif du propriétaire (LOT-2F) : reprises ici par leurs identifiants, sans inscription propre.
 
 Cette liste n'est pas exhaustive : tout ce que PE-01 à EN-10, avec leurs annotations, ne couvrent pas reste non décidé, comme tout paramètre non explicitement accepté.
+
+### MEC-0003 — Marche sur terrain plat
+
+**Fiche de périmètre restreint : premier incrément de la marche ordinaire. Après validation de la fiche complète par le propriétaire, elle n'autorise que l'implémentation et les tests du périmètre décrit ci-dessous. `MEC-0001` et `MEC-0002` restent reportées : cette fiche ne les accepte pas, ne les modifie pas et ne remplace aucune de leurs règles.**
+
+| Champ | Valeur |
+|---|---|
+| Système | Combat tactique : marche ordinaire d'une seule unité, sur une carte à un seul niveau, au terrain plat. |
+| Description | L'unité se déplace de case en case dans les huit directions, vers une destination choisie dans sa zone atteignable, en payant des TU et de l'énergie à chaque pas. C'est le premier incrément de la marche de `MEC-0001`, dont il applique les règles par renvoi. |
+| Classe | `MODIFICATION-VALIDEE`, pour le seul périmètre autorisé ci-dessous. |
+| Fonctionnement de référence et preuves | Règles de Bastion : sous-décisions inscrites de `MEC-0001`, citées par renvoi ; arbitrages du propriétaire du 21 novembre 2026, propres à cette fiche (A1 à A9), avec leur provenance au bloc « Arbitrages ». Aucun comportement d'OXCE n'est revendiqué, et rien n'est repris d'OXCE : ni code, ni données, ni assets (D4). |
+| Changement demandé | Implémenter et tester dans `Bastion.Simulation` la marche décrite ci-dessous, et aucun autre comportement. |
+| Décision du propriétaire | acceptée — pour le seul périmètre de cette fiche. Arbitrages du propriétaire du 21 novembre 2026 : A1 à A4 (message de 17:40:18 UTC) ; A5, A6 et A7, nommés B1, B2 et B4 dans le message de 17:52:05 UTC ; A8, nommé C1 dans le message de 18:51:09 UTC ; A9 (message de 20:06:43 UTC). Validation de la fiche complète : acceptée le 21 novembre 2026, sur réponse explicite « oui » du propriétaire à la question de l’orchestrateur « Valides-tu la fiche MEC-0003 v4 dans son ensemble, sous réserve de cette correction de provenance ? » (conversation Bastion du 21 novembre 2026). Cette décision ne s'étend ni à `MEC-0001` ni à `MEC-0002`, dont le statut est inchangé. |
+| Périmètre autorisé | Le bloc « Périmètre » ci-dessous, et lui seul. |
+| Éléments exclus | Le bloc « Hors périmètre » ci-dessous, et tout ce que cette fiche ne décrit pas. |
+| Tests de référence | Aucun : la fiche ne revendique aucune fidélité à OXCE. |
+| Tests de modification | T01 à T29 et T03b, ci-dessous. Aucun n'est écrit ni exécuté à la date de l'inscription. |
+| État d'implémentation | non commencé |
+
+#### Périmètre
+
+- **Carte :**
+  - un seul niveau, au terrain plat, avec un sol stable partout ;
+  - des cases de largeur uniforme, paire, en millimètres (Q1.1) ;
+  - toutes les cases et tous les obstacles sont connus. S6 et S7 restent applicables ; comme tout est connu, elles sont toujours satisfaites.
+- **Obstacles :**
+  - murs pleins, infranchissables et de pleine hauteur, placés sur les arêtes entre les cases. Leur épaisseur est configurable par type (Q1.3 ; 100 mm initialement, Q1.7) ; chaque mur est centré sur son arête (Q2.5) et s'étend d'un coin à l'autre ;
+  - cases entièrement infranchissables ;
+  - bords de la carte, traités comme des obstacles.
+- **Unité :**
+  - une seule unité, debout ;
+  - son emprise est un rectangle configurable par type (Q1.2 ; profil initial : Q1.6), défini selon A8 : la **largeur** est perpendiculaire à la direction de face, la **profondeur** lui est parallèle et la **hauteur** est verticale. Dans ce périmètre, le contrôle se fait en plan (A2) ;
+  - au repos, elle est orientée dans l'une des huit directions de pas ;
+  - sa position initiale doit être admissible : aucun chevauchement avec un obstacle.
+- **Ressources :**
+  - l'unité dispose de TU et d'énergie courantes, données ;
+  - il n'y a ni tour, ni récupération, ni surcharge.
+- **Calculs :**
+  - les dimensions configurées sont exprimées en millimètres entiers (R-5) ;
+  - les calculs physiques ne sont pas limités systématiquement aux entiers (R-5). Leur méthode et leur précision numériques ne sont pas fixées par cette fiche : R-5 les laisse ouvertes ;
+  - aucun hasard n'intervient.
+
+#### Règles applicables, par renvoi à `MEC-0001`
+
+Ces règles s'appliquent telles qu'elles sont inscrites dans `MEC-0001`, sans recopie. Aucune règle de cette fiche n'y déroge ; en cas de divergence apparente, la règle de `MEC-0001` s'applique et la divergence est signalée.
+
+- **Directions et terrain :** S1 (huit directions) ; N1 (cases et murs entre les cases).
+- **Coûts :** S2, Q3.1, Q3.2, Q3.7 à Q3.9, Q3.12 et Q3.13 ; facteur de terrain : A6.
+  - Les coûts en TU et en énergie restent distincts : bases différentes (4 TU et 2 d'énergie initialement, Q3.7), chacune arrondie séparément (Q3.13).
+  - Le multiplicateur d'énergie des diagonales reste propre, configurable et indépendant de celui des TU (Q3.2 ; 1,5 avec arrondi supérieur initialement, Q3.9). Le multiplicateur des TU de S2 est inchangé.
+- **Diagonales :** S3, N2, ARB-A et G1. Le pas diagonal est admis si l'un des deux passages orthogonaux est praticable, et refusé sinon. Il reste un seul pas, facturé une fois.
+- **Ressources et zone :** G3 et Z1. Un pas n'est réalisable que si les TU et l'énergie suffisent. La zone atteignable se calcule avec les deux ressources et les informations connues ; une destination hors zone n'est pas sélectionnable.
+- **Chemin :** G4 et Q4.16 (résumé, niveau [CIT]) : TU minimales, puis énergie minimale, puis départage par l'ordre des suites de directions N, NE, E, SE, S, SW, W, NW.
+- **Exécution :** Q3.4, M-05 et Q4.21 (résumé, niveau [CIT]).
+- **Orientation :** Q4.17 (résumé, niveau [CIT]). L'unité s'oriente vers le pas engagé, sans supplément de TU ni d'énergie, et le volume balayé par la rotation est contrôlé (A5, A7).
+- **Collisions :** Q4.2 (résumé, niveau [CIT]) ; Q1.2, R-8 et B3. Le contact ne bloque pas ; le chevauchement intérieur est interdit. Le même volume physique vaut pour les deux mécaniques.
+
+#### Arbitrages propres à `MEC-0003`
+
+Ils valent pour le seul périmètre de cette fiche. Ils ne modifient pas `MEC-0001`, où les points correspondants restent ouverts ou non validés.
+
+**Provenance :** les arbitrages A1 à A9 reprennent les formulations proposées par l’orchestrateur et expressément validées par le propriétaire le 21 novembre 2026. Les citations reproduisent les instructions transmises à Claude Code. Leur approbation résulte des réponses explicites du propriétaire dans la conversation. Les horodatages ci-dessous sont ceux rapportés par Claude Code dans son journal de session ; ils n’établissent pas que le propriétaire a rédigé les formulations citées. Le reste est la formulation détaillée de la préparation, confirmée par la validation de la fiche complète.
+- Message de 17:40:18 UTC : « unité centrée dans sa case » (A1) ; « diagonale en L, avec contrôle du volume physique réel » (A2) ; « priorité N, E, S, W entre deux passages praticables » (A3) ; « restrictions de périmètre acceptées par le propriétaire » (A4).
+- Message de 17:52:05 UTC, où ces arbitrages sont nommés B1, B2 et B4 : « contrôle du volume rectangulaire réel balayé par les rotations » (B1, ici A5) ; « facteur de terrain commun aux TU et à l'énergie pour la configuration initiale, sans supprimer leurs coûts distincts ni le multiplicateur énergétique indépendant des diagonales » (B2, ici A6) ; règle du demi-tour (B4, ici A7), citée ci-dessous. Le même message demande, sous le nom B3, de conserver une provenance fidèle : c'est l'objet du présent bloc.
+- Message de 18:51:09 UTC, où cet arbitrage est nommé C1 : « Largeur perpendiculaire à la direction de face. » ; « Profondeur parallèle à la direction de face. » ; « Hauteur verticale. » (C1, ici A8).
+- Message de 20:06:43 UTC : règle A9, citée ci-dessous.
+- Les numéros A5 à A8 évitent la confusion avec la décision B3 de `MEC-0001` (géométrie commune), citée ailleurs dans cette fiche.
+
+- **A1 — Unité centrée.** Au repos, l'emprise de l'unité est centrée sur le centre de sa case et orientée selon son orientation.
+- **A2 — Diagonale en L, avec contrôle du volume physique réel.**
+  - Un pas diagonal suit un trajet en L : du centre de la case de départ au centre de la case intermédiaire de l'un des deux passages orthogonaux, puis au centre de la case d'arrivée. Il reste un seul pas diagonal, facturé une fois (S2, G1).
+  - Un pas orthogonal est une translation rectiligne de centre à centre.
+  - Pendant le pas, l'unité est orientée vers le pas engagé (Q4.17). Le contrôle porte sur le volume physique réel balayé, c'est-à-dire l'emprise rectangulaire orientée de l'unité le long du trajet. Aucune enveloppe ne lui est substituée (B3-04).
+  - Un passage est praticable si ce volume ne chevauche ni un mur, ni une case infranchissable, ni un bord de la carte.
+  - Le contrôle se fait en plan : dans ce périmètre, les obstacles sont de pleine hauteur et le terrain est plat.
+- **A3 — Priorité entre deux passages praticables : N, puis E, puis S, puis W.** Quand les deux passages d'un pas diagonal sont praticables, l'unité emprunte celui dont la direction vient en premier dans cet ordre :
+  - NE et NW : passage N ;
+  - SE : passage E ;
+  - SW : passage S.
+
+  Quand un seul passage est praticable, l'unité l'emprunte. A3 ne reprend pas la formulation non validée PNV-7 (« X puis Y »).
+- **A4 — Restrictions de périmètre acceptées.**
+  - (a) Obstacles limités à ceux du bloc « Périmètre ».
+  - (b) Une seule unité, debout.
+  - (c) Facteur de terrain commun aux deux ressources : voir A6.
+  - (d) **Dans cette tranche seulement**, une configuration où un pas pourrait coûter 0 TU est refusée. Les règles générales de `MEC-0001` ne sont pas modifiées : les cycles gratuits et la terminaison de la recherche y restent ouverts.
+  - (e) **Exécution atomique d'un pas, seulement dans les scénarios sans événement physique pendant ce pas.** Le pas est alors vérifié, débité et achevé d'un bloc. Cela ne fixe ni l'instant de l'engagement ni les phases d'un pas, qui restent ouverts dans `MEC-0001`, et cela ne s'applique à aucun scénario comportant un événement physique.
+  - (f) Ni tour, ni récupération, ni surcharge.
+  - (g) Une modification de la carte entre le calcul du chemin et son exécution n'est admise que dans les tests, pour vérifier Q3.4, M-05 et Q4.21.
+- **A5 — Rotation : contrôle du volume rectangulaire réel balayé** (B1).
+  - Avant un pas qui change l'orientation, la rotation se fait au centre de la case de départ.
+  - Le contrôle porte sur toute la surface balayée par l'emprise rectangulaire réelle pendant la rotation, et non sur une enveloppe.
+  - Pour une rotation de 45°, 90° ou 135°, l'unité tourne du côté le plus court.
+- **A6 — Facteur de terrain** (B2).
+  - Chaque type de terrain a un facteur unique, commun aux TU et à l'énergie. Il multiplie la base de chaque ressource, et chaque résultat est arrondi séparément (Q3.13). Les coûts en TU et en énergie restent donc distincts.
+  - Le multiplicateur d'énergie des diagonales reste indépendant (Q3.2).
+  - Les trois catégories initiales sont celles de Q3.8.
+- **A7 — Demi-tour de 180°** (B4). Règle validée par le propriétaire, citée telle quelle :
+  - « Priorité au sens horaire. »
+  - « Si ce sens est physiquement bloqué, essayer le sens antihoraire. »
+  - « Refuser le pas uniquement lorsque les deux sens sont impraticables. »
+  - « Contrôler le volume rectangulaire réel pendant toute la rotation. »
+- **A8 — Orientation de l'emprise** (C1). Règle validée par le propriétaire, citée telle quelle :
+  - « Largeur perpendiculaire à la direction de face. »
+  - « Profondeur parallèle à la direction de face. »
+  - « Hauteur verticale. »
+- **A9 — Échec d'un pas.** Règle validée par le propriétaire, citée telle quelle :
+  - « tous les contrôles de rotation, de passage et de ressources sont effectués avant de modifier l'état de l'unité. »
+  - « Si le pas est refusé, sa position, son orientation, ses TU et son énergie restent inchangées. »
+  - « Les pas précédemment exécutés conservent leurs effets et leurs coûts. »
+
+**Constats géométriques, sans valeur de règle.** Ce ne sont que des conséquences d'A1, A5 et A7, pour une emprise rectangulaire, donc symétrique par rapport à son centre, et centrée :
+- tourner du côté le plus long balaie toujours au moins la surface du côté le plus court. Pour une rotation de moins de 180°, l'autre côté ne peut donc jamais réussir là où le plus court échoue ;
+- les deux sens d'un demi-tour balaient exactement la même surface : celle du disque de rayon égal à la demi-diagonale de l'emprise. Le repli antihoraire de A7 ne change donc jamais le résultat dans ce périmètre. Il est conservé tel quel, et testé par T29.
+
+#### Exécution d'un ordre
+
+L'ordre porte sur une destination de la zone atteignable ; le chemin est choisi selon G4 et Q4.16. Chaque pas se déroule ainsi (A9) :
+1. **Contrôles, sans aucune modification de l'état de l'unité :**
+   - rotation vers le pas, si l'orientation change : volume rectangulaire réel balayé (Q4.17, A5, A7) ;
+   - passage et volume le long du trajet (G1, A2, A3) ;
+   - coût réel du pas, et ressources : les TU et l'énergie doivent suffire (Q3.13, A6, M-05, G3).
+2. **Si tous les contrôles réussissent :** rotation, débit des deux ressources et déplacement, d'un seul bloc (A4 e).
+3. **Si un contrôle échoue :** le pas est refusé.
+   - La position, l'orientation, les TU et l'énergie de l'unité restent inchangées (A9).
+   - L'ordre s'arrête avant ce pas, sans nouveau calcul de chemin (Q3.4, Q4.21).
+   - Les pas déjà exécutés conservent leurs effets et leurs coûts (A9, Q3.4).
+
+Le résultat d'un pas indique le sens de la rotation, le passage emprunté et, en cas d'arrêt, le motif.
+
+#### Hors périmètre
+
+Ces sujets restent régis par `MEC-0001` et `MEC-0002`. Ils ne sont ni abandonnés ni modifiés :
+- plusieurs niveaux, ressauts, escaliers, rampes, échelles et ascenseurs ;
+- portes ;
+- autres unités et corps, et donc S10, ARB-B et G2 ;
+- terrain inconnu et découvertes ;
+- tours, récupération et surcharge ;
+- postures autres que debout ;
+- réactions et surveillance ;
+- événements physiques, sauts, chutes et collisions de `MEC-0002` ;
+- interface.
+
+#### Tests de comportement
+
+**Notation des tests :**
+- repère : (colonne, ligne) ; N = ligne − 1 ; E = colonne + 1. C'est une notation de test, non une règle ;
+- emprise : « largeur × profondeur », selon A8 : largeur perpendiculaire à la direction de face, profondeur parallèle à celle-ci ;
+- sauf mention contraire : case de 1 500 mm, mur de 100 mm, unité de 600 × 600 mm, unité placée au centre (0, 0) de sa case ;
+- « vérifié » signifie : calculé par un script de préparation, hors du dépôt ;
+- les cas de contact (T12, T28) sont alignés sur les axes : le contact y tombe exactement sur des millimètres entiers.
+
+| N° | Situation | Résultat attendu | Fondement | État |
+|---|---|---|---|---|
+| T01 | Pas orthogonal, terrain normal | 4 TU, 2 d'énergie | Q3.7 | vérifié |
+| T02 | Pas diagonal, terrain normal | 6 TU, 3 d'énergie | S2, Q3.9, Q3.13 | vérifié |
+| T03 | Arrivée en terrain difficile, puis très difficile | orthogonal 6/3, diagonal 9/5 ; puis 8/4 et 12/6 | Q3.8, Q3.13 | vérifié |
+| T03b | Terrain configuré avec un facteur commun de 125 % ; puis multiplicateur d'énergie des diagonales configuré à 2 | orthogonal 5 TU / 3 d'énergie, diagonal 7 / 5 ; puis diagonal 7 / 6, les TU étant inchangées | A6, Q3.2, Q3.13, S2 | calcul direct |
+| T04 | Pas d'un terrain difficile vers un terrain normal | 4/2 : seul compte le terrain d'arrivée | S2 | vérifié |
+| T05 | Unité en (2,2), sans obstacle ; 8 TU et 100 d'énergie, puis 8 TU et 3 d'énergie | 12 cases atteignables (les 8 voisines et les 4 cases à deux pas en ligne droite) ; puis les 8 voisines | Z1, G3 | vérifié |
+| T06 | Ordre vers une case hors zone | refus ; ni débit ni déplacement | Z1 | règle inscrite |
+| T07 | Départ (0,1), arrivée (2,0) ; cases (1,0) et (1,1) en terrain configuré à +25 % | [E, NE] (11 TU, 6 d'énergie), et non [NE, E] (11, 7) | G4, A6 | vérifié |
+| T08 | Départ (0,1), arrivée (1,0) ; multiplicateur d'énergie des diagonales configuré à 3 | avec 5 d'énergie : [N, E] (8, 4) ; avec 6 d'énergie : [NE] (6, 6) | G3, G4, Q3.2 | vérifié |
+| T09 | Départ (0,1), arrivée (2,0), terrain normal | [NE, E] (10, 5), préféré à [E, NE], de même coût | Q4.16 | vérifié |
+| T10 | Diagonale NE : murs sur les arêtes nord et est de la case de départ ; puis sur l'arête nord seulement | refusée ; puis admise par le passage E, au coût d'un seul pas diagonal | S3, N2, G1, A2 | découle des règles |
+| T11 | Diagonale NE : case N infranchissable, et mur entre la case E et la case d'arrivée | refusée : aucun passage n'est praticable | ARB-A, G1, A2 | découle des règles |
+| T12 | Couloir nord-sud (murs à l'ouest et à l'est de la case, faces à ± 700 mm) ; unité de 1 400 × 600 mm (largeur 1 400, profondeur 600) orientée N | repos et pas N admis : la largeur de 1 400 mm touche les deux murs, sans chevauchement | Q4.2, A1, A2, A8 | vérifié |
+| T13 | Carte de 5 colonnes × 6 lignes, dont seule la case (3,1) est infranchissable ; unité de 1 600 × 1 600 mm orientée N en (2,4), position initiale admissible ; deux pas N exécutés un par un | 1er pas vers (2,3) admis, bien que le volume dépasse la case. 2e pas vers (2,2) refusé : l'emprise y chevaucherait la case (3,1), voisine en diagonale. L'unité reste en (2,3), orientée N, ses ressources n'étant diminuées que du 1er pas, 4 TU et 2 d'énergie (A9). La case (2,2) n'est pas non plus dans la zone atteignable | Q1.2, Z1, A1, A2, A9 | vérifié |
+| T14 | Couloir nord-sud ; unité de 1 300 × 1 300 mm orientée N | pas N admis ; un pas qui exige une rotation, de 45° ou plus, est refusé | Q4.17, A5 | vérifié pour 45° |
+| T15 | Exécution d'un chemin de trois pas | ressources diminuées du coût de chaque pas ; position finale correcte ; orientation finale = direction du dernier pas | G3, Q3.4, Q4.17 | règles inscrites |
+| T16 | Chemin calculé, puis terrain du 2e pas rendu difficile, coût encore payable | pas exécuté et débité au coût réel | M-05, A4 (g) | découle des règles |
+| T17 | Carte de 3 × 2 ; unité de 600 × 600 mm orientée N en (0,1), avec 10 TU et 100 d'énergie ; chemin [E, E] calculé vers (2,1), terrain normal ; puis la case (2,1) devient très difficile | 1er pas exécuté : unité en (1,1), orientée E, 6 TU et 98 d'énergie. 2e pas refusé, car son coût réel est de 8 TU pour 6 disponibles : l'unité reste en (1,1), orientée E, avec 6 TU et 98 d'énergie ; aucun nouveau calcul de chemin | Q3.4, M-05, Q4.21, A4 (g), A9 | vérifié |
+| T18 | Même carte et même état, deux calculs | même zone, même chemin, même passage, même sens de rotation | G4, A3, A7 | découle des règles |
+| T19 | Configurations invalides : largeur de case impaire ; dimension non entière ; pas à 0 TU ; position initiale en chevauchement | refusées, avec un message explicite | Q1.1, R-5, Q1.2, A4 (d) | découle des règles |
+| T20 | NE, les deux passages praticables | passage N | A3 | découle de A3 |
+| T21 | SE, les deux passages praticables | passage E | A3 | découle de A3 |
+| T22 | SW, puis NW, les deux passages praticables | passage S, puis passage N | A3 | découle de A3 |
+| T23 | NE, passage N traversé par un mur | passage E | G1, A3 | découle de A3 |
+| T24 | Carte de 3 × 3 ; unité de 600 × 600 mm orientée N en (1,1), un mur sur l'arête est de (1,1) ; pas E | refusé : la rotation N → E serait libre, mais la translation traverse le mur. L'unité reste en (1,1), orientée N, car la rotation n'est pas appliquée ; TU et énergie inchangées | N1, Q3.12, A2, A9 | vérifié |
+| T25 | Unité de 1 400 × 200 mm (largeur 1 400, profondeur 200) orientée N ; un seul mur, sur l'arête nord de sa case ; pas NE | rotation N → NE admise : le rectangle atteint au plus 800/√2 ≈ 565,69 mm vers le nord, pour une face du mur à 700 mm. Pas admis par le passage E, le passage N traversant le mur. Le disque circonscrit (rayon √(700² + 100²) ≈ 707,11 mm) l'aurait refusé : le cas départage le rectangle et le disque | A5, A2, A3, A8 | vérifié |
+| T26 | Unité de 200 × 1 400 mm (largeur 200, profondeur 1 400) orientée N ; un seul mur, sur l'arête est de sa case ; pas NE | rotation admise : le rectangle atteint au plus ≈ 565,69 mm vers l'est, pour une face du mur à 700 mm, mais ≈ 707,11 mm vers le nord, où il n'y a pas de mur. Pas admis par le passage N (priorité A3 ; le passage E traverse le mur). Le disque l'aurait refusé | A5, A2, A3, A8 | vérifié |
+| T27 | Unité de 600 × 600 mm orientée N, terrain libre ; pas S | demi-tour dans le sens horaire, puis pas exécuté au coût d'un pas orthogonal ; le résultat indique « horaire » | A7, Q4.17 | vérifié |
+| T28 | Couloir nord-sud ; unité de 1 400 × 200 mm (largeur 1 400, profondeur 200) orientée N ; pas S | au repos, la largeur de 1 400 mm touche les deux murs sans chevauchement. Sens horaire bloqué : le rectangle atteint ≈ 707,11 mm vers l'est, pour une face du mur à 700 mm. Sens antihoraire bloqué aussi. Pas refusé : position, orientation, TU et énergie inchangées | A7, A8, A9 | vérifié |
+| T29 | Choix du sens d'un demi-tour, procédure testée seule, avec les quatre combinaisons « horaire libre ou bloqué » × « antihoraire libre ou bloqué » | horaire s'il est libre ; sinon antihoraire s'il est libre ; sinon refus | A7 | règle validée ; le cas « horaire bloqué, antihoraire libre » n'est pas constructible sur une carte de ce périmètre |
