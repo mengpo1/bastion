@@ -1,0 +1,102 @@
+NEW  l.14 PRIM [PIECES-MANDATS-ET-CONFIRMATIONS.md] «  conforme sous réserves  »
+NEW  l.36 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 1  »
+NEW  l.38 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 2  »
+NEW  l.51 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 1  »
+NEW  l.51 PRIM [PIECES-Q4-Q5-B3-DECLARATIONS.md] «  Message A  »
+NEW  l.59 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 1  »
+NEW  l.60 PRIM [messages-reextraits.md] «  Mission :  »
+NEW  l.60 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 2  »
+NEW  l.60 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  Mission  »
+NEW  l.73 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Pour Bastion MEC-0001, voici les quatre dernières propositions et validations originales  »
+NEW  l.73 PRIM [messages-reextraits.md] «  Mission :  »
+NEW  l.73 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 2  »
+NEW  l.73 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  Mission  »
+NEW  l.76 PRIM [messages-reextraits.md] «  Q1.1 à Q1.4 ne sont pas encore joints. Conserve explicitement leur provenance comme non v »
+NEW  l.79 PRIM [PIECES-MANDATS-ET-CONFIRMATIONS.md] «  Les pièces comprennent, pour chacune de ces décisions, les deux options A et B, puis la v »
+NEW  l.81 PRIM [PIECE-Q1.1-Q1.4-OPTIONS-B.md] «  les options B de Q1.1 à Q1.4 ont déjà été transmises au propriétaire dans la conversation »
+NEW  l.92 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Pour Bastion MEC-0001, lot Q1 Géométrie, je valide Q1.1=A, Q1.2=A, Q1.3=A, Q1.4=A. Poursu »
+OLD  l.106 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  les étages pouvaient initialement être séparés…  »
+NEW  l.111 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  Mission  »
+NEW  l.168 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  clarification validée  »
+NEW  l.168 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  articulation validée  »
+OLD  l.201 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Les dimensions physiques configurées **peuvent être exprimées** en millimètres.  »
+OLD  l.236 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Mur centré sur la frontière commune. Son épaisseur se répartit de part et d'autre ; un mu »
+NEW  l.253 PRIM [4f625a0d-BASTION-MEC-0001-CONSOLIDATION-Q1-Q4-REVUE.md] «  vers demi-entiers  »
+NEW  l.253 PRIM [PIECES-Q4-Q5-B3-DECLARATIONS.md] «  la contrainte Q1 des millimètres entiers  »
+NEW  l.253 PRIM [4f625a0d-BASTION-MEC-0001-CONSOLIDATION-Q1-Q4-REVUE.md] «  Unités physiques de géométrie : mm entiers  »
+NEW  l.253 PRIM [4f625a0d-BASTION-MEC-0001-CONSOLIDATION-Q1-Q4-REVUE.md] «  vers demi-entiers  »
+OLD  l.258 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  règle X d'abord Q1  »
+OLD  l.259 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  événements simultanés **sur le trajet**  »
+OLD  l.275 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Connexions explicites entre positions stables. Chaque escalier relie des positions et niv »
+OLD  l.276 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Passages spéciaux entre supports horizontaux. Une rampe est un trajet de connexion défini »
+OLD  l.277 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Action spécifique avec connexion définie. Accès réservé aux unités compatibles, points d' »
+OLD  l.278 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Plateforme à états explicites. L'ascenseur possède un niveau courant et des connexions d' »
+OLD  l.279 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Coût défini par connexion. Escaliers, rampes, échelles et ascenseurs possèdent des coûts  »
+OLD  l.280 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Coûts obligatoirement définis par connexion. Aucun barème universel pour l'instant ; des  »
+OLD  l.281 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Aucun surcoût universel lié au mur. Un mur infranchissable bloque ; un passage ouvert est »
+OLD  l.315 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Barème par type de terrain. Chaque terrain définit un coût d'entrée en TU et en énergie.  »
+OLD  l.316 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Multiplicateur configurable indépendant. L'énergie d'une diagonale possède son propre fac »
+OLD  l.318 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  4 TU et 2 énergie. Une diagonale coûte alors 6 TU, selon S2.  »
+OLD  l.320 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Facteur initial 1,5 avec arrondi supérieur. Un coût énergétique de 3 devient 5 en diagona »
+OLD  l.333 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Valeurs à déterminer après calibration. La réserve et sa récupération restent configurabl »
+OLD  l.346 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  aucune formule Force × 10 universelle  »
+NEW  l.354 PRIM [registre.md] «  La surcharge ne majore pas le prix des pas  »
+NEW  l.355 PRIM [registre.md] «  principe d'OXCE, sans seuil d'immobilisation supplémentaire  »
+NEW  l.355 PRIM [registre.md] «  aucune immobilisation liée à la charge  »
+OLD  l.367 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Vérifier avant chaque pas et interrompre si nécessaire. Le pas non commencé n'est pas déb »
+OLD  l.368 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Événements simultanés **sur le trajet**  »
+NEW  l.404 PRIM [registre.md] «  notamment en cas d'augmentation imprévue du coût  »
+OLD  l.436 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Largeur de case et volumes des unités en proportions, sans mètres fixés. Hauteur d'étage  »
+OLD  l.445 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  Chaque type d'unité a un volume de collision rectangulaire configurable en 3D. Les postur »
+NEW  l.491 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Ouvert  »
+NEW  l.622 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.2.md] «  le profil ne dépasse pas sa case  »
+NEW  l.696 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  Mission  »
+NEW  l.697 PRIM [PIECES-MANDATS-ET-CONFIRMATIONS.md] «  conforme sous réserves  »
+NEW  l.699 PRIM [BASTION-MEC-0001-CONSOLIDATION-v1.4.1-CORRECTIFS-MINEURS.md] «  user  »
+NEW  l.700 PRIM [PIECES-Q4-Q5-B3-DECLARATIONS.md] «  pleinement conforme  »
+NEW  l.700 PRIM [PIECES-Q4-Q5-B3-DECLARATIONS.md] «  traitement documenté des anomalies, vérification des preuves de validation et nouvelle ap »
+NEW  l.721 PRIM [registre.md] «  encombré  »
+NEW  l.734 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 1  »
+NEW  l.734 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 2  »
+NEW  l.734 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  Mission  »
+NEW  l.734 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  reproduit tel que reçu  »
+NEW  l.752 PRIM [PIECES-MANDATS-ET-CONFIRMATIONS.md] «  conforme sous réserves  »
+NEW  l.799 PRIM [messages-reextraits.md] «  Q1.1 à Q1.4 ne sont pas encore joints  »
+NEW  l.845 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  Mission  »
+NEW  l.845 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.2.md] «  PARTIEL  »
+NEW  l.845 PRIM [PIECES-MANDATS-ET-CONFIRMATIONS.md] «  BASTION — Mandat de revue indépendante MEC-0001  »
+NEW  l.846 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Scénarios  »
+OLD  l.886 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  non comparé  »
+OLD  l.900 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  [TR-A] et [TR]  »
+OLD  l.901 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  options B absentes  »
+OLD  l.902 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  sauf les numéros 9 à 12  »
+OLD  l.902 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  sauf les numéros 7 à 11  »
+OLD  l.906 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.1.md] «  La v0.4.1 n'est pas déclarée conforme  »
+OLD  l.908 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  Dans la v0.4  »
+OLD  l.935 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  observation documentaire, sans valeur de décision  »
+OLD  l.936 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  Précisée ou modifiée par  »
+OLD  l.936 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  — (priorité « X puis Y » non décidée : PNV-7)  »
+OLD  l.937 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  tout le volume  »
+OLD  l.938 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  jamais deux unités conscientes sur une même case  »
+OLD  l.940 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  Ces chiffres sont identiques à ceux de l'option A de Q3.11  »
+OLD  l.942 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.2.md] «  Sp (passage supposé praticable, comme T02 et T22) ; test intégré de la géométrie : Pa  »
+NEW  l.944 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  Concordance d'ordre et de troncature  »
+OLD  l.946 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.2.md] «  P1 n'est pas modifiée ; elle est complétée par la pièce 1 bis  »
+OLD  l.947 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  P2 l.215 environ  »
+OLD  l.947 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  P2 l.217  »
+OLD  l.956 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.2.md] «  Autres décisions, dont les six arbitrages du §2 bis : non étudiées  »
+OLD  l.961 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.2.md] «  La v0.4.2 n'est pas déclarée conforme  »
+NEW  l.974 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  message 1  »
+NEW  l.974 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  message 2  »
+NEW  l.974 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 1  »
+NEW  l.974 PRIM [PIECES-Q1-Q3-TRANSMISES.md] «  Message 2  »
+NEW  l.976 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.1.md] «  Concordance d'ordre et de troncature  »
+NEW  l.976 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.2.md] «  le profil ne dépasse pas sa case  »
+NEW  l.987 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.2.md] «  tranché sur ce point  »
+NEW  l.988 SECONDAIRE [RAPPORT-REVUE-INDEPENDANTE-v0.4.2.md] «  arrondi préalable au millimètre  »
+NEW  l.988 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.3.md] «  au millimètre le plus proche, ou inférieur  »
+NEW  l.989 PRIM [PIECE-MANDAT-v0.4.2-ARBITRAGES.md] «  clarification  »
+NEW  l.992 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.3.md] «  Q1.1 à Q1.3, Q1.5 à Q1.7, Q2.5, Q2.6  »
+NEW  l.999 PRIM [BASTION-MANDAT-INSCRIPTION-DOCUMENTAIRE-MEC-0001-v1.0-VALIDE.md] «  Succède à  »
+NEW  l.1004 SECONDAIRE [BASTION-MEC-0001-CONSOLIDATION-Q1-Q5-B3-v0.4.3.md] «  La v0.4.3 n'est pas déclarée conforme  »
+{'prim': 214, 'second': 51, 'none': 0}

@@ -1,0 +1,18 @@
+bareme {'normal': ((4, 2), (6, 3)), 'difficile': ((6, 3), (9, 5)), 'tres difficile': ((8, 4), (12, 6))}
+T01 56 98
+T02 51 95 loi OXCE energie 4
+T05 minimum (10, 5) ex aequo [('NE', 'E'), ('E', 'NE')] choix ('NE', 'E')
+T18 (5, 2) (7, 3)
+T19 7
+T20 45 60 15 flottant naif 14
+T21 15 17 12 13
+min(s+60,60) pour s=0..60: {60}
+T22 diag (6, 3) detour (10, 5)
+T23 A B
+T37 B
+T44 cout 8 4 admissible avec 5 TU: False S5: reste 1
+T45 54 97
+T26 1400 848.5281374238571 850 1272.7922061357854 1274
+rotation max 1341.6 a 26.57 deg ; sqrt 1341.6
+rapport 1/2
+enveloppes paires OK
