@@ -456,8 +456,8 @@ Cette liste n'est pas exhaustive : tout ce que PE-01 à EN-10, avec leurs annota
 | Périmètre autorisé | Le bloc « Périmètre » ci-dessous, et lui seul. |
 | Éléments exclus | Le bloc « Hors périmètre » ci-dessous, et tout ce que cette fiche ne décrit pas. |
 | Tests de référence | Aucun : la fiche ne revendique aucune fidélité à OXCE. |
-| Tests de modification | T01 à T29 et T03b, ci-dessous. Aucun n'est écrit ni exécuté à la date de l'inscription. |
-| État d'implémentation | non commencé |
+| Tests de modification | T01 à T29 et T03b, ci-dessous. Aucun n'est écrit ni exécuté à la date de l'inscription. *(Annotation ajoutée le 22 novembre 2026 : texte historique conservé. Les 30 scénarios sont couverts par des tests écrits et réussis, dans `tests/Bastion.Simulation.Tests/Movement/`, exécutés avec succès par la CI de la PR #19 et par celle du commit de fusion. La dernière phrase de T13 a été corrigée le 21 novembre 2026 par l'avenant n° 1 au mandat d'implémentation. Détail : `docs/reviews/MEC-0003-IMPLEMENTATION-LOT1-2026-11-21.md`.)* |
+| État d'implémentation | intégré — dans `main` par la PR #19, commit de fusion `eeebc57001cd73a1ff1b45375960dc9b99ae3281` (22 novembre 2026). État à la date de l'inscription : non commencé. Réserves ouvertes, au §8 du rapport d'exécution : RL-11, RL-13 et la limite de couverture de RL-01. |
 
 #### Périmètre
 
