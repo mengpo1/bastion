@@ -1,0 +1,12 @@
+<Project Sdk="Godot.NET.Sdk/4.7.2">
+  <!-- Prototype technique du lot 1D. Godot 4.7.2 stable .NET épinglé par le SDK (T-002, version de référence provisoire). -->
+  <!-- Hors de Bastion.slnx et de la CI : ce projet se compile séparément (T-103 reste à examiner). -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <RootNamespace>Bastion.Client</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Bastion.Simulation/Bastion.Simulation.csproj" />
+  </ItemGroup>
+</Project>
