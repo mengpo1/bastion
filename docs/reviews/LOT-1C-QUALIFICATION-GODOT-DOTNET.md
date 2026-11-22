@@ -5,7 +5,9 @@
 **Autorisation d'exécution :** 2026-11-22T16:40:18.276Z, en réponse à une question de Claude Code : le propriétaire a choisi « Autoriser l'exécution (Recommandé) ». Elle n'autorise ni commit, ni push, ni PR.
 **Base :** `main` au commit `4cdd5e4cf989586b1d2a3e9c1fad075097398c50`, qui contient la fusion de la PR #20 ; contrôlée par `git fetch origin main`.
 **Branche :** `claude/lot-1c-godot-qualification`, créée à partir de `origin/main`.
-**État :** expérimentation terminée ; ce rapport est le seul fichier ajouté au dépôt. **Rien n'est commité ni publié.**
+**État :**
+- **À la date de l'expérimentation :** expérimentation terminée ; ce rapport était le seul fichier ajouté au dépôt, et rien n'était commité ni publié.
+- **Publication :** le rapport est publié dans la PR #21, en brouillon, par le commit `7f8807675dda9d7ee9adfa69346e929b7782be0f`. Un commit documentaire complémentaire le corrige et actualise T-002 et T-101 du registre technique (§10). La PR n'est pas fusionnée.
 
 ## 1. Conclusion
 
@@ -15,7 +17,7 @@
 - Exécuté par Godot en mode headless, sur le runtime .NET 10.0.15, le script appelle réellement la simulation : un pas E sur une carte de 3 × 3 cases amène l'unité de (1,1) à (2,1), avec 56 TU et 98 d'énergie. Le processus se termine avec le code 0.
 - **Contrôle négatif :** le même script, réglé pour attendre volontairement 55 TU, se termine avec le code 1. Le code de sortie reflète donc bien le résultat.
 
-Cette conclusion repose sur les exécutions réelles décrites ci-dessous, et non sur la documentation. Sa portée se limite à l'environnement testé (§7).
+Cette conclusion repose sur les exécutions réelles décrites ci-dessous, et non sur la documentation. Sa portée se limite à l'environnement testé (§9).
 
 ## 2. Versions exactes
 
@@ -180,12 +182,24 @@ Aucune difficulté bloquante :
 - **T-103 non examiné :** la cohabitation entre la solution `.slnx` de Bastion et un projet Godot placé dans le dépôt n'est pas testée, puisque le mandat exclut de créer ce projet dans le dépôt.
 - **CI :** la CI de Bastion n'exécute pas Godot ; ce rapport ne la modifie pas.
 
-## 10. Points à décider par le propriétaire
+## 10. Décisions prises et opérations restantes
 
-1. **Version de Godot.** Le registre technique (T-002) indique « Version de Godot à figer ». Ce rapport fournit les éléments d'une décision : version `4.7.2.stable.mono.official.ed1daf0bf`, compatible avec `net10.0` dans l'environnement testé. Il ne modifie pas le registre : la décision vous appartient.
-2. **Réserve de T-101.** Le registre note « Compatibilité de `net10.0` avec Godot .NET toujours non vérifiée ». Sa mise à jour éventuelle relève aussi d'une décision distincte.
-3. **Projet d'interface Godot.** Sa création, ainsi que ses conditions (T-002 figé, compatibilité vérifiée), relève d'un mandat ultérieur.
-4. **Publication de ce rapport.** Commit, push de la seule branche `claude/lot-1c-godot-qualification` et PR en brouillon : elle attend votre autorisation distincte.
+### 10.1 Décisions déjà prises par le propriétaire
+
+1. **Bilan du lot 1C validé**, dans les limites de vérification déclarées. La compatibilité est considérée comme démontrée uniquement sous Linux x86_64, en mode headless, dans l'environnement testé (message « BASTION — Lot 1C — Validation et autorisation de publication », 2026-11-22T17:19:34.316Z).
+2. **Godot 4.7.2 .NET retenu** comme version candidate pour le premier prototype (même message).
+3. **Registre technique actualisé** à la demande du propriétaire (message « BASTION — PR #21 — Corrections documentaires finales », 2026-11-22T18:00:01.157Z) :
+   - T-002 inscrit Godot 4.7.2 stable .NET comme version de référence provisoire du premier prototype ;
+   - T-101 qualifie positivement la compatibilité de `net10.0` sous Linux x86_64 en mode headless, avec ses réserves.
+4. **Aucun prototype visuel** n'est autorisé à ce stade (message du 2026-11-22T17:19:34.316Z).
+5. **Publication** de ce rapport dans la PR #21, en brouillon : autorisée et faite (commit `7f8807675dda9d7ee9adfa69346e929b7782be0f`), puis complétée par un commit documentaire.
+
+### 10.2 Opérations encore à réaliser
+
+1. **Vérifications restantes :** Windows et macOS, affichage graphique, éditeur Godot et exports (§9.2).
+2. **Version définitive de Godot :** la version inscrite à T-002 reste provisoire ; la figer relève d'une décision ultérieure du propriétaire.
+3. **Projet d'interface Godot :** sa création relève d'un mandat ultérieur.
+4. **Fusion de la PR #21 :** elle attend l'autorisation explicite du propriétaire.
 
 ## Annexe A — Fichiers du projet de qualification (hors dépôt)
 
