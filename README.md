@@ -7,7 +7,7 @@ Projet de jeu en C# avec Godot .NET.
 - le harnais de développement est installé et opérationnel : hooks Claude Code, tests des hooks, intégration continue ;
 - le premier incrément de gameplay, `MEC-0003` (marche sur terrain plat), est implémenté, testé et intégré à `main` (PR #19) ;
 - la simulation C# comprend désormais la marche sur terrain plat ; `MEC-0001` et `MEC-0002` restent reportées ;
-- l'interface Godot n'est pas encore créée.
+- un prototype technique Godot, `src/Bastion.Client.Godot/`, existe depuis le lot 1D : une scène reliée à la simulation, qui n'est pas l'interface finale. Il reste hors de `Bastion.slnx`, mais la CI le compile et lance son contrôle fumée depuis le lot 1E.
 
 ## Organisation
 
@@ -34,7 +34,7 @@ Règles permanentes de travail : [`CLAUDE.md`](CLAUDE.md).
 | `docs/mandates/` | Mandats et spécifications reçus, non modifiés |
 | `docs/reviews/` | Rapports d'exécution et revues |
 
-Le projet Godot (interface) n'existe pas encore : voir `docs/decisions/TECHNICAL-DECISIONS.md`.
+Le prototype Godot, `src/Bastion.Client.Godot/` (lot 1D), n'est pas dans `Bastion.slnx` : les commandes ci-dessous, lancées à la racine, ne le compilent pas. Sa compilation et son lancement sont décrits dans sa notice, `src/Bastion.Client.Godot/README.md`.
 
 ## Prérequis
 
