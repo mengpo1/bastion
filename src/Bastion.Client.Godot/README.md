@@ -111,7 +111,7 @@ Codes de sortie :
 - **0** : tous les contrôles réussissent ;
 - **1** : au moins un contrôle échoue ;
 - **2** : une exception est survenue ;
-- **124** (code de `timeout`) : la scène n'a pas démarré le contrôle, par exemple parce que le projet n'est pas compilé en Debug. Godot ne quitterait alors jamais de lui-même ; d'où la limite de temps.
+- **124** (code de `timeout`) : Godot n'a pas quitté dans le délai. Ce n'est pas un contrôle en échec. Soit la scène n'a pas démarré le contrôle (par exemple parce que le projet n'est pas compilé en Debug), soit le contrôle s'est bloqué, soit il s'est terminé sans que Godot quitte. Godot ne quitterait alors jamais de lui-même ; d'où la limite de temps.
 
 Sous macOS, `timeout` n'existe pas par défaut ; `gtimeout`, du paquet `coreutils` de Homebrew, joue le même rôle (non vérifié).
 
