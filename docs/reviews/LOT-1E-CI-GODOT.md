@@ -7,8 +7,10 @@
 **Branche :** `claude/lot-1e-ci-godot`, créée à partir de `origin/main`.
 **État :** lot exécuté.
 - Le premier commit, `a39b2562dbaaf9af6c9482fdbd18325865a3afb4` (workflow, notice, archive du mandat), est poussé sur la branche du lot, et sa CI est verte (run 45148037933).
-- Un second commit ajoute ce rapport, celui de la relecture, et la correction de la notice demandée par la relecture (RX-02). Ce rapport ne peut pas citer le SHA ni la CI du commit qui le contient : ils sont donnés au propriétaire dans le message de fin de lot.
-- **Aucune PR n'est ouverte, rien n'est fusionné.**
+- Un second commit, `af6a5d9b87da69f3a4914b860c30c7b49668768b`, ajoute ce rapport, celui de la relecture, et la correction de la notice demandée par la relecture (RX-02). Sa CI est verte (run 45151080174).
+- Un troisième commit applique le correctif documentaire demandé par l'orchestrateur, sur autorisation du propriétaire (§10).
+- Ce rapport ne peut pas citer le SHA ni la CI du commit qui le contient : ils sont donnés au propriétaire dans le message de fin de lot.
+- La PR en brouillon vers `main` est autorisée depuis le 2026-11-23T12:03:49Z. **Rien n'est fusionné.**
 
 ## 1. Résumé
 
@@ -48,13 +50,17 @@ Les étapes existantes ne sont pas modifiées. Le client reste hors de `Bastion.
 | `docs/mandates/README.md` | une ligne d'index ajoutée : provenance, statut, empreinte | +1 |
 | `docs/reviews/LOT-1E-CI-GODOT.md` | ce rapport | nouveau |
 | `docs/reviews/LOT-1E-CI-GODOT-RELECTURE.md` | rapport de la relecture indépendante ciblée | nouveau |
+| `README.md` (racine) | correctif du §10 : le prototype Godot existe depuis le lot 1D, hors de `Bastion.slnx` | +2 −2 |
+| `src/Bastion.Client.Godot/Bastion.Client.Godot.csproj` | correctif du §10 : commentaire seulement, le client est désormais contrôlé par la CI | +1 −1 |
 
 Les changements sont ceux de `git diff --numstat origin/main`, relevés avant le second commit, sans compter les deux rapports.
 
 Le premier commit `a39b256` portait « +32 −8 » sur la notice. La correction RX-02 y ajoute une ligne remplacée. Au total : 4 fichiers, 130 insertions et 10 suppressions, plus les deux rapports.
 
+Le correctif du §10 remplace six lignes de la notice, sans en changer le nombre, et modifie deux autres fichiers : le `README.md` racine et un commentaire du `.csproj`.
+
 **Fichiers inchangés :**
-- le code du client : `PrototypeScene.cs`, `SmokeTest.cs`, `Main.tscn`, `project.godot`, `Bastion.Client.Godot.csproj` ;
+- le code du client : `PrototypeScene.cs`, `SmokeTest.cs`, `Main.tscn`, `project.godot`. Dans `Bastion.Client.Godot.csproj`, seul un commentaire change (§10) ;
 - le moteur `src/Bastion.Simulation/` et les tests `tests/Bastion.Simulation.Tests/` ;
 - `Bastion.slnx`, `Directory.Build.props` et `global.json` ;
 - le harnais (`.claude/`, `scripts/harness/`) et `CLAUDE.md` ;
@@ -241,14 +247,19 @@ Le contrôle fumée n'a pas été relancé en local après cette correction : au
 
 ## 5. Essais manuels sous macOS (retour du propriétaire)
 
-Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels du prototype sous macOS. Il a confirmé cette liste en réponse à une question de Claude Code (« Oui, ces six essais ») :
+Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels du prototype sous macOS :
 
-1. lancement de la scène et affichage de la grille ;
-2. état initial (1,4), N, 20 TU, 10 d'énergie, et zone atteignable affichée ;
-3. clic sur (2,4), qui donne (2,4), E, 16 TU et 8 d'énergie ;
-4. clic sur une case bloquée et sur une case hors zone, sans effet ;
-5. deux ordres successifs, avec la zone mise à jour entre les deux ;
-6. touche R, qui restaure l'état initial.
+1. grille 5 × 5 ;
+2. case (3,2) barrée ;
+3. état initial ;
+4. déplacement vers (2,4) ;
+5. refus d'une destination inaccessible ;
+6. touche R.
+
+**Historique de cette liste :**
+- Le mandat ne détaillait pas les six essais. Claude Code a proposé de reprendre les six contrôles du mandat 1D, et le propriétaire a retenu cette proposition à 09:23:17 UTC (« Oui, ces six essais »). Les deux premiers commits du lot l'ont publiée.
+- Cette liste comportait un essai que le propriétaire n'avait pas déclaré : deux ordres successifs. Elle détaillait aussi des valeurs qu'il n'a pas énoncées.
+- Le retour de l'orchestrateur (12:02:11 UTC) donne la liste ci-dessus. Le propriétaire l'a retenue à 12:03:49 UTC, et elle est retranscrite ici telle quelle.
 
 **C'est un retour d'utilisateur, et non une reproduction indépendante.** La version de macOS, l'architecture du processeur et les commandes exactes ne sont pas connues ici. Claude Code n'a exécuté aucun essai sous macOS. La notice du client le dit dans les mêmes termes. Le chemin `/Applications/Godot_mono.app/Contents/MacOS/Godot`, le contrôle fumée en ligne de commande et `gtimeout` y restent marqués comme non vérifiés.
 
@@ -272,7 +283,7 @@ Un agent distinct du développeur a relu le commit `a39b256` et une première ve
 | RX-02 : la notice réduisait le code 124 à « la scène n'a pas démarré le contrôle » | à corriger | **corrigé** dans `src/Bastion.Client.Godot/README.md` : Godot n'a pas quitté dans le délai, et ce n'est pas un contrôle en échec. Trois causes possibles : scène non démarrée, contrôle bloqué, ou contrôle terminé sans que Godot quitte. |
 | RX-03 : répartition des lignes de la notice fausse (« +31 −9 » au lieu de « +32 −8 ») | à corriger | **corrigé** au §2, avec le nouveau décompte après RX-02 |
 | RX-04 : « même délai qu'aux lots 1C et 1D » : rien ne l'établit pour le lot 1C | à corriger | **corrigé** : « le même qu'au lot 1D » |
-| RX-05 : le commentaire du `.csproj` du client dit encore « Hors de Bastion.slnx et de la CI ». Le `README.md` racine dit, depuis le lot 1D, que l'interface Godot n'existe pas encore. | observation | **non modifié**, laissé à la décision du propriétaire (§9). Le mandat ne demande que la notice du client, et le `.csproj` fait partie du prototype. |
+| RX-05 : le commentaire du `.csproj` du client dit encore « Hors de Bastion.slnx et de la CI ». Le `README.md` racine dit, depuis le lot 1D, que l'interface Godot n'existe pas encore. | observation | **corrigé ensuite** par le correctif du §10, sur retour de l'orchestrateur et autorisation du propriétaire : commentaire du `.csproj` et `README.md` racine |
 | RX-06 : les avertissements de MSBuild ou du SDK ne font pas échouer les compilations, ni celles du client ni celle de la racine | observation | **non modifié** : formulation nuancée au §3.1, limite au §7, point à décider au §9 |
 | RX-07 : si Godot ignorait SIGTERM, `timeout 300` ne le borne pas, faute de `-k` ou de `timeout-minutes` | observation | **non modifié**, déjà déclaré au §7 ; point à décider au §9 |
 | RX-08 : sur une PR, chaque modification de la description relance aussi le téléchargement de Godot et le contrôle fumée | observation | **non modifié**, ajouté au §7 |
@@ -319,27 +330,59 @@ La correction RX-02 ne touche que la notice : aucun code, aucun workflow. Les v�
 
 ## 9. Points à décider par le propriétaire
 
-1. **Publication :** autoriser ou non l'ouverture d'une PR de `claude/lot-1e-ci-godot` vers `main`. Elle exécuterait aussi le chemin `pull_request` de la CI. La fusion demande une autorisation distincte.
+1. **Fusion :** la PR en brouillon est autorisée (§10). La fusion dans `main` demande une autorisation distincte.
 2. **Signature de Godot :** se contenter de l'empreinte épinglée, ou demander plus tard un contrôle de signature, si la publication en fournit une. Ce serait un autre mandat.
-3. **Textes devenus inexacts (RX-05) :**
-   - le commentaire du `.csproj` du client, « Hors de Bastion.slnx et de la CI », est devenu faux avec ce lot ;
-   - les deux phrases du `README.md` racine sur l'interface Godot sont fausses depuis le lot 1D.
-
-   Faut-il les corriger, dans ce lot ou dans un autre ? Je ne les ai pas modifiés.
+3. **Textes devenus inexacts (RX-05) :** tranché, et corrigé par le §10.
 4. **Avertissements MSBuild (RX-06) :** faire échouer aussi les compilations sur les avertissements de MSBuild et du SDK (`-warnaserror` ou `MSBuildTreatWarningsAsErrors`), pour le client et pour la racine ? Ce serait un durcissement d'un contrôle existant, donc à arbitrer.
 5. **Borne stricte du contrôle fumée (RX-07) :** ajouter `timeout-minutes` à l'étape, pour le cas d'un Godot qui ignorerait SIGTERM ? `timeout -k` ne conviendrait pas, car il changerait le code en 137.
 
+## 10. Correctif documentaire après le retour de l'orchestrateur
+
+**Origine :** retour de l'orchestrateur transmis par le propriétaire le 2026-11-23T12:02:11Z. Sa revue technique est favorable, mais il demande un correctif documentaire ciblé avant la PR.
+
+**Autorisation :** 2026-11-23T12:03:49Z. En réponse à deux questions de Claude Code, le propriétaire a choisi :
+- « Liste de l'orchestrateur » pour les essais macOS ;
+- « Corriger, push et PR brouillon (Recommandé) » : corrections, vérifications, un commit au-dessus des deux commits publiés, push sur la seule branche du lot et PR en brouillon vers `main`. Sans fusion, et sans réécriture de l'historique.
+
+**Corrections :**
+
+| Point demandé | Fichier | Changement |
+|---|---|---|
+| 1. retranscrire exactement les six essais macOS déclarés, sans essai de deux ordres successifs | `src/Bastion.Client.Godot/README.md`, §5 de ce rapport | liste remplacée par : grille 5 × 5, case (3,2) barrée, état initial, déplacement vers (2,4), refus d'une destination inaccessible, touche R. L'historique est au §5. |
+| 2. le prototype Godot existe depuis le lot 1D | `README.md` (racine) | les deux phrases « l'interface Godot n'est pas encore créée » et « Le projet Godot (interface) n'existe pas encore » sont remplacées : le prototype existe depuis le lot 1D, hors de `Bastion.slnx`, et la CI le contrôle depuis le lot 1E. Les commandes de la racine ne le compilent pas ; renvoi vers sa notice. |
+| 3. le commentaire du `.csproj` | `src/Bastion.Client.Godot/Bastion.Client.Godot.csproj`, ligne 3 | « Hors de Bastion.slnx et de la CI » devient « Hors de Bastion.slnx […]. Depuis le lot 1E, la CI le contrôle par des étapes dédiées. » La mention de T-103 est conservée. |
+
+Aucun code exécutable, aucun workflow, aucun registre protégé n'est modifié. Le rapport de relecture, copié tel quel, n'est pas modifié non plus : il garde la trace de la première liste.
+
+**Vérifications :** toutes exécutées dans le dépôt de travail après les corrections, avec le code 0 partout.
+
+| Commande | Résultat |
+|---|---|
+| `dotnet build src/Bastion.Client.Godot/Bastion.Client.Godot.csproj` (Debug) | 0 Warning(s), 0 Error(s) |
+| `dotnet build src/Bastion.Client.Godot/Bastion.Client.Godot.csproj --configuration Release` | 0 Warning(s), 0 Error(s) |
+| comparaison des assemblages `Bastion.Client.Godot.dll`, Debug et Release, avant et après les corrections | SHA-256 identiques (Debug `a9f20858…f821`, Release `4f6bfc25…e15d`) : le changement de commentaire ne modifie pas le code compilé |
+| `dotnet format src/Bastion.Client.Godot/Bastion.Client.Godot.csproj --verify-no-changes --no-restore` | aucune sortie |
+| `timeout 300 "$GODOT" --headless --path src/Bastion.Client.Godot -- --smoke-test` | 21 lignes « SMOKE OK », « SMOKE : RÉUSSITE » |
+| `dotnet restore` puis `dotnet build --no-restore --configuration Release` | 0 Warning(s), 0 Error(s) |
+| `dotnet test --no-build --configuration Release` | « Passed! - Failed: 0, Passed: 46, Skipped: 0, Total: 46 » |
+| `dotnet format --verify-no-changes --no-restore` | aucune sortie |
+| `bash scripts/harness/test-hooks.sh` | « == 75 tests, 0 échec(s) == » |
+
+Le correctif est purement documentaire ; aucune nouvelle relecture indépendante n'a été lancée. La CI du troisième commit et celle de la PR sont données au propriétaire dans le message de fin de lot.
+
 ## Annexe A — Empreintes SHA-256
 
-| Fichier | Sur `origin/main` (`535bcae`) | Au commit `a39b256` | Après la correction RX-02 |
-|---|---|---|---|
-| `.github/workflows/ci.yml` | `e160e1d83fa4bd4541e78a4ef40003e1fd92f0219f7f6a92b3f9ac2d9249f55d` | `68584c2546e01624bfcb6afa13c5c8fdd809796ed535fd298732d9d3a56b06bb` | inchangé |
-| `src/Bastion.Client.Godot/README.md` | `5198592713bf7f824dd9338b024cdee5682b69f2513281a0ec3123db069562b0` | `da52489e8dca67379f89499d771a424359d3bf65ddeaf391480e77dfadfb1a1f` | `43260f3c0eb911c41b936d82ed51b9efb5ac53f379cd7c075474a3b7d59c6b54` |
-| `docs/mandates/README.md` | `6b4d65b31219d49174761391d39074efba5c422ce66c8f9f1bcbcae87ba7f4dd` | `8cd9953a75cc44bf1d01f501330111f35b42b3b7e1093960bcd59b2fb4cce7aa` | inchangé |
-| `docs/mandates/BASTION-MANDAT-LOT-1E-v1.0-transcription.md` | absent | `19620b278e21c8743d02bb8888b5274f26366646456617330004a5c02d63b695` | inchangé |
-| `docs/reviews/LOT-1E-CI-GODOT-RELECTURE.md` | absent | absent | `f3c022e8d05bf197ce5b96435698beb7d4aee7a3c369c85e8ff8ea0c17a27d4f` |
-| `src/Bastion.Client.Godot/PrototypeScene.cs` | `62b2cce35de4a372352365e0714b7d85aeed62aec598189d1a549fd1e1675f27` | identique | identique |
-| `src/Bastion.Client.Godot/SmokeTest.cs` | `eedf802f690c187e25b5c35665e5175a811ebd603ab1a4875670bfd4983fa207` | identique | identique |
+| Fichier | Sur `origin/main` (`535bcae`) | Au commit `a39b256` | Au commit `af6a5d9` (RX-02) | Après le correctif du §10 |
+|---|---|---|---|---|
+| `.github/workflows/ci.yml` | `e160e1d83fa4bd4541e78a4ef40003e1fd92f0219f7f6a92b3f9ac2d9249f55d` | `68584c2546e01624bfcb6afa13c5c8fdd809796ed535fd298732d9d3a56b06bb` | inchangé | inchangé |
+| `src/Bastion.Client.Godot/README.md` | `5198592713bf7f824dd9338b024cdee5682b69f2513281a0ec3123db069562b0` | `da52489e8dca67379f89499d771a424359d3bf65ddeaf391480e77dfadfb1a1f` | `43260f3c0eb911c41b936d82ed51b9efb5ac53f379cd7c075474a3b7d59c6b54` | `df74c7e5b7b67749da17e5315cbf8823a899a00db47030ee51a4ec7062d32372` |
+| `README.md` (racine) | `13cf328f92130eb36ec2e82502c2490dc8041f17de139d15a0818c1e7d106563` | identique | identique | `6290a7524ac090740e90ade699677245bbe079bd96c963a6ac67fe06b62a8c2e` |
+| `src/Bastion.Client.Godot/Bastion.Client.Godot.csproj` | `ce712561aef6aa90102003f7f22060182a4a7c72e875f1d4f1b2c080c4b6bd3c` | identique | identique | `a56c5b2f1f0b04b64d91df0b7e0405dd2cb97ef9743e565f4e1b32faf8fd5e69` |
+| `docs/mandates/README.md` | `6b4d65b31219d49174761391d39074efba5c422ce66c8f9f1bcbcae87ba7f4dd` | `8cd9953a75cc44bf1d01f501330111f35b42b3b7e1093960bcd59b2fb4cce7aa` | inchangé | inchangé |
+| `docs/mandates/BASTION-MANDAT-LOT-1E-v1.0-transcription.md` | absent | `19620b278e21c8743d02bb8888b5274f26366646456617330004a5c02d63b695` | inchangé | inchangé |
+| `docs/reviews/LOT-1E-CI-GODOT-RELECTURE.md` | absent | absent | `f3c022e8d05bf197ce5b96435698beb7d4aee7a3c369c85e8ff8ea0c17a27d4f` | inchangé |
+| `src/Bastion.Client.Godot/PrototypeScene.cs` | `62b2cce35de4a372352365e0714b7d85aeed62aec598189d1a549fd1e1675f27` | identique | identique | identique |
+| `src/Bastion.Client.Godot/SmokeTest.cs` | `eedf802f690c187e25b5c35665e5175a811ebd603ab1a4875670bfd4983fa207` | identique | identique | identique |
 
 Ce rapport ne peut pas porter sa propre empreinte.
 

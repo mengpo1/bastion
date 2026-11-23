@@ -81,12 +81,12 @@ Ouvrir le projet dans l'éditeur Godot :
 
 Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels du prototype sous macOS. C'est un retour d'utilisateur, et non une reproduction indépendante : ni la version de macOS, ni les commandes exactes employées ne sont connues ici. Les essais déclarés conformes sont les suivants :
 
-1. lancement de la scène et affichage de la grille ;
-2. état initial (1,4), N, 20 TU, 10 d'énergie, et zone atteignable affichée ;
-3. clic sur (2,4), qui donne (2,4), E, 16 TU et 8 d'énergie ;
-4. clic sur une case bloquée et sur une case hors zone, sans effet ;
-5. deux ordres successifs, avec la zone mise à jour entre les deux ;
-6. touche R, qui restaure l'état initial.
+1. grille 5 × 5 ;
+2. case (3,2) barrée ;
+3. état initial ;
+4. déplacement vers (2,4) ;
+5. refus d'une destination inaccessible ;
+6. touche R.
 
 Le chemin et les commandes ci-dessous n'ont pas été vérifiés de façon indépendante sous macOS. Avec l'application officielle `Godot_mono.app` 4.7.2 placée dans `/Applications` :
 
