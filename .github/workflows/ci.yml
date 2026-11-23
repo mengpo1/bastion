@@ -1,5 +1,6 @@
 # CI minimale : restauration, compilation, format, tests (.NET et hooks),
-# puis, sur les pull requests, contrôle de traçabilité des changements de simulation.
+# puis, sur les pull requests, contrôle de traçabilité des changements de simulation,
+# puis le client Godot (lot 1E) : compilation, format et contrôle fumée en mode headless.
 # Chaque étape échoue si sa commande renvoie un code non nul.
 name: CI
 
@@ -54,3 +55,44 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           echo "Contrôle de déclaration non applicable à l'événement $GITHUB_EVENT_NAME : il ne s'applique qu'aux pull requests et ne bloque pas une fusion (main non protégée)."
+
+      # Client Godot (lot 1E). Il reste hors de Bastion.slnx : il est contrôlé par des commandes ciblées.
+      - name: Client Godot — restauration
+        run: dotnet restore src/Bastion.Client.Godot/Bastion.Client.Godot.csproj
+
+      - name: Client Godot — compilation Release
+        run: dotnet build src/Bastion.Client.Godot/Bastion.Client.Godot.csproj --no-restore --configuration Release
+
+      - name: Client Godot — format
+        run: dotnet format src/Bastion.Client.Godot/Bastion.Client.Godot.csproj --verify-no-changes --no-restore
+
+      # Distribution officielle de Godot 4.7.2 stable .NET (T-002), vérifiée par son empreinte SHA-512
+      # (relevée au lot 1C et égale à celle du fichier SHA512-SUMS.txt de la publication).
+      - name: Client Godot — installation de Godot 4.7.2 stable .NET
+        env:
+          GODOT_ARCHIVE: Godot_v4.7.2-stable_mono_linux_x86_64.zip
+          GODOT_SHA512: 1855960b27ee3ef5e66e5e228cced69d55637b24334a7411162687dcd077d8f9f645348cdb8eae984bec8135d49ed855a1e3a16476786b8bce60774fd8402d13
+        run: |
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/$GODOT_ARCHIVE" "https://github.com/godotengine/godot/releases/download/4.7.2-stable/$GODOT_ARCHIVE"
+          echo "$GODOT_SHA512  $RUNNER_TEMP/$GODOT_ARCHIVE" | sha512sum -c -
+          unzip -q "$RUNNER_TEMP/$GODOT_ARCHIVE" -d "$RUNNER_TEMP/godot"
+          godot="$RUNNER_TEMP/godot/Godot_v4.7.2-stable_mono_linux_x86_64/Godot_v4.7.2-stable_mono_linux.x86_64"
+          "$godot" --headless --version
+          echo "GODOT=$godot" >> "$GITHUB_ENV"
+
+      # Godot charge la compilation Debug du projet : elle doit précéder le contrôle fumée.
+      - name: Client Godot — compilation Debug
+        run: dotnet build src/Bastion.Client.Godot/Bastion.Client.Godot.csproj --no-restore
+
+      # Codes : 0 réussite ; 1 contrôle en échec ; 2 exception ; 124 délai dépassé (la scène n'a pas terminé,
+      # ce qui n'est pas un défaut fonctionnel détecté). Tout code non nul fait échouer l'étape.
+      - name: Client Godot — contrôle fumée (headless)
+        run: |
+          code=0
+          timeout 300 "$GODOT" --headless --path src/Bastion.Client.Godot -- --smoke-test || code=$?
+          case "$code" in
+            0) echo "Contrôle fumée réussi (code 0)." ;;
+            124) echo "::error::Contrôle fumée : délai de 300 s dépassé (code 124). La scène n'a pas terminé ; ce n'est pas un échec fonctionnel détecté." ;;
+            *) echo "::error::Contrôle fumée : échec (code $code)." ;;
+          esac
+          exit "$code"

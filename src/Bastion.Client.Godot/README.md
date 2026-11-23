@@ -1,4 +1,4 @@
-# Bastion.Client.Godot — prototype technique (lot 1D)
+# Bastion.Client.Godot — prototype technique (lots 1D et 1E)
 
 Ce prototype est une scène Godot 2D, vue du dessus, reliée au moteur `Bastion.Simulation`. On y clique sur une case de la zone atteignable, et l'unité s'y déplace selon le résultat du moteur. Il vérifie la liaison entre une interface Godot et la simulation. Ce n'est ni le design final de l'interface, ni une mécanique de gameplay.
 
@@ -29,7 +29,17 @@ La scène ne contient aucune règle : elle convertit les pixels en cases, transm
 
 ## Compilation
 
-Le client **ne fait pas partie de `Bastion.slnx`** : `dotnet build` à la racine du dépôt ne le compile pas, et la CI ne le compile ni ne l'exécute. Le format lancé à la racine ne le contrôle pas non plus.
+Le client **ne fait pas partie de `Bastion.slnx`** : `dotnet build` et `dotnet format` à la racine du dépôt ne le voient pas.
+
+La CI le contrôle par des étapes dédiées, depuis le lot 1E :
+- restauration ;
+- compilation Release ;
+- format ;
+- installation de Godot 4.7.2 stable .NET, depuis la distribution officielle, vérifiée par son empreinte SHA-512 ;
+- compilation Debug ;
+- contrôle fumée en mode headless, limité à 300 s.
+
+Tout code de sortie non nul fait échouer la CI. La CI n'exécute pas le client avec un affichage et ne l'exporte pas.
 
 **Avant tout lancement**, depuis la racine du dépôt, compiler le client en **Debug**. C'est la compilation que Godot charge quand il lance le projet depuis son dossier ; une compilation Release seule ne suffit pas.
 
@@ -45,7 +55,7 @@ dotnet build src/Bastion.Client.Godot/Bastion.Client.Godot.csproj --configuratio
 
 ## Ouverture et lancement
 
-### Linux (vérifié en mode headless et sous affichage virtuel Xvfb ; pas sur un écran réel)
+### Linux (vérifié en mode headless, en local et dans la CI GitHub Actions sous ubuntu-24.04, et sous affichage virtuel Xvfb en local ; pas sur un écran réel)
 
 Dans les commandes ci-dessous, `GODOT` désigne le binaire `Godot_v4.7.2-stable_mono_linux.x86_64` de l'archive officielle, qui doit rester à côté de son dossier `GodotSharp/`.
 
@@ -67,9 +77,18 @@ Ouvrir le projet dans l'éditeur Godot :
 "$GODOT" --editor --path src/Bastion.Client.Godot
 ```
 
-### macOS (non vérifié : aucun essai n'a eu lieu sous macOS)
+### macOS (six essais manuels déclarés conformes par le propriétaire ; non reproduits de façon indépendante)
 
-Avec l'application officielle `Godot_mono.app` 4.7.2 placée dans `/Applications` :
+Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels du prototype sous macOS. C'est un retour d'utilisateur, et non une reproduction indépendante : ni la version de macOS, ni les commandes exactes employées ne sont connues ici. Les essais déclarés conformes sont les suivants :
+
+1. lancement de la scène et affichage de la grille ;
+2. état initial (1,4), N, 20 TU, 10 d'énergie, et zone atteignable affichée ;
+3. clic sur (2,4), qui donne (2,4), E, 16 TU et 8 d'énergie ;
+4. clic sur une case bloquée et sur une case hors zone, sans effet ;
+5. deux ordres successifs, avec la zone mise à jour entre les deux ;
+6. touche R, qui restaure l'état initial.
+
+Le chemin et les commandes ci-dessous n'ont pas été vérifiés de façon indépendante sous macOS. Avec l'application officielle `Godot_mono.app` 4.7.2 placée dans `/Applications` :
 
 ```bash
 GODOT=/Applications/Godot_mono.app/Contents/MacOS/Godot
@@ -104,6 +123,11 @@ timeout 300 xvfb-run -a "$GODOT" --path src/Bastion.Client.Godot -- --smoke-test
 
 ## Limites
 
-- **Plateformes :** seul Linux x86_64 a été essayé, en mode headless et sous Xvfb avec le rendu logiciel OpenGL 3 de Mesa. Ni un écran réel, ni une souris physique, ni macOS, ni Windows n'ont été essayés.
-- **CI :** elle ne compile ni n'exécute ce client.
-- **Export :** aucun export de jeu n'est prévu dans ce lot.
+- **Linux x86_64 :**
+  - vérifié en mode headless, en local et dans la CI ;
+  - vérifié sous Xvfb en local, avec le rendu logiciel OpenGL 3 de Mesa ;
+  - jamais essayé sur un écran réel ni avec une souris physique.
+- **macOS :** six essais manuels déclarés conformes par le propriétaire le 23 novembre 2026. C'est un retour d'utilisateur, non reproduit de façon indépendante. Le contrôle fumée en ligne de commande et `gtimeout` n'y sont pas vérifiés.
+- **Windows :** aucun essai.
+- **CI :** compilation, format et contrôle fumée en mode headless seulement ; ni affichage, ni export.
+- **Export :** aucun export de jeu n'est testé.
