@@ -2,7 +2,7 @@
 
 Registre protégé (spécification v0.2, §3.1). Une fiche n'autorise un changement de comportement qu'avec une **décision du propriétaire « acceptée »**, explicite, datée et prouvée. Claude Code n'y écrit qu'avec cet accord.
 
-**Trois fiches sont enregistrées. `MEC-0001` et `MEC-0002`, proposées et incomplètes, sont sans décision globale « acceptée » et n'autorisent aucune implémentation. `MEC-0003` est acceptée pour un périmètre restreint, le premier incrément de la marche : seul ce périmètre peut être implémenté.**
+**Quatre fiches sont enregistrées. `MEC-0001` et `MEC-0002`, proposées et incomplètes, sont sans décision globale « acceptée » et n'autorisent aucune implémentation. `MEC-0003` et `MEC-0004` sont acceptées, chacune pour un périmètre restreint : le premier incrément de la marche pour `MEC-0003`, la gestion élémentaire des tours d'une seule unité pour `MEC-0004`. Seuls ces périmètres peuvent être implémentés.**
 
 ## Règles
 
@@ -624,3 +624,224 @@ Ces sujets restent régis par `MEC-0001` et `MEC-0002`. Ils ne sont ni abandonn�
 | T27 | Unité de 600 × 600 mm orientée N, terrain libre ; pas S | demi-tour dans le sens horaire, puis pas exécuté au coût d'un pas orthogonal ; le résultat indique « horaire » | A7, Q4.17 | vérifié |
 | T28 | Couloir nord-sud ; unité de 1 400 × 200 mm (largeur 1 400, profondeur 200) orientée N ; pas S | au repos, la largeur de 1 400 mm touche les deux murs sans chevauchement. Sens horaire bloqué : le rectangle atteint ≈ 707,11 mm vers l'est, pour une face du mur à 700 mm. Sens antihoraire bloqué aussi. Pas refusé : position, orientation, TU et énergie inchangées | A7, A8, A9 | vérifié |
 | T29 | Choix du sens d'un demi-tour, procédure testée seule, avec les quatre combinaisons « horaire libre ou bloqué » × « antihoraire libre ou bloqué » | horaire s'il est libre ; sinon antihoraire s'il est libre ; sinon refus | A7 | règle validée ; le cas « horaire bloqué, antihoraire libre » n'est pas constructible sur une carte de ce périmètre |
+
+### MEC-0004 — Gestion élémentaire des tours et récupération des ressources
+
+**Fiche de périmètre restreint : `MODIFICATION-VALIDEE`, uniquement pour le périmètre de cette fiche. MEC-0001 et MEC-0002 conservent leur statut reporté. MEC-0003 reste inchangée. La validation fonctionnelle de MEC-0004 ne vaut pas autorisation générale de modification du dépôt.**
+
+**Provenance :** MEC-0004 v1.1, complétée par les trois précisions proposées par l'orchestrateur dans MEC-0004 v1.2, puis validée intégralement par le propriétaire le 23 novembre 2026, en réponse à la question « Validez-vous MEC-0004 v1.2 dans son ensemble ? » par « oui ».
+
+Le texte consolidé de la v1.2 précise : « Ce document consolide les règles acceptées. Il n'est pas une nouvelle proposition de gameplay. »
+
+Adaptations à l'inscription, sans changement de fond : les sections numérotées 2 à 7 reprennent mot pour mot celles du texte consolidé de la v1.2, aux niveaux de titres près ; l'en-tête en gras assemble des phrases de ce texte (ligne « Classe » du tableau, fin de la section 2, dernière phrase de la section 8) ; dans la ligne « Décision du propriétaire », le premier mot est écrit « acceptée », à la forme du gabarit du registre, et la preuve de validation est ajoutée. La section 8 de ce texte, qui décrit les étapes d'autorisation, n'est pas reprise ici ; son étape 4 prévoit une « Autorisation distincte d'implémentation. »
+
+| Champ | Valeur |
+|---|---|
+| Système | Combat tactique : gestion élémentaire des tours d'une seule unité. |
+| Description | Une commande explicite termine le tour, récupère les TU et l'énergie et incrémente le compteur de tours. |
+| Classe | `MODIFICATION-VALIDEE`, uniquement pour le périmètre de cette fiche. |
+| Fonctionnement de référence et preuves | Règles propres à Bastion. Renvoi à ARB-D, Q3.6, Q4.6 et Q3.14 de MEC-0001. Aucun comportement ni fidélité à OXCE revendiqué. |
+| Changement demandé | Introduire la mécanique restreinte décrite ci-dessous, sans modifier MEC-0003. |
+| Décision du propriétaire | acceptée le 23 novembre 2026 : validation explicite de MEC-0004 v1.2 dans son ensemble, comprenant la fiche v1.1 et ses trois précisions finales. Preuve : réponse « oui » du propriétaire à la question « Validez-vous MEC-0004 v1.2 dans son ensemble ? », déclarée au §1 du mandat d'inscription (`docs/mandates/BASTION-MANDAT-LOT-1G-A-INSCRIPTION-MEC-0004-transcription.md`) et dans le texte consolidé de la v1.2, transmis par le propriétaire le 24 novembre 2026 et reproduit à l'annexe A de `docs/reviews/LOT-1G-A-INSCRIPTION-MEC-0004.md`. L'échange d'origine n'est pas dans le dépôt. |
+| Périmètre autorisé | Uniquement le fonctionnement décrit dans les sections 2 à 4. |
+| Éléments exclus | Section 5 et tout comportement non décrit dans cette fiche. |
+| Tests de référence | Aucun : aucune fidélité à OXCE revendiquée. |
+| Tests de modification | T01 à T16, définis à la section 6, non encore implémentés. |
+| État d'implémentation | `non commencé` |
+
+#### 2. Portée des décisions existantes
+
+MEC-0004 applique par renvoi certaines sous-décisions de MEC-0001, sans valider MEC-0001 dans son ensemble.
+
+Les décisions existantes sont :
+
+- **ARB-D :** récupération des TU par addition du solde et du montant récupéré, avec plafonnement.
+- **Q3.6 :** énergie disposant d'une réserve maximale et d'une récupération distinctes de celles des TU.
+- **Q4.6 :** profil initial de test configurable de 60 TU maximales, 60 TU récupérées par tour, 100 points d'énergie maximale et 20 récupérés par tour.
+- **Q3.14 :** facteur de surcharge égal à 1 lorsque la charge est nulle.
+
+La formule de récupération de l'énergie par addition plafonnée est une **nouvelle décision de MEC-0004**, et non une formule précédemment fixée par MEC-0001.
+
+##### Surcharge
+
+MEC-0004 ne modélise aucune charge portée. Le facteur de surcharge est donc neutre (1), conformément au cas sans charge prévu par Q3.14.
+
+La récupération des TU utilise ainsi la formule d'ARB-D sans réduction supplémentaire.
+
+Aucune règle de surcharge n'est implémentée.
+
+MEC-0001 et MEC-0002 conservent leur statut reporté. MEC-0003 reste inchangée.
+
+#### 3. Fonctionnement
+
+##### 3.1. Ressources
+
+Profil initial de test :
+
+| Paramètre | Valeur |
+|---|---:|
+| TU maximales | 60 |
+| Récupération de TU par tour | 60 |
+| Énergie maximale | 100 |
+| Récupération d'énergie par tour | 20 |
+
+Les quatre paramètres sont configurables. Ces valeurs ne constituent pas l'équilibrage définitif du jeu.
+
+**TU après récupération :**
+
+`TU suivantes = min(TU courantes + récupération TU, TU maximales)`
+
+**Énergie après récupération :**
+
+`Énergie suivante = min(énergie courante + récupération énergie, énergie maximale)`
+
+La récupération est indépendante pour les deux ressources.
+
+##### 3.2. Validation des paramètres
+
+- Les plafonds sont strictement positifs.
+- Les récupérations sont positives ou nulles.
+- Une récupération supérieure au plafond est autorisée.
+- Les ressources courantes doivent être comprises entre zéro et leur plafond respectif, bornes incluses.
+- Les valeurs négatives sont refusées.
+- Un état initial dépassant un plafond est refusé, sans réduction silencieuse.
+- Un état initial exactement égal aux plafonds est accepté.
+
+Ces contrôles appartiennent au nouveau système de tours.
+
+Ils ne modifient pas les règles existantes de création des états de MEC-0003, notamment `MovementModel.CreateState`.
+
+##### 3.3. Déroulement d'un tour
+
+1. L'unité commence au tour numéro 1.
+2. Le joueur peut déplacer l'unité selon MEC-0003.
+3. Le joueur déclenche explicitement « Fin de tour ».
+4. Le moteur applique les deux récupérations.
+5. Le numéro de tour augmente de 1.
+6. La position et l'orientation de l'unité restent inchangées.
+7. Le joueur peut de nouveau déplacer l'unité.
+
+La fin de tour est autorisée même si aucune action n'a été effectuée ou si les deux ressources sont déjà à leur maximum.
+
+Aucune fin de tour automatique n'est introduite.
+
+##### 3.4. Conservation des informations affichées
+
+Après une fin de tour :
+
+- Le chemin du dernier ordre de déplacement est conservé.
+- Le dernier résultat est remplacé par un message indiquant la fin du tour et la récupération effectuée.
+- Le compteur de tours est actualisé.
+- Les ressources affichées correspondent au nouvel état.
+
+La fin de tour n'est pas un nouvel ordre de déplacement.
+
+La touche R efface le chemin et restaure le message initial du scénario.
+
+#### 4. Prototype Godot — Scénario 4
+
+Les scénarios 1, 2 et 3 restent inchangés.
+
+##### Configuration
+
+- Carte identique à celle du scénario 1.
+- Une seule unité.
+- Position initiale : (1,4).
+- Orientation initiale : nord.
+- TU initiales : 12.
+- Énergie initiale : 35.
+- Tour initial : 1.
+
+##### Commandes
+
+**Touche 4 :**
+
+Charge le scénario 4 dans son état initial.
+
+Appuyer sur 4 lorsque le scénario 4 est déjà actif provoque également une réinitialisation complète.
+
+Sur clavier AZERTY, la position physique de la touche 4 est reconnue, notamment lorsque son libellé est une apostrophe.
+
+**Touche T :**
+
+Termine le tour dans le scénario 4.
+
+Elle est sans effet dans les scénarios 1, 2 et 3.
+
+**Touche R :**
+
+Réinitialise le scénario courant.
+
+Dans le scénario 4, elle restaure :
+- le tour 1 ;
+- les 12 TU ;
+- les 35 points d'énergie ;
+- la position initiale ;
+- l'orientation initiale ;
+- le chemin initial effacé ;
+- le message initial.
+
+##### Affichage
+
+Le panneau du scénario 4 présente le numéro de tour, les ressources, les commandes et le dernier résultat.
+
+Le compteur de tours ne s'affiche que dans le scénario 4.
+
+Le chemin affiché est celui du dernier déplacement exécuté par le moteur, conservé conformément à la section 3.4.
+
+Les règles de récupération appartiennent exclusivement à `Bastion.Simulation`. Le client Godot transmet les commandes et affiche les résultats.
+
+#### 5. Hors périmètre
+
+Ne pas introduire :
+
+- plusieurs unités ;
+- adversaires ou intelligence artificielle ;
+- alternance entre camps ou phases ennemies ;
+- combats, réactions ou surveillance ;
+- gestion de l'initiative ;
+- inventaire, équipements et surcharge ;
+- récupération conditionnelle au repos ;
+- limite temporelle des tours ;
+- animation ou interface définitive ;
+- modification des règles de marche de MEC-0003 ;
+- implémentation générale de MEC-0001 ou MEC-0002.
+
+Tout comportement non explicitement décrit dans la présente fiche est hors périmètre.
+
+#### 6. Tests de comportement
+
+Les tests suivants sont définis et acceptés, mais ne sont pas encore implémentés.
+
+| ID | Situation | Résultat attendu |
+|---|---|---|
+| T01 | Tour 1, 12 TU, 35 énergie ; fin de tour | Tour 2, 60 TU, 55 énergie |
+| T02 | Tour 2, 60 TU, 55 énergie ; fin de tour sans déplacement | Tour 3, 60 TU, 75 énergie |
+| T03 | 58 TU, 95 énergie ; fin de tour | 60 TU, 100 énergie |
+| T04 | Fin de tour sans déplacement | Compteur augmenté de 1 |
+| T05 | Fin de tour après déplacement | Position et orientation conservées |
+| T06 | Maximum TU 40, récupération TU 25 ; maximum énergie 30, récupération énergie 10 ; ressources courantes 12 TU, 15 énergie | 37 TU, 25 énergie |
+| T07 | Récupération supérieure au plafond | Résultat plafonné |
+| T08 | Récupération égale à zéro | Ressource inchangée |
+| T09 | Paramètre négatif, plafond nul ou état initial hors plafond | Rejet explicite, sans modification d'état |
+| T10 | Touche T dans les scénarios 1 à 3 | Aucun effet |
+| T11 | Touche R ou 4 dans le scénario 4 | Réinitialisation complète |
+| T12 | Touche 4 simulée avec un clavier AZERTY | Scénario 4 chargé |
+| T13 | Scénarios 1 à 3 et contrôles existants | Aucune régression |
+| T14 | 60 TU, 100 énergie ; fin de tour | Ressources inchangées, compteur +1 |
+| T15 | État initial exactement aux plafonds | Accepté |
+| T16 | Fin de tour après déplacement | Chemin conservé, message du dernier résultat actualisé |
+
+#### 7. Architecture et qualité
+
+Prescriptions destinées au futur mandat d'implémentation :
+
+- La logique des tours appartient à `Bastion.Simulation`.
+- Le moteur ne dépend pas de Godot.
+- Les états restent immuables.
+- Le client Godot ne recalcule pas les ressources.
+- Les fonctionnalités existantes sont réutilisées.
+- Aucune dépendance, abstraction ou framework supplémentaire sans justification.
+- Les tests unitaires, les contrôles fumée et une relecture indépendante accompagnent l'implémentation.
+
+La présente fiche ne demande pas encore d'écrire ce code.
