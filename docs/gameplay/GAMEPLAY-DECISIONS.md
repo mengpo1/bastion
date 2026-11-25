@@ -646,8 +646,8 @@ Adaptations à l'inscription, sans changement de fond : les sections numérotée
 | Périmètre autorisé | Uniquement le fonctionnement décrit dans les sections 2 à 4. |
 | Éléments exclus | Section 5 et tout comportement non décrit dans cette fiche. |
 | Tests de référence | Aucun : aucune fidélité à OXCE revendiquée. |
-| Tests de modification | T01 à T16, définis à la section 6, non encore implémentés. |
-| État d'implémentation | `non commencé` |
+| Tests de modification | T01 à T16, définis à la section 6, non encore implémentés. *(Annotation ajoutée le 25 novembre 2026 : texte historique conservé, qui décrit l'état à la date de l'inscription. Les seize scénarios T01 à T16 sont désormais couverts : T01 à T09, T14 et T15 par les 19 tests xUnit du moteur, dans `tests/Bastion.Simulation.Tests/Turns/` ; T05, T10 à T12 et T16 par 54 nouveaux contrôles du contrôle fumée Godot, dans `src/Bastion.Client.Godot/SmokeTest.cs` ; T13, l'absence de régression, par les 46 tests .NET et les 66 contrôles fumée antérieurs, inchangés. La CI de la PR #26 a exécuté avec succès 65 tests .NET et 120 contrôles fumée. Détail : `docs/reviews/LOT-1G-IMPLEMENTATION-MEC-0004.md`.)* |
+| État d'implémentation | intégré — dans main par la PR #26, commit de fusion b4e2a4793dd1101ff4b81e6ad404613ec7671838 (25 novembre 2026). État à la date de l'inscription : non commencé. Vérifications automatisées : la CI de la PR #26 (ligne « Tests de modification »). Essais manuels sous macOS, distincts de ces vérifications : sept contrôles du prototype du lot 1G (scénario 4, anciens scénarios et fenêtre), déclarés satisfaisants par le propriétaire le 25 novembre 2026. C'est une déclaration du propriétaire, non reproduite de façon indépendante. Détail : `docs/reviews/LOT-1H-CLOTURE-MEC-0004.md`. |
 
 #### 2. Portée des décisions existantes
 

@@ -5,9 +5,10 @@ Projet de jeu en C# avec Godot .NET.
 **État :**
 
 - le harnais de développement est installé et opérationnel : hooks Claude Code, tests des hooks, intégration continue ;
-- le premier incrément de gameplay, `MEC-0003` (marche sur terrain plat), est implémenté, testé et intégré à `main` (PR #19) ;
-- la simulation C# comprend désormais la marche sur terrain plat ; `MEC-0001` et `MEC-0002` restent reportées ;
-- un prototype technique Godot, `src/Bastion.Client.Godot/`, existe depuis le lot 1D : une scène reliée à la simulation, qui n'est pas l'interface finale. Il reste hors de `Bastion.slnx`, mais la CI le compile et lance son contrôle fumée depuis le lot 1E.
+- deux incréments de gameplay sont implémentés, testés et intégrés à `main` : `MEC-0003`, la marche sur terrain plat (PR #19), et `MEC-0004`, la gestion élémentaire des tours et la récupération des ressources (PR #26) ;
+- la simulation C# comprend la marche sur terrain plat et, dans `Bastion.Simulation.Turns`, la gestion élémentaire des tours d'une seule unité : une commande explicite termine le tour, récupère les TU et l'énergie, chacune dans la limite de son plafond, et passe au tour suivant ;
+- `MEC-0001` et `MEC-0002` restent reportées ;
+- un prototype technique Godot, `src/Bastion.Client.Godot/`, existe depuis le lot 1D : une scène reliée à la simulation, avec quatre scénarios fixes de démonstration, trois pour la marche (lot 1F) et un pour la gestion des tours (lot 1G). Ce n'est ni un jeu complet ni l'interface finale. Il reste hors de `Bastion.slnx`, mais la CI le compile et lance son contrôle fumée depuis le lot 1E.
 
 ## Organisation
 
@@ -23,8 +24,8 @@ Règles permanentes de travail : [`CLAUDE.md`](CLAUDE.md).
 
 | Chemin | Rôle |
 |---|---|
-| `src/Bastion.Simulation/` | Simulation, indépendante de Godot : marche sur terrain plat de `MEC-0003` (`Movement/`) |
-| `tests/Bastion.Simulation.Tests/` | Tests xUnit : tests fumée techniques et tests de `MEC-0003` (`Movement/`) |
+| `src/Bastion.Simulation/` | Simulation, indépendante de Godot : marche sur terrain plat de `MEC-0003` (`Movement/`) et gestion élémentaire des tours de `MEC-0004` (`Turns/`) |
+| `tests/Bastion.Simulation.Tests/` | Tests xUnit : tests fumée techniques, tests de `MEC-0003` (`Movement/`) et de `MEC-0004` (`Turns/`) |
 | `scripts/harness/` | Hooks Claude Code, leurs tests et leurs limites |
 | `.claude/settings.json` | Branchement des hooks |
 | `.github/workflows/ci.yml` | Intégration continue |
