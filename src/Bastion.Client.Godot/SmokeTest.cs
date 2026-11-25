@@ -1,12 +1,14 @@
 using Bastion.Simulation.Movement;
+using Bastion.Simulation.Turns;
 using Godot;
 
 namespace Bastion.Client;
 
 /// <summary>
-/// Contrôle fumée du prototype (lots 1D et 1F), lancé par l'argument utilisateur « --smoke-test ». Il parcourt le
+/// Contrôle fumée du prototype (lots 1D, 1F et 1G), lancé par l'argument utilisateur « --smoke-test ». Il parcourt le
 /// scénario 1 (contrôles du lot 1D, inchangés), puis les scénarios 2 et 3 du lot 1F, chargés par les touches 2 et 3,
-/// et revient au scénario 1 par la touche 1.
+/// et revient au scénario 1 par la touche 1. Le lot 1G vérifie ensuite que la touche T est sans effet dans les
+/// scénarios 1 à 3, puis le scénario 4 (MEC-0004) : touche 4, fins de tour, déplacement, touches R et 4.
 /// Il envoie des clics et des touches à la fenêtre (<see cref="Viewport.PushInput"/>), traités par le même code que
 /// ceux du joueur (<see cref="PrototypeScene._UnhandledInput"/>), puis compare l'état de la scène et le texte de son
 /// panneau aux résultats du moteur et aux valeurs du mandat. Le dessin (grille, zone, unité) n'est pas contrôlé ici :
@@ -308,6 +310,128 @@ internal static class SmokeTest
                 && Layout(scene.Model.Map) == "murs : aucun ; cases infranchissables : (3,2) ; terrains non normaux : aucun",
                 $"touche 1 : scénario 1 rechargé dans son état initial ({Describe(scene.State)}, {Layout(scene.Model.Map)})");
             CheckScenario(1, "aucun", "après le retour au scénario 1");
+
+            // Lot 1G (MEC-0004). Le numéro de tour ne s'affiche que dans le scénario 4.
+            void CheckTurnLine(int? turn, string when)
+            {
+                Check(turn is null
+                        ? scene.Turns is null && !scene.HudText.Contains("Tour : ", StringComparison.Ordinal)
+                            && !scene.HudText.Contains("T : terminer le tour", StringComparison.Ordinal)
+                        : scene.Turns?.Turn == turn && scene.HudText.Contains($"Tour : {turn}\n", StringComparison.Ordinal)
+                            && scene.HudText.Contains("T : terminer le tour\n", StringComparison.Ordinal),
+                    turn is null ? $"aucun tour ni commande T affichés {when}" : $"tour {turn} et commande T affichés {when}");
+
+                // Titre du panneau : celui du lot 1F dans les scénarios 1 à 3, celui du lot 1G dans le scénario 4.
+                string title = turn is null
+                    ? "Bastion — banc d'essai de MEC-0003 (lots 1D à 1F)"
+                    : "Bastion — banc d'essai MEC-0004 (lot 1G)";
+                Check(scene.HudText.StartsWith(title + "\n", StringComparison.Ordinal),
+                    $"titre du panneau « {title} » {when}");
+            }
+
+            // T10 : la touche T est sans effet dans les scénarios 1 à 3, y compris après un déplacement.
+            foreach (int number in new[] { 1, 2, 3 })
+            {
+                PressKey(scene, Key.Key0 + number, Key.Key0 + number);
+                await Settle($"t10-scenario-{number}");
+                Click(scene, PrototypeScene.CellCenter(FirstDestination));
+                await Settle($"t10-scenario-{number}-ordre");
+                UnitState beforeT = scene.State;
+                string resultBeforeT = scene.LastResult;
+                string pathBeforeT = scene.LastPath;
+                Check(scene.Scenario == number && beforeT.Position == FirstDestination,
+                    $"scénario {number} chargé puis déplacé en (2,4) avant la touche T ({Describe(beforeT)})");
+                PressKey(scene, Key.T, Key.T);
+                await Settle($"t10-scenario-{number}-touche-t");
+                Check(scene.Scenario == number && scene.State == beforeT && scene.LastResult == resultBeforeT && scene.LastPath == pathBeforeT,
+                    $"T10 : touche T sans effet dans le scénario {number} ({Describe(scene.State)}, chemin {scene.LastPath})");
+                CheckTurnLine(null, $"dans le scénario {number}");
+            }
+
+            // T12 : touche 4 telle qu'un clavier AZERTY la donne, sans la touche Maj : libellé « ' », position de la touche 4.
+            const string Scenario4Message = "Scénario 4 dans son état initial : tour 1.";
+            PressKey(scene, Key.Apostrophe, Key.Key4);
+            await Settle("scenario-4");
+            MovementModel turnModel = scene.Model;
+            UnitState turnStart = scene.State;
+            Check(scene.Scenario == 4 && scene.Turns is not null && scene.Turns.Unit == turnStart
+                && Same(turnStart, new GridPosition(1, 4), Direction.N, 12, 35) && scene.LastResult == Scenario4Message,
+                $"T12 : touche 4 (AZERTY) : scénario 4 chargé, {Describe(turnStart)} ({scene.LastResult})");
+            Check(Layout(turnModel.Map) == "murs : aucun ; cases infranchissables : (3,2) ; terrains non normaux : aucun"
+                && turnModel.Map.Columns == 5 && turnModel.Map.Rows == 5 && turnModel.Map.CellWidthMm == 1500,
+                $"carte du scénario 4 = carte du scénario 1 : {Layout(turnModel.Map)}");
+            Check(scene.Reachability.Zone.ToHashSet().SetEquals(turnModel.ComputeReachability(turnStart).Zone),
+                $"zone affichée = zone du moteur ({scene.Reachability.Zone.Count} cases)");
+            CheckTurnLine(1, "au chargement du scénario 4");
+            CheckScenario(4, "aucun", "au chargement du scénario 4");
+
+            // T01 et T02 : deux fins de tour sans déplacement, comparées au moteur de tours et aux valeurs de la fiche.
+            async Task<TurnOutcome> EndTurnAsync(string slug)
+            {
+                TurnOutcome expected = TurnRules.Initial.EndTurn(scene.Turns!);
+                PressKey(scene, Key.T, Key.T);
+                await Settle(slug);
+                Check(scene.Turns == expected.After && scene.State == expected.After.Unit && scene.LastResult == expected.Message,
+                    $"touche T = résultat du moteur de tours : tour {scene.Turns?.Turn}, {Describe(scene.State)} ({scene.LastResult})");
+                HashSet<GridPosition> expectedZone = scene.Model.ComputeReachability(expected.After.Unit).Zone.ToHashSet();
+                Check(scene.Reachability.Zone.ToHashSet().SetEquals(expectedZone),
+                    $"zone affichée après la fin de tour = zone du moteur pour le nouvel état ({scene.Reachability.Zone.Count} cases, {expectedZone.Count} attendues)");
+                return expected;
+            }
+
+            await EndTurnAsync("s4-fin-tour-1");
+            Check(scene.Turns?.Turn == 2 && Same(scene.State, new GridPosition(1, 4), Direction.N, 60, 55),
+                $"T01 : tour 2, 60 TU et 55 d'énergie attendus : tour {scene.Turns?.Turn}, {Describe(scene.State)}");
+            CheckTurnLine(2, "après la 1re fin de tour");
+            CheckScenario(4, "aucun", "après la 1re fin de tour");
+            await EndTurnAsync("s4-fin-tour-2");
+            Check(scene.Turns?.Turn == 3 && Same(scene.State, new GridPosition(1, 4), Direction.N, 60, 75),
+                $"T02 : tour 3, 60 TU et 75 d'énergie attendus : tour {scene.Turns?.Turn}, {Describe(scene.State)}");
+            CheckTurnLine(3, "après la 2e fin de tour");
+
+            // T05 et T16 : fin de tour après un déplacement ; position, orientation et chemin conservés, message actualisé.
+            OrderOutcome expectedMove = turnModel.ExecuteOrder(scene.State, FirstDestination);
+            Click(scene, PrototypeScene.CellCenter(FirstDestination));
+            await Settle("s4-ordre-2-4");
+            Check(scene.State == expectedMove.FinalState && scene.Turns?.Unit == expectedMove.FinalState && scene.Turns?.Turn == 3,
+                $"clic sur (2,4) dans le scénario 4 = résultat d'ExecuteOrder, tour inchangé : {Describe(scene.State)}");
+            CheckScenario(4, PathText(expectedMove), "après l'ordre vers (2,4)");
+            string resultAfterMove = scene.LastResult;
+            TurnOutcome afterMove = await EndTurnAsync("s4-fin-tour-apres-ordre");
+            Check(scene.State.Position == FirstDestination && scene.State.Orientation == Direction.E
+                && scene.State.Position == expectedMove.FinalState.Position && scene.State.Orientation == expectedMove.FinalState.Orientation,
+                $"T05 : position et orientation conservées après la fin de tour : {Describe(scene.State)}");
+            Check(scene.LastPath == PathText(expectedMove) && scene.LastResult != resultAfterMove && scene.LastResult == afterMove.Message,
+                $"T16 : chemin « {scene.LastPath} » conservé, dernier résultat actualisé ({scene.LastResult})");
+            CheckTurnLine(4, "après la fin de tour qui suit le déplacement");
+            CheckScenario(4, PathText(expectedMove), "après la fin de tour qui suit le déplacement");
+
+            // T11 : la touche R réinitialise complètement le scénario 4.
+            PressKey(scene, Key.R);
+            await Settle("s4-touche-r");
+            Check(scene.Scenario == 4 && scene.State == turnStart && scene.Turns?.Turn == 1 && scene.Turns?.Unit == turnStart
+                && scene.LastPath == "aucun" && scene.LastResult == Scenario4Message,
+                $"T11 : touche R : tour 1, {Describe(scene.State)}, chemin effacé, message initial ({scene.LastResult})");
+            CheckTurnLine(1, "après la touche R");
+
+            // T11 : la touche 4, dans le scénario 4 déjà actif, le réinitialise aussi complètement (libellé QWERTY seul).
+            Click(scene, PrototypeScene.CellCenter(FirstDestination));
+            await Settle("s4-ordre-avant-touche-4");
+            await EndTurnAsync("s4-fin-tour-avant-touche-4");
+            Check(scene.Turns?.Turn == 2 && scene.State != turnStart, $"état déplacé au tour 2 avant la touche 4 ({Describe(scene.State)})");
+            PressKey(scene, Key.Key4, Key.None);
+            await Settle("s4-touche-4");
+            Check(scene.Scenario == 4 && scene.State == turnStart && scene.Turns?.Turn == 1 && scene.LastPath == "aucun"
+                && scene.LastResult == Scenario4Message,
+                $"T11 : touche 4 dans le scénario 4 actif : réinitialisation complète ({Describe(scene.State)}, tour {scene.Turns?.Turn})");
+            CheckTurnLine(1, "après la touche 4");
+
+            // Retour au scénario 1 : plus de tour, état initial du lot 1D.
+            PressKey(scene, Key.Key1, Key.Key1);
+            await Settle("retour-scenario-1-depuis-4");
+            Check(scene.Scenario == 1 && scene.State == initial && scene.Reachability.Zone.ToHashSet().SetEquals(initialZone),
+                $"touche 1 depuis le scénario 4 : scénario 1 dans son état initial ({Describe(scene.State)})");
+            CheckTurnLine(null, "après le retour au scénario 1");
         }
         catch (Exception exception)
         {
