@@ -1,16 +1,17 @@
-# Bastion.Client.Godot — prototype technique (lots 1D à 1F)
+# Bastion.Client.Godot — prototype technique (lots 1D à 1G)
 
-Ce prototype est une scène Godot 2D, vue du dessus, reliée au moteur `Bastion.Simulation`. On y clique sur une case de la zone atteignable, et l'unité s'y déplace selon le résultat du moteur. Depuis le lot 1F, c'est aussi un banc d'essai de MEC-0003 : trois scénarios fixes permettent d'observer un mur et des terrains. Ce n'est ni le design final de l'interface, ni une mécanique de gameplay.
+Ce prototype est une scène Godot 2D, vue du dessus, reliée au moteur `Bastion.Simulation`. On y clique sur une case de la zone atteignable, et l'unité s'y déplace selon le résultat du moteur. Depuis le lot 1F, c'est aussi un banc d'essai de MEC-0003 : trois scénarios fixes permettent d'observer un mur et des terrains. Ce n'est ni le design final de l'interface, ni une mécanique de gameplay. Depuis le lot 1G, un quatrième scénario permet d'essayer la gestion élémentaire des tours de MEC-0004 : fin de tour et récupération des TU et de l'énergie.
 
 ## Ce que fait la scène
 
-**Trois scénarios fixes**, choisis par les touches 1, 2 et 3. Ce sont des données de démonstration, et non des règles de jeu. Partout, la carte MEC-0003 compte 5 × 5 cases de 1 500 mm, et l'unité `UnitBody.StandardHuman` part de (1,4), orientée N, avec 20 TU et 10 d'énergie.
+**Quatre scénarios fixes**, choisis par les touches 1 à 4. Ce sont des données de démonstration, et non des règles de jeu. Partout, la carte MEC-0003 compte 5 × 5 cases de 1 500 mm, et l'unité `UnitBody.StandardHuman` part de (1,4), orientée N. Elle dispose de 20 TU et de 10 d'énergie dans les scénarios 1 à 3, et de 12 TU et de 35 d'énergie dans le scénario 4.
 
 | Touche | Scénario | Carte |
 |---|---|---|
 | 1 | référence (lot 1D), chargé au lancement | terrain normal partout ; case infranchissable en (3,2) |
 | 2 | mur et recherche de chemin | terrain normal partout ; mur standard sur l'arête est de (1,4) |
 | 3 | coûts des terrains | terrain difficile en (2,4), très difficile en (3,4), normal ailleurs |
+| 4 | gestion des tours (MEC-0004), au tour 1 | celle du scénario 1 |
 
 **Affichage :**
 - en vert, la zone atteignable rendue par `ComputeReachability` ;
@@ -21,18 +22,20 @@ Ce prototype est une scène Godot 2D, vue du dessus, reliée au moteur `Bastion.
 - sous la carte, la légende de ces couleurs ;
 - à droite :
   - le numéro et le titre du scénario ;
+  - dans le seul scénario 4, le numéro du tour ;
   - la position, l'orientation, les TU, l'énergie et le nombre de cases atteignables ;
   - les directions du chemin choisi par le moteur pour le dernier ordre exécuté, par exemple « N → SE » ;
-  - le dernier résultat et les commandes.
+  - le dernier résultat et les commandes. Dans le scénario 4, la commande T s'y ajoute.
 
 Les murs, les terrains et la case infranchissable sont lus dans la carte du moteur (`WallBetween`, `TerrainAt`, `IsBlocked`), et non recopiés par la scène.
 
 **Commandes :**
 - **clic gauche** sur une case : ordre transmis au moteur par `ExecuteOrder`. L'affichage reprend l'état rendu par le moteur, puis la zone est recalculée. Un ordre refusé ne change rien et affiche le message du moteur.
-- **touches 1, 2 et 3** de la rangée des chiffres : chargent le scénario correspondant, dans son état initial. Sur un clavier AZERTY, ce sont les touches « & », « é » et « " », sans la touche Maj : la scène reconnaît la position de la touche. Le pavé numérique n'est pas pris en charge.
-- **touche R** : recrée l'état initial du scénario courant. C'est une commande de débogage, pas une règle de gameplay.
+- **touches 1 à 4** de la rangée des chiffres : chargent le scénario correspondant, dans son état initial ; dans le scénario 4 déjà actif, la touche 4 le réinitialise. Sur un clavier AZERTY, ce sont les touches « & », « é », « " » et « ' », sans la touche Maj : la scène reconnaît la position de la touche. Le pavé numérique n'est pas pris en charge.
+- **touche T**, dans le seul scénario 4 : termine le tour. Le moteur de tours (`TurnRules.EndTurn`) récupère les TU et l'énergie, plafonnées (60 TU récupérées pour 60 au plus, 20 d'énergie pour 100 au plus), et passe au tour suivant. La position, l'orientation et le chemin du dernier déplacement sont conservés ; le dernier résultat devient le compte rendu du moteur. La touche T est sans effet dans les scénarios 1 à 3.
+- **touche R** : recrée l'état initial du scénario courant. C'est une commande de débogage, pas une règle de gameplay. Dans le scénario 4, elle restaure aussi le tour 1 et le message initial du scénario.
 
-La scène ne contient aucune règle : elle convertit les pixels en cases, transmet les ordres et affiche les résultats. Le déplacement est instantané. Dans le scénario 2, c'est le moteur qui décide si la case située derrière le mur reste atteignable par un autre chemin, et par lequel.
+La scène ne contient aucune règle : elle convertit les pixels en cases, transmet les ordres et affiche les résultats. Le déplacement est instantané. Dans le scénario 2, c'est le moteur qui décide si la case située derrière le mur reste atteignable par un autre chemin, et par lequel. Dans le scénario 4, les récupérations et le numéro de tour viennent du moteur de tours ; la scène ne les calcule pas.
 
 ## Prérequis
 
@@ -101,7 +104,7 @@ Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels d
 5. refus d'une destination inaccessible ;
 6. touche R.
 
-Ces essais portent sur le prototype du lot 1D, avant l'ajout des scénarios 2 et 3 par le lot 1F. Ces deux scénarios et les touches 1, 2 et 3 n'ont pas été essayés sous macOS.
+Ces essais portent sur le prototype du lot 1D, avant l'ajout des scénarios 2 et 3 par le lot 1F et du scénario 4 par le lot 1G. Ces trois scénarios et les touches 1 à 4 et T n'ont pas été essayés sous macOS.
 
 Le chemin et les commandes ci-dessous n'ont pas été vérifiés de façon indépendante sous macOS. Avec l'application officielle `Godot_mono.app` 4.7.2 placée dans `/Applications` :
 
@@ -133,7 +136,15 @@ Il parcourt dans l'ordre :
    - ces valeurs sont comparées à celles du mandat et au résultat d'`ExecuteOrder`, et le chemin affiché à celui du moteur ;
    - la touche R est vérifiée aussi ;
    - la touche 1 du pavé numérique et la barre d'espace restent sans effet ;
-4. le retour au scénario 1 par la touche 1, transmise comme par un clavier AZERTY (« & »), depuis un état déplacé et un chemin affiché.
+4. le retour au scénario 1 par la touche 1, transmise comme par un clavier AZERTY (« & »), depuis un état déplacé et un chemin affiché ;
+5. la touche T dans les scénarios 1 à 3, après un déplacement : aucun effet (lot 1G, T10) ;
+6. le scénario 4 (lot 1G), chargé par la touche 4 telle qu'un clavier AZERTY la transmet (« ' » à la position de la touche 4) :
+   - état initial : (1,4), N, 12 TU, 35 d'énergie, tour 1 (T12) ;
+   - deux fins de tour : tour 2 avec 60 TU et 55 d'énergie, puis tour 3 avec 60 TU et 75 d'énergie (T01, T02) ;
+   - un déplacement, puis une fin de tour : position, orientation et chemin conservés, dernier résultat actualisé (T05, T16) ;
+   - les touches R et 4 : réinitialisation complète (T11) ;
+   - chaque fin de tour est comparée au résultat du moteur de tours, et les valeurs de MEC-0004 sont vérifiées en constantes ;
+7. le retour au scénario 1, où aucun tour n'est affiché.
 
 Les chemins attendus viennent du moteur, ou valent « aucun ». Le contrôle ne les relit jamais dans la scène.
 
@@ -160,8 +171,8 @@ timeout 300 xvfb-run -a "$GODOT" --path src/Bastion.Client.Godot -- --smoke-test
 
 ## Limites
 
-**Essais non effectués pour le lot 1F**, au moment de sa publication :
-- **macOS :** aucun essai des scénarios 2 et 3 ni des touches 1, 2 et 3. Les six essais déclarés par le propriétaire portent sur le prototype du lot 1D.
+**Essais non effectués pour les lots 1F et 1G**, au moment de leur réalisation :
+- **macOS :** aucun essai des scénarios 2 à 4 ni des touches 1 à 4 et T. Les six essais déclarés par le propriétaire portent sur le prototype du lot 1D. L'essai manuel du scénario 4 sous macOS n'a pas eu lieu.
 - **Écran réel :** aucun essai, sous aucun système (Linux, macOS ou Windows). Le rendu n'est connu que par des captures automatiques sous affichage virtuel (Xvfb).
 - **Clavier et souris physiques :** aucun essai. Les entrées sont simulées par le contrôle fumée et, lors de la relecture, par des événements X11 sous Xvfb.
 
@@ -175,9 +186,13 @@ timeout 300 xvfb-run -a "$GODOT" --path src/Bastion.Client.Godot -- --smoke-test
   - vérifiés en local, par le contrôle fumée en mode headless et par des captures sous Xvfb ;
   - pas encore dans la CI au moment du lot 1F ;
   - aucune validation manuelle, sur aucun système.
-- **Touches 1, 2 et 3 :**
-  - vérifiées par des événements simulés : la touche 2 par son seul libellé ; les touches 3 et 1 comme un clavier AZERTY les transmet (libellé « " » ou « & », position de la touche) ;
-  - lors de la relecture du lot, aussi par de vrais événements X11 sous Xvfb, avec une disposition AZERTY imitée ;
+- **Scénario 4 (lot 1G) :**
+  - vérifié en local, par le contrôle fumée en mode headless et par des captures sous Xvfb ;
+  - pas encore dans la CI au moment du lot 1G ;
+  - aucune validation manuelle, sur aucun système.
+- **Touches 1 à 4 et T :**
+  - vérifiées par des événements simulés : la touche 2 par son seul libellé ; les touches 3, 1 et 4 comme un clavier AZERTY les transmet (libellé « " », « & » ou « ' », position de la touche) ;
+  - aussi par de vrais événements X11 sous Xvfb, avec une disposition AZERTY imitée : les touches 1 à 3 et R lors de la relecture du lot 1F, les touches 4, T, R et 1 lors de celle du lot 1G (résultat inspecté sur des captures) ;
   - jamais avec un clavier physique.
 - **macOS :** six essais manuels déclarés conformes par le propriétaire le 23 novembre 2026, sur le prototype du lot 1D. C'est un retour d'utilisateur, non reproduit de façon indépendante. Le contrôle fumée en ligne de commande et `gtimeout` n'y sont pas vérifiés.
 - **Windows :** aucun essai.

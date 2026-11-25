@@ -1,14 +1,16 @@
 using Bastion.Simulation.Movement;
+using Bastion.Simulation.Turns;
 using Godot;
 
 namespace Bastion.Client;
 
 /// <summary>
-/// Scène unique du prototype technique (lots 1D à 1F) : une carte MEC-0003 de 5 × 5 cases et une unité, vues du dessus.
-/// Trois scénarios fixes de démonstration (lot 1F) se chargent par les touches 1, 2 et 3 ; ce sont des données, et non
-/// des règles de jeu. Toutes les règles (zone atteignable, chemins, coûts, collisions, rotations) viennent de
-/// Bastion.Simulation : la scène convertit les coordonnées entre pixels et cases, transmet les ordres au moteur et
-/// affiche ses résultats.
+/// Scène unique du prototype technique (lots 1D à 1G) : une carte MEC-0003 de 5 × 5 cases et une unité, vues du dessus.
+/// Quatre scénarios fixes de démonstration se chargent par les touches 1 à 4 ; ce sont des données, et non des règles
+/// de jeu. Les scénarios 1 à 3 (lot 1F) portent sur la marche ; le scénario 4 (lot 1G) ajoute la gestion des tours de
+/// MEC-0004 : la touche T y termine le tour, par le moteur de tours. Toutes les règles (zone atteignable, chemins,
+/// coûts, collisions, rotations, récupérations) viennent de Bastion.Simulation : la scène convertit les coordonnées
+/// entre pixels et cases, transmet les ordres et les commandes aux moteurs et affiche leurs résultats.
 /// </summary>
 public partial class PrototypeScene : Node2D
 {
@@ -21,10 +23,18 @@ public partial class PrototypeScene : Node2D
     private const Direction StartOrientation = Direction.N;
     private const int StartTu = 20;
     private const int StartEnergy = 10;
+
+    /// <summary>Scénario 4 (MEC-0004, §4) : carte du scénario 1, 12 TU, 35 d'énergie, tour 1, profil initial de test.</summary>
+    private const int TurnScenario = 4;
+    private const int TurnScenarioStartTu = 12;
+    private const int TurnScenarioStartEnergy = 35;
+    private const string TurnScenarioInitialMessage = "Scénario 4 dans son état initial : tour 1.";
+    private static readonly TurnRules ScenarioTurnRules = TurnRules.Initial;
     private const string NoPath = "aucun";
 
-    /// <summary>Titres des scénarios, dans l'ordre des touches 1, 2 et 3.</summary>
-    private static readonly string[] ScenarioTitles = ["référence (lot 1D)", "mur et recherche de chemin", "coûts des terrains"];
+    /// <summary>Titres des scénarios, dans l'ordre des touches 1 à 4.</summary>
+    private static readonly string[] ScenarioTitles =
+        ["référence (lot 1D)", "mur et recherche de chemin", "coûts des terrains", "gestion des tours"];
 
     private static readonly Color FloorColor = new(0.82f, 0.82f, 0.78f);
     private static readonly Color ReachableColor = new(0.62f, 0.85f, 0.62f);
@@ -39,7 +49,7 @@ public partial class PrototypeScene : Node2D
 
     private Label _hud = null!;
 
-    /// <summary>Numéro du scénario chargé : 1, 2 ou 3.</summary>
+    /// <summary>Numéro du scénario chargé : 1 à 4.</summary>
     internal int Scenario { get; private set; }
 
     /// <summary>Moteur de la marche, construit pour la carte du scénario chargé.</summary>
@@ -53,6 +63,9 @@ public partial class PrototypeScene : Node2D
 
     /// <summary>Dernier résultat affiché.</summary>
     internal string LastResult { get; private set; } = string.Empty;
+
+    /// <summary>État de la gestion des tours, rendu par le moteur de tours : scénario 4 seulement, <c>null</c> ailleurs.</summary>
+    internal TurnState? Turns { get; private set; }
 
     /// <summary>Directions du chemin choisi par le moteur pour le dernier ordre exécuté, ou « aucun ».</summary>
     internal string LastPath { get; private set; } = NoPath;
@@ -92,12 +105,21 @@ public partial class PrototypeScene : Node2D
         {
             if (key.Keycode == Key.R)
             {
-                // Commande de débogage, et non règle de gameplay : recrée l'état initial du scénario.
-                ResetScenario("Scénario réinitialisé (touche R).");
+                // Commande de débogage, et non règle de gameplay : recrée l'état initial du scénario. Dans le
+                // scénario 4, elle restaure aussi le tour 1 et le message initial (MEC-0004, §3.4 et §4).
+                ResetScenario(Scenario == TurnScenario ? TurnScenarioInitialMessage : "Scénario réinitialisé (touche R).");
+            }
+            else if (key.Keycode == Key.T)
+            {
+                // Fin de tour explicite (MEC-0004), dans le seul scénario 4 : sans effet dans les scénarios 1 à 3.
+                if (Turns is not null)
+                {
+                    EndTurn(Turns);
+                }
             }
             else if (ScenarioKey(key) is int scenario)
             {
-                LoadScenario(scenario, $"Scénario {scenario} chargé (touche {scenario}).");
+                LoadScenario(scenario, scenario == TurnScenario ? TurnScenarioInitialMessage : $"Scénario {scenario} chargé (touche {scenario}).");
             }
         }
     }
@@ -177,17 +199,18 @@ public partial class PrototypeScene : Node2D
         var map = new TacticalMapBuilder(Columns, Rows, CellWidthMm);
         TacticalMapBuilder layout = scenario switch
         {
-            1 => map.Block(new GridPosition(3, 2)),
+            1 or TurnScenario => map.Block(new GridPosition(3, 2)),
             2 => map.AddWall(new GridPosition(1, 4), Direction.E, WallType.Standard),
             3 => map.SetTerrain(new GridPosition(2, 4), TerrainType.Difficult).SetTerrain(new GridPosition(3, 4), TerrainType.VeryDifficult),
-            _ => throw new ArgumentOutOfRangeException(nameof(scenario), scenario, "Scénario inconnu : 1, 2 ou 3 attendu."),
+            _ => throw new ArgumentOutOfRangeException(nameof(scenario), scenario, "Scénario inconnu : 1 à 4 attendu."),
         };
         return layout.Build();
     }
 
     /// <summary>
-    /// Scénario d'une touche 1, 2 ou 3 de la rangée des chiffres, reconnue par son libellé (clavier QWERTY) ou par sa
-    /// position (clavier AZERTY, où ces touches donnent « & », « é » et « " » sans la touche Maj) ; sinon <c>null</c>.
+    /// Scénario d'une touche 1 à 4 de la rangée des chiffres, reconnue par son libellé (clavier QWERTY) ou par sa
+    /// position (clavier AZERTY, où ces touches donnent « & », « é », « " » et « ' » sans la touche Maj) ; sinon
+    /// <c>null</c>.
     /// </summary>
     private static int? ScenarioKey(InputEventKey key)
     {
@@ -262,12 +285,30 @@ public partial class PrototypeScene : Node2D
 
         OrderOutcome outcome = Model.ExecuteOrder(State, destination);
         State = outcome.FinalState;
+        if (Turns is not null)
+        {
+            Turns = ScenarioTurnRules.WithUnit(Turns, State);
+        }
+
         LastResult = outcome.Message;
         if (outcome.Path is not null)
         {
             LastPath = string.Join(" → ", outcome.Path.Steps);
         }
 
+        Refresh();
+    }
+
+    /// <summary>
+    /// Fin de tour du scénario 4 : le moteur de tours calcule les récupérations et le nouveau tour. Le chemin du dernier
+    /// déplacement est conservé ; le dernier résultat devient le compte rendu du moteur (MEC-0004, §3.4).
+    /// </summary>
+    private void EndTurn(TurnState turns)
+    {
+        TurnOutcome outcome = ScenarioTurnRules.EndTurn(turns);
+        Turns = outcome.After;
+        State = outcome.After.Unit;
+        LastResult = outcome.Message;
         Refresh();
     }
 
@@ -281,7 +322,13 @@ public partial class PrototypeScene : Node2D
 
     private void ResetScenario(string message)
     {
-        State = Model.CreateState(StartPosition, StartOrientation, StartTu, StartEnergy);
+        bool turns = Scenario == TurnScenario;
+        State = Model.CreateState(
+            StartPosition,
+            StartOrientation,
+            turns ? TurnScenarioStartTu : StartTu,
+            turns ? TurnScenarioStartEnergy : StartEnergy);
+        Turns = turns ? ScenarioTurnRules.Start(State) : null;
         LastResult = message;
         LastPath = NoPath;
         Refresh();
@@ -292,8 +339,12 @@ public partial class PrototypeScene : Node2D
     {
         Reachability = Model.ComputeReachability(State);
         _hud.Text =
-            "Bastion — banc d'essai de MEC-0003 (lots 1D à 1F)\n" +
-            $"Scénario {Scenario} : {ScenarioTitles[Scenario - 1]}\n\n" +
+            (Scenario == TurnScenario
+                ? "Bastion — banc d'essai MEC-0004 (lot 1G)\n"
+                : "Bastion — banc d'essai de MEC-0003 (lots 1D à 1F)\n") +
+            $"Scénario {Scenario} : {ScenarioTitles[Scenario - 1]}\n" +
+            (Turns is null ? string.Empty : $"Tour : {Turns.Turn}\n") +
+            "\n" +
             $"Position : {State.Position}\n" +
             $"Orientation : {State.Orientation}\n" +
             $"TU restantes : {State.Tu}\n" +
@@ -301,8 +352,9 @@ public partial class PrototypeScene : Node2D
             $"Cases atteignables : {Reachability.Zone.Count}\n" +
             $"Chemin du dernier ordre exécuté : {LastPath}\n\n" +
             $"Dernier résultat : {LastResult}\n\n" +
-            "1, 2, 3 : choisir le scénario\n" +
+            "1 à 4 : choisir le scénario\n" +
             "Clic gauche : ordre de déplacement\n" +
+            (Turns is null ? string.Empty : "T : terminer le tour\n") +
             "R : réinitialiser le scénario (débogage)";
         QueueRedraw();
     }
