@@ -591,3 +591,38 @@ index bf25b19..5a39104 100644
 | `docs/mandates/BASTION-MANDAT-INSCRIPTION-DOCUMENTAIRE-MEC-0001-v1.0-VALIDE.md` | `90e049c751aa797c79cf8202439f723f1278449af0d3abe58467f07b3a5885e0` (inchangé) | `90e049c751aa797c79cf8202439f723f1278449af0d3abe58467f07b3a5885e0` |
 
 Ce rapport ne peut pas porter sa propre empreinte.
+
+## Addendum — Publication du lot 1I
+
+Cet addendum est ajouté le 27 novembre 2026, à la demande du message « BASTION — LOT-1I — Addendum de publication », pour finaliser la traçabilité de la PR #28. Le reste du rapport n'est pas modifié :
+- les relectures indépendantes et leur traitement (§5) ;
+- les réserves sur les essais macOS (§6) ;
+- le diff (§7) et les empreintes (annexe).
+
+**Portée des mentions historiques.** Elles décrivent l'état du travail local avant la publication, le 25 novembre 2026. Elles étaient exactes à cette date et restent écrites telles quelles. Ce sont :
+- « Rien n'est commité ni publié », dans la ligne « État » de l'en-tête ;
+- « rien n'est poussé, donc la CI n'a pas tourné sur ce lot », au §6 ;
+- « HEAD reste `origin/main` et rien n'est commité », au §6 (demandes du hook `Stop`) ;
+- les mentions semblables des relectures reproduites au §5, par exemple « CI : elle n'a pas tourné, puisque rien n'est poussé ».
+
+**Publication**, autorisée par le message « BASTION — LOT-1I — Autorisation de publication » du 25 novembre 2026, sans fusion. Les éléments ci-dessous ont été vérifiés le 27 novembre 2026, vers 13:02 UTC :
+
+| Élément | Constat | Vérification |
+|---|---|---|
+| Commit publié | `6a0ccea27ed7e0a42953eb10df0e08bccd502bb7`, du 25 novembre 2026, sur la branche `claude/lot-1i-corrections-documentaires` ; son parent est `10f4a0a51d2b3f2296a13cd1aeff46d7a5a8e8c5` | `git fetch`, puis `git rev-parse` de la branche locale et de la branche distante, qui sont identiques |
+| Contenu du commit | les quatre fichiers autorisés, et eux seuls. Le présent rapport y figure dans sa version antérieure à cet addendum, de SHA-256 `d109c6b37ab1e13299f5ea1247e6e6eeb433d01ecbbc2760ee1c15a718f3dc66` | `git show --name-only 6a0ccea` ; `git show 6a0ccea:docs/reviews/LOT-1I-CORRECTIONS-DOCUMENTAIRES.md` passé à `sha256sum` |
+| PR #28 | https://github.com/mengpo1/bastion/pull/28 : ouverte, **en brouillon**, vers `main`, tête `6a0ccea`, sans conflit (`mergeable` vrai, état `clean`) | API GitHub, `pulls/28` |
+| CI sur le push | exécution [45708625153](https://github.com/mengpo1/bastion/actions/runs/45708625153), **succès** | API GitHub, `actions/runs/45708625153` ; journal du job, lu le 25 novembre |
+| CI sur la PR | exécution [45708667900](https://github.com/mengpo1/bastion/actions/runs/45708667900), **succès** | API GitHub, `actions/runs/45708667900` ; journal du job, lu le 25 novembre |
+| Fusion | **aucune** : la PR n'est pas fusionnée (`merged_at` vide), et `origin/main` vaut toujours `10f4a0a51d2b3f2296a13cd1aeff46d7a5a8e8c5` | API GitHub ; `git fetch origin main` |
+
+**Résultats lus dans les journaux de la CI, le 25 novembre 2026,** pour chacune des deux exécutions :
+- compilations sans avertissement ni erreur, client Godot compris ;
+- format conforme ;
+- 65 tests .NET réussis sur 65 ;
+- 75 tests des hooks, 0 échec ;
+- 120 contrôles fumée Godot réussis, « SMOKE : RÉUSSITE ».
+
+Sur l'exécution de la PR, le contrôle de traçabilité indique : « Aucun fichier de src/Bastion.Simulation/ modifié : aucune déclaration requise. » Ces deux exécutions sont les seules sur le commit `6a0ccea`.
+
+**Statut de cet addendum à la date de sa rédaction, le 27 novembre 2026 :** une modification locale du seul rapport, ni commitée ni poussée ; sa publication demandait alors une nouvelle autorisation explicite. Une fois publié, l'addendum change la tête de la PR : les exécutions de CI citées ci-dessus portent sur le commit `6a0ccea`, et non sur le commit qui le contient.
