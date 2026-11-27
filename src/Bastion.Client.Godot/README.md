@@ -93,7 +93,9 @@ Ouvrir le projet dans l'éditeur Godot :
 "$GODOT" --editor --path src/Bastion.Client.Godot
 ```
 
-### macOS (six essais manuels déclarés conformes par le propriétaire ; non reproduits de façon indépendante)
+### macOS (essais manuels déclarés par le propriétaire : six le 23 novembre 2026, sept le 25 novembre 2026 ; non reproduits de façon indépendante)
+
+#### Essais déclarés le 23 novembre 2026, sur le prototype du lot 1D
 
 Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels du prototype sous macOS. C'est un retour d'utilisateur, et non une reproduction indépendante : ni la version de macOS, ni les commandes exactes employées ne sont connues ici. Les essais déclarés conformes sont les suivants :
 
@@ -104,7 +106,34 @@ Le 23 novembre 2026, le propriétaire a déclaré conformes six essais manuels d
 5. refus d'une destination inaccessible ;
 6. touche R.
 
-Ces essais portent sur le prototype du lot 1D, avant l'ajout des scénarios 2 et 3 par le lot 1F et du scénario 4 par le lot 1G. Ces trois scénarios et les touches 1 à 4 et T n'ont pas été essayés sous macOS.
+Ces essais portent sur le prototype du lot 1D, avant l'ajout des scénarios 2 et 3 par le lot 1F et du scénario 4 par le lot 1G. Ils ne couvrent ni ces trois scénarios, ni les touches 1 à 4 et T.
+
+#### Essais déclarés le 25 novembre 2026, sur le prototype du lot 1G
+
+Le 25 novembre 2026, après les essais du lot 1G sous macOS, le propriétaire a transmis directement dans la conversation Bastion le compte rendu suivant. Il est reproduit à l'annexe A de `docs/reviews/LOT-1H-CLOTURE-MEC-0004.md`.
+
+| Essai | Résultat déclaré |
+|---|---|
+| Charger le scénario 4 | Satisfaisant |
+| Terminer le premier tour | Satisfaisant |
+| Terminer le deuxième tour | Satisfaisant |
+| Déplacer puis terminer le tour | Satisfaisant |
+| Réinitialiser | Satisfaisant |
+| Vérifier les anciens scénarios | Satisfaisant |
+| Vérifier la fenêtre | Satisfaisant |
+
+D'après ce compte rendu, les essais portaient notamment sur :
+- l'état initial du scénario 4 : tour 1, 12 TU, 35 d'énergie ;
+- la première fin de tour : tour 2, 60 TU, 55 d'énergie ;
+- la deuxième fin de tour : tour 3, 60 TU, 75 d'énergie ;
+- la conservation de la position, de l'orientation et du chemin après un déplacement et une fin de tour ;
+- la réinitialisation avec R et 4 ;
+- l'absence d'effet de T dans les scénarios 1 à 3 ;
+- la lisibilité de la fenêtre de 800 × 720 pixels.
+
+Ces sept résultats sont des déclarations du propriétaire, sans reproduction indépendante. Ils sont distincts des six essais du 23 novembre 2026. Le compte rendu n'établit ni la version de macOS, ni le commit essayé, ni les modalités d'affichage, ni les périphériques utilisés.
+
+#### Chemin et commandes
 
 Le chemin et les commandes ci-dessous n'ont pas été vérifiés de façon indépendante sous macOS. Avec l'application officielle `Godot_mono.app` 4.7.2 placée dans `/Applications` :
 
@@ -172,9 +201,12 @@ timeout 300 xvfb-run -a "$GODOT" --path src/Bastion.Client.Godot -- --smoke-test
 ## Limites
 
 **Essais non effectués pour les lots 1F et 1G**, au moment de leur réalisation :
-- **macOS :** aucun essai des scénarios 2 à 4 ni des touches 1 à 4 et T. Les six essais déclarés par le propriétaire portent sur le prototype du lot 1D. L'essai manuel du scénario 4 sous macOS n'a pas eu lieu.
-- **Écran réel :** aucun essai, sous aucun système (Linux, macOS ou Windows). Le rendu n'est connu que par des captures automatiques sous affichage virtuel (Xvfb).
-- **Clavier et souris physiques :** aucun essai. Les entrées sont simulées par le contrôle fumée et, lors de la relecture, par des événements X11 sous Xvfb.
+- **macOS :** à la réalisation des lots, aucun essai des scénarios 2 à 4 ni des touches 1 à 4 et T ; les six essais déclarés par le propriétaire le 23 novembre 2026 portent sur le prototype du lot 1D. Depuis, le 25 novembre 2026, le propriétaire a déclaré satisfaisants sept essais du prototype du lot 1G sous macOS (section macOS ci-dessus), sans reproduction indépendante.
+- **Écran réel :** aucun essai par Claude Code ni par la CI, sous aucun système (Linux, macOS ou Windows). Trois sources distinctes, à ne pas confondre :
+  - **CI GitHub Actions :** tests automatisés, dont le contrôle fumée en mode headless, sans affichage ni capture d'écran ;
+  - **vérifications locales sous Xvfb :** captures automatiques sous affichage virtuel, qui permettent d'examiner le rendu ;
+  - **macOS :** sept essais manuels déclarés satisfaisants par le propriétaire le 25 novembre 2026, sans reproduction indépendante ni précision sur les modalités matérielles.
+- **Clavier et souris physiques :** aucun essai par Claude Code ni par la CI. Les entrées sont simulées par le contrôle fumée et, lors de la relecture, par des événements X11 sous Xvfb. Les essais manuels déclarés par le propriétaire sous macOS ne précisent pas les périphériques utilisés.
 
 **Ce qui est vérifié, et ses limites :**
 
@@ -185,16 +217,16 @@ timeout 300 xvfb-run -a "$GODOT" --path src/Bastion.Client.Godot -- --smoke-test
 - **Scénarios 2 et 3 (lot 1F) :**
   - vérifiés en local, par le contrôle fumée en mode headless et par des captures sous Xvfb ;
   - pas encore dans la CI au moment du lot 1F ;
-  - aucune validation manuelle, sur aucun système.
+  - validation manuelle : aucune au moment du lot 1F. Le 25 novembre 2026, l'essai « Vérifier les anciens scénarios » du propriétaire sous macOS est déclaré satisfaisant, sans reproduction indépendante ; le compte rendu cite l'absence d'effet de la touche T dans les scénarios 1 à 3, sans détailler les autres points vérifiés. Aucune sur un autre système.
 - **Scénario 4 (lot 1G) :**
   - vérifié en local, par le contrôle fumée en mode headless et par des captures sous Xvfb ;
   - pas encore dans la CI au moment du lot 1G ;
-  - aucune validation manuelle, sur aucun système.
+  - validation manuelle : cinq des sept essais déclarés satisfaisants par le propriétaire sous macOS le 25 novembre 2026 portent sur ce scénario (chargement, deux fins de tour, déplacement puis fin de tour, réinitialisation ; section macOS), sans reproduction indépendante. Aucune sur un autre système.
 - **Touches 1 à 4 et T :**
   - vérifiées par des événements simulés : la touche 2 par son seul libellé ; les touches 3, 1 et 4 comme un clavier AZERTY les transmet (libellé « " », « & » ou « ' », position de la touche) ;
   - aussi par de vrais événements X11 sous Xvfb, avec une disposition AZERTY imitée : les touches 1 à 3 et R lors de la relecture du lot 1F, les touches 4, T, R et 1 lors de celle du lot 1G (résultat inspecté sur des captures) ;
-  - jamais avec un clavier physique.
-- **macOS :** six essais manuels déclarés conformes par le propriétaire le 23 novembre 2026, sur le prototype du lot 1D. C'est un retour d'utilisateur, non reproduit de façon indépendante. Le contrôle fumée en ligne de commande et `gtimeout` n'y sont pas vérifiés.
+  - jamais avec un clavier physique par Claude Code ni par la CI. Les essais déclarés par le propriétaire sous macOS le 25 novembre 2026 citent les touches R, 4 et T, sans préciser le clavier ni sa disposition.
+- **macOS :** six essais manuels déclarés conformes par le propriétaire le 23 novembre 2026, sur le prototype du lot 1D, et sept essais déclarés satisfaisants le 25 novembre 2026, sur le prototype du lot 1G (scénario 4, anciens scénarios et fenêtre). Ce sont des retours d'utilisateur, non reproduits de façon indépendante ; le compte rendu du 25 novembre n'établit ni le commit essayé, ni les modalités d'affichage, ni les périphériques. Le contrôle fumée en ligne de commande et `gtimeout` n'y sont pas vérifiés.
 - **Windows :** aucun essai.
 - **CI :** compilation, format et contrôle fumée en mode headless seulement ; ni affichage, ni export.
 - **Export :** aucun export de jeu n'est testé.
